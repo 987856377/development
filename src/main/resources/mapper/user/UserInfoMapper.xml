@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.user.mapper.UserInfoMapper">
+    <resultMap id="userInfoMap" type="com.spring.development.module.user.entity.UserInfo">
+        <id column="id" property="id"/>
+        <result column="orgcode" property="orgcode"/>
+        <result column="orgname" property="orgname"/>
+        <result column="name" property="name"/>
+        <result column="identity" property="identity"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="nation" property="nation"/>
+        <result column="phone" property="phone"/>
+        <result column="mail" property="mail"/>
+    </resultMap>
+
+
+    <select id="getUserNamesByOrgCode" resultType="java.lang.String">
+        select name from user_info
+        <where>
+            <if test="orgcode != null">
+                orgcode = #{orgcode}
+            </if>
+            <if test="name != null">
+                and orgname = #{orgname}
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserInfoByOrgCodeOrName" resultType="com.spring.development.module.user.entity.UserInfo">
+        select * from user_info
+        <where>
+            <if test="orgcode != null">
+                orgcode = #{orgcode}
+            </if>
+            <if test="orgname != null">
+                and orgname = #{name}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

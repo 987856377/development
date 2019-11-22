@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.message.mapper.MessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.development.module.message.entity.Message">
+        <id column="id" property="id" />
+        <result column="sender" property="sender" />
+        <result column="sender_name" property="senderName" />
+        <result column="send_org_code" property="sendOrgCode" />
+        <result column="send_org_name" property="sendOrgName" />
+        <result column="send_time" property="sendTime" />
+        <result column="receiver" property="receiver" />
+        <result column="receiver_name" property="receiverName" />
+        <result column="accept_org_code" property="acceptOrgCode" />
+        <result column="accept_org_name" property="acceptOrgName" />
+        <result column="read_time" property="readTime" />
+        <result column="subject" property="subject" />
+        <result column="content" property="content" />
+        <result column="readflag" property="readflag" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sender,sender_name, send_org_code,send_org_name , send_time, receiver,receiver_name, accept_org_code,accept_org_name, read_time, subject, content, period, readflag
+    </sql>
+    <update id="isRead">
+        update message
+        <set>
+            <if test="readTime != null">
+                read_time = #{readTime}
+            </if>
+            <if test="readflag != null">
+                ,readflag = #{readflag}
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </update>
+    <select id="getMessageList" resultType="com.spring.development.module.message.entity.Message">
+        select * from message
+        <where>
+            <if test="sender != null">
+                sender = #{sender}
+            </if>
+            <if test="receiver != null">
+                receiver = #{receiver}
+            </if>
+        </where>
+    </select>
+    <select id="getMessage" resultType="com.spring.development.module.message.entity.Message">
+        select * from message
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="sender != null">
+                and sender = #{sender}
+            </if>
+            <if test="receiver != null">
+                and receiver = #{receiver}
+            </if>
+        </where>
+    </select>
+
+</mapper>

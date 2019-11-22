@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.organization.mapper.OrganizationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.development.module.organization.entity.Organization">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="orgflag" property="orgflag" />
+        <result column="name" property="name" />
+        <result column="classify" property="classify" />
+        <result column="type" property="type" />
+        <result column="host" property="host" />
+        <result column="relation" property="relation" />
+        <result column="postcode" property="postcode" />
+        <result column="address" property="address" />
+        <result column="phone" property="phone" />
+        <result column="mail" property="mail" />
+        <result column="responser" property="responser" />
+        <result column="officer" property="officer" />
+        <result column="web" property="web" />
+        <result column="supervising" property="supervising" />
+        <result column="flag" property="flag" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, classify, type, host, relation, postcode, address, phone, mail, responser, officer, web, supervising, flag
+    </sql>
+
+    <select id="getOrg" resultType="com.spring.development.module.organization.entity.Organization">
+        select * from organization
+        <where>
+            <if test="code != null and code != ''">
+                code = #{code}
+            </if>
+
+            <if test="name != null and name != ''">
+                <bind name="usrName" value="'%' + name + '%'"/>
+                and name like #{usrName}
+            </if>
+
+            <if test="orgflag != null and orgflag != ''">
+                <bind name="orgFlag" value="orgflag + '%'"/>
+                and orgflag like #{orgFlag}
+            </if>
+
+            <if test="classify != null">
+                and classify = #{classify}
+            </if>
+
+            <if test="type != null">
+                and type = #{type}
+            </if>
+
+            <if test="host != null">
+                and host = #{host}
+            </if>
+
+            <if test="relation != null">
+                and relation = #{relation}
+            </if>
+
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+
+            <if test="responser != null">
+                and responser = #{responser}
+            </if>
+
+            <if test="officer != null">
+                and officer = #{officer}
+            </if>
+
+            <if test="supervising != null">
+                <bind name="super" value="'%' + supervising + '%'"/>
+                and supervising like #{super}
+            </if>
+
+            <if test="flag != null">
+                and flag = #{flag}
+            </if>
+        </where>
+        limit #{current}, #{size}
+    </select>
+    <select id="getOrgByName" resultType="com.spring.development.module.organization.entity.Organization">
+        select * from organization
+        <where>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+        </where>
+    </select>
+    <select id="getSubOrg" resultType="com.spring.development.module.organization.entity.Organization">
+        select * from organization
+        <where>
+            <if test="orgflag != null and orgflag != ''">
+                <bind name="orgFlag" value="orgflag + '%'"/>
+                orgflag like #{orgFlag}
+            </if>
+            order by orgflag asc
+        </where>
+    </select>
+
+    <update id="cancelOrg">
+        update organization
+        <set>
+            <if test="flag != null">
+                flag = #{flag}
+            </if>
+        </set>
+        <where>
+            <if test="code != null">
+                code = #{code}
+            </if>
+        </where>
+    </update>
+
+</mapper>
