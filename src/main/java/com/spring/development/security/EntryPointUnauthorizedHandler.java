@@ -16,7 +16,7 @@ public class EntryPointUnauthorizedHandler implements AuthenticationEntryPoint {
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
 
-        httpServletResponse.getWriter().println("{\"code\":401,\"msg\":\"Sorry，你没有携带 token 或者 token 无效！\",\"data\":\"\"}");
+        httpServletResponse.getWriter().println("{\"code\":401,\"message\":\"Sorry，你没有携带 token 或者 token 无效！\",\"data\":\"\"}");
         httpServletResponse.getWriter().flush();
     }
 }

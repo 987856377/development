@@ -16,7 +16,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
 
-        httpServletResponse.getWriter().println("{\"code\":403,\"msg\":\"Sorry，你没有权限访问！\",\"data\":\"\"}");
+        httpServletResponse.getWriter().println("{\"code\":403,\"message\":\"Sorry，你没有权限访问！\",\"data\":\"\"}");
         httpServletResponse.getWriter().flush();
     }
 }
