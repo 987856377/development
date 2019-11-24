@@ -31,7 +31,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         if (message == null){
             return null;
         }
-        return messageMapper.getMessageList(message.getSender(), message.getReceiver());
+        return messageMapper.getMessageList(message.getSender(), message.getReceiver(), message.getSendFlag());
     }
 
     @Override
@@ -39,11 +39,11 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         if (message.getId() == null){
             return null;
         } else if (message.getSender() != null){
-            return messageMapper.getMessage(message.getId(),message.getSender(),message.getReceiver());
-        } else if (message.getReceiver() != null && message.getReadflag() != null){
+            return messageMapper.getMessage(message.getId(),message.getSender(),message.getReceiver(), message.getSendFlag());
+        } else if (message.getReceiver() != null && message.getReadFlag() != null){
             message.setReadTime(new Timestamp(System.currentTimeMillis()));
-            if (messageMapper.isRead(message.getId(), message.getReadTime(), message.getReadflag())) {
-                return messageMapper.getMessage(message.getId(),message.getSender(),message.getReceiver());
+            if (messageMapper.isRead(message.getId(), message.getReadTime(), message.getReadFlag())) {
+                return messageMapper.getMessage(message.getId(),message.getSender(),message.getReceiver(), message.getSendFlag());
             }
         }
         return null;

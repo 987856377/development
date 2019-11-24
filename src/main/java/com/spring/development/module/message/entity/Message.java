@@ -61,6 +61,11 @@ public class Message extends Model<Message> {
     private Timestamp sendTime;
 
     /**
+     * 发送标记: 1. 已发 0. 未发
+     */
+    private Integer sendFlag = 1;
+
+    /**
      * 接收者 (关联user表的 id)
      */
     private Long receiver;
@@ -99,7 +104,7 @@ public class Message extends Model<Message> {
     /**
      * 阅读标记: 1. 已读 0. 未读
      */
-    private Integer readflag = 0;
+    private Integer readFlag = 0;
 
 
     @Override

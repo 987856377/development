@@ -52,7 +52,10 @@ public class MessageController {
     }
 
     /*
-        sender or reciever
+        sender or reciever, sendFlag
+        {
+            "sender":"3"
+        }
      */
     @RequestMapping("getMessageList")
     public ResultJson getMessageList(@RequestBody Message message){
@@ -64,7 +67,10 @@ public class MessageController {
 
     /*
         发送者: id , sender
-        接收者: id , reciever , readflag
+        接收者: id , reciever , readflag, sendFlag
+        {
+            "sender":"3"
+        }
      */
     @RequestMapping("getMessage")
     public ResultJson getMessage(@RequestBody Message message){

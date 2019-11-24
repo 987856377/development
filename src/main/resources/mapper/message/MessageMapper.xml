@@ -10,6 +10,7 @@
         <result column="send_org_code" property="sendOrgCode" />
         <result column="send_org_name" property="sendOrgName" />
         <result column="send_time" property="sendTime" />
+        <result column="send_flag" property="sendFlag" />
         <result column="receiver" property="receiver" />
         <result column="receiver_name" property="receiverName" />
         <result column="accept_org_code" property="acceptOrgCode" />
@@ -17,12 +18,12 @@
         <result column="read_time" property="readTime" />
         <result column="subject" property="subject" />
         <result column="content" property="content" />
-        <result column="readflag" property="readflag" />
+        <result column="read_flag" property="readFlag" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, sender,sender_name, send_org_code,send_org_name , send_time, receiver,receiver_name, accept_org_code,accept_org_name, read_time, subject, content, period, readflag
+        id, sender,sender_name, send_org_code,send_org_name , send_time, send_flag, receiver,receiver_name, accept_org_code,accept_org_name, read_time, subject, content, period, read_flag
     </sql>
     <update id="isRead">
         update message
@@ -30,8 +31,8 @@
             <if test="readTime != null">
                 read_time = #{readTime}
             </if>
-            <if test="readflag != null">
-                ,readflag = #{readflag}
+            <if test="readFlag != null">
+                ,read_flag = #{readFlag}
             </if>
         </set>
         <where>
@@ -49,6 +50,9 @@
             <if test="receiver != null">
                 receiver = #{receiver}
             </if>
+            <if test="sendFlag != null">
+                and send_flag = #{sendFlag}
+            </if>
         </where>
     </select>
     <select id="getMessage" resultType="com.spring.development.module.message.entity.Message">
@@ -62,6 +66,9 @@
             </if>
             <if test="receiver != null">
                 and receiver = #{receiver}
+            </if>
+            <if test="sendFlag != null">
+                and send_flag = #{sendFlag}
             </if>
         </where>
     </select>
