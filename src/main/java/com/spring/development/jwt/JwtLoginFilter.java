@@ -93,4 +93,14 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        //返回json形式的错误信息
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+
+        response.getWriter().println("{\"code\":409,\"message\":\"用户名密码验证失败\",\"data\":\"\"}");
+        response.getWriter().flush();
+    }
 }
