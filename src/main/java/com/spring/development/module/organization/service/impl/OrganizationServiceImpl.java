@@ -41,7 +41,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
 
     @Override
     public boolean cancelOrg(Organization organization) {
-        if (organization.getName() == null || organization.getFlag() == null){
+        if (organization.getCode() == null || organization.getFlag() == null){
             return false;
         }
         return organizationMapper.cancelOrg(organization.getCode(),organization.getFlag());

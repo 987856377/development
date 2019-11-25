@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -60,6 +61,7 @@ public class OrganizationController {
         if (organization==null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
+        organization.setDate(new Timestamp(System.currentTimeMillis()));
         return ResultJson.success(organizationService.saveOrUpdate(organization));
     }
 
@@ -123,6 +125,11 @@ public class OrganizationController {
         Long offset = (request.getCurrent()-1)*request.getSize();
         request.setCurrent(offset);
         return ResultJson.success(organizationService.getOrg(request));
+    }
+
+    @RequestMapping("getOrgList")
+    public ResultJson getOrgList(@RequestBody Page<Organization> page){
+        return ResultJson.success(organizationService.page(page));
     }
 
 

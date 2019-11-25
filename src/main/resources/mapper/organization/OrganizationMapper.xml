@@ -20,12 +20,13 @@
         <result column="officer" property="officer" />
         <result column="web" property="web" />
         <result column="supervising" property="supervising" />
+        <result column="date" property="date" />
         <result column="flag" property="flag" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, name, classify, type, host, relation, postcode, address, phone, mail, responser, officer, web, supervising, flag
+        id, code, name, classify, type, host, relation, postcode, address, phone, mail, responser, officer, web, supervising, date, flag
     </sql>
 
     <select id="getOrg" resultType="com.spring.development.module.organization.entity.Organization">

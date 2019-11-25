@@ -60,13 +60,13 @@
             </if>
         </set>
         <where>
-            <if test="code != null">
+            <if test="orgcode != null">
                 id in
                 <trim prefix="(" suffix=")">
                     select id from user_info
                     <where>
-                        <if test="code != null">
-                            orgcode = #{code}
+                        <if test="orgcode != null">
+                            orgcode = #{orgcode}
                         </if>
                     </where>
                 </trim>

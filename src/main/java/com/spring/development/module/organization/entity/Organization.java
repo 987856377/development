@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.sql.Timestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -125,6 +128,12 @@ public class Organization extends Model<Organization> {
      * 上级机构
      */
     private String supervising;
+
+    /**
+     * 注册日期
+     */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Timestamp date;
 
     /**
      * 1:正常,0: 待激活:9:停用
@@ -267,6 +276,14 @@ public class Organization extends Model<Organization> {
 
     public void setSupervising(String supervising) {
         this.supervising = supervising;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     public Integer getFlag() {
