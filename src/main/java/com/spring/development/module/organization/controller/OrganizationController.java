@@ -90,8 +90,8 @@ public class OrganizationController {
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         QueryWrapper wrapper = new QueryWrapper();
-        wrapper.eq("name",request.getName());
-        return ResultJson.success(organizationService.getOne(wrapper));
+        wrapper.like("name",request.getName());
+        return ResultJson.success(organizationService.list(wrapper));
     }
 
     /*
