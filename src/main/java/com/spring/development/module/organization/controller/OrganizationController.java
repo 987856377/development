@@ -69,7 +69,10 @@ public class OrganizationController {
         if (organizationService.getOne(wrapper) != null || !validPhone(organization.getPhone())){
             return ResultJson.failure(ResultCode.BAD_REQUEST,"手机号已被使用或手机号格式有误");
         }
-        organization.setDate(new Timestamp(System.currentTimeMillis()));
+        if (organization.getId() == null && organization.getCode() == null && organization.getOrgflag() == null){
+            organization.setDate(new Timestamp(System.currentTimeMillis()));
+            return ResultJson.success(organizationService.saveOrUpdate(organization));
+        }
         return ResultJson.success(organizationService.saveOrUpdate(organization));
     }
 
