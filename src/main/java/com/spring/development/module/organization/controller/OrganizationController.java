@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -61,8 +63,30 @@ public class OrganizationController {
         if (organization==null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.ne("name",organization.getName());
+        wrapper.eq("phone",organization.getPhone());
+        if (organizationService.getOne(wrapper) != null || !validPhone(organization.getPhone())){
+            return ResultJson.failure(ResultCode.BAD_REQUEST,"手机号已被使用或手机号格式有误");
+        }
         organization.setDate(new Timestamp(System.currentTimeMillis()));
         return ResultJson.success(organizationService.saveOrUpdate(organization));
+    }
+
+    public static boolean validPhone(String phone) {
+        String regex = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
+        if (phone.length() != 11) {
+            return false;
+        } else {
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(phone);
+            boolean isMatch = m.matches();
+            if (isMatch) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
 
