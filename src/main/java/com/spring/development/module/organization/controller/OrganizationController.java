@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,10 +70,27 @@ public class OrganizationController {
         if (organizationService.getOne(wrapper) != null || !validPhone(organization.getPhone())){
             return ResultJson.failure(ResultCode.BAD_REQUEST,"手机号已被使用或手机号格式有误");
         }
-        if (organization.getId() == null && organization.getCode() == null && organization.getOrgflag() == null){
+//        添加
+        if (organization.getId() == null){
+            QueryWrapper codeExisted = new QueryWrapper();
+            codeExisted.eq("code",organization.getCode());
+            if (organizationService.getOne(codeExisted) != null){
+                return ResultJson.failure(ResultCode.BAD_REQUEST,"机构代码已被注册,请核对您的机构代码");
+            }
+            QueryWrapper superWrapper = new QueryWrapper();
+            superWrapper.eq("name",organization.getSupervising());
+            Organization one = organizationService.getOne(superWrapper);
+            if (one == null){
+//            1. 添加的机构没有上级机构: orgflag 生成规则: 机构的 code 前两位拼接后两位
+                organization.setOrgflag(organization.getCode().substring(0,2)+organization.getCode().substring(organization.getCode().length()-2));
+            }else {
+//            2. 添加的机构有上级机构: orgflag生成规则: 上级机构的 orgflag 拼接本机构 code 的后两位
+                organization.setOrgflag(one.getOrgflag() + organization.getCode().substring(organization.getCode().length() - 2));
+            }
             organization.setDate(new Timestamp(System.currentTimeMillis()));
             return ResultJson.success(organizationService.saveOrUpdate(organization));
         }
+//        更新
         return ResultJson.success(organizationService.saveOrUpdate(organization));
     }
 

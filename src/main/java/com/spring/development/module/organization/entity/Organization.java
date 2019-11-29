@@ -136,7 +136,7 @@ public class Organization extends Model<Organization> {
     private Timestamp date;
 
     /**
-     * 1:正常,0: 待激活:9:停用
+     * 1:正常,0: 停用:9:待激活
      */
     private Integer flag = 0;
 
