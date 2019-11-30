@@ -208,4 +208,12 @@ public class OrganizationController {
         return ResultJson.success(organizationService.getSubOrg(request));
     }
 
+    @RequestMapping("getOrgInfoByUid")
+    public ResultJson getOrgInfoByUid(@RequestBody OrgRequest request){
+        if (request.getId() == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(organizationService.getOrgInfoByUid(request));
+    }
+
 }

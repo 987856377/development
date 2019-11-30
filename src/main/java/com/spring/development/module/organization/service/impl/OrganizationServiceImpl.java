@@ -1,5 +1,6 @@
 package com.spring.development.module.organization.service.impl;
 
+import com.spring.development.module.organization.entity.response.OrgResponse;
 import com.spring.development.module.organization.entity.Organization;
 import com.spring.development.module.organization.entity.request.OrgRequest;
 import com.spring.development.module.organization.mapper.OrganizationMapper;
@@ -48,7 +49,20 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     }
 
     @Override
-    public List<Organization> getSubOrg(OrgRequest request) {
+    public List<OrgResponse> getSubOrg(OrgRequest request) {
+        if (request.getOrgflag() == null){
+            return null;
+        }
         return organizationMapper.getSubOrg(request.getOrgflag());
+    }
+
+    @Override
+    public OrgResponse getOrgInfoByUid(OrgRequest request) {
+        if (request.getId() == null){
+            return null;
+        }
+        OrgResponse response = organizationMapper.getOrgInfoByUid(request.getId());
+        response.setSubOrgList(organizationMapper.getSubOrg(response.getOrgflag()));
+        return response;
     }
 }

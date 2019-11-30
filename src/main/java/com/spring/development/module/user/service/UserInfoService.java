@@ -1,6 +1,9 @@
 package com.spring.development.module.user.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.spring.development.module.user.entity.request.UserRequest;
+import com.spring.development.module.user.entity.response.UserResponse;
 import com.spring.development.module.user.mapper.UserInfoMapper;
 import com.spring.development.module.user.entity.UserInfo;
 import org.springframework.stereotype.Service;
@@ -31,4 +34,14 @@ public class UserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> {
         return userInfoMapper.getUserInfoByOrgCodeOrName(userInfo.getOrgcode(),userInfo.getOrgname());
     }
 
+    public Page<UserResponse> userInfoPage(Page<UserResponse> page) {
+        return userInfoMapper.userInfoPage(page);
+    }
+
+    public UserResponse getUserInfo(UserRequest request) {
+        if (request.getUsername() == null){
+            return null;
+        }
+        return userInfoMapper.getUserInfo(request.getUsername());
+    }
 }

@@ -93,8 +93,8 @@
             </if>
         </where>
     </select>
-    <select id="getSubOrg" resultType="com.spring.development.module.organization.entity.Organization">
-        select * from organization
+    <select id="getSubOrg" resultType="com.spring.development.module.organization.entity.response.OrgResponse">
+        select name,code,orgflag  from organization
         <where>
             <if test="orgflag != null and orgflag != ''">
                 <bind name="orgFlag" value="orgflag + '%'"/>
@@ -102,6 +102,9 @@
             </if>
             order by orgflag asc
         </where>
+    </select>
+    <select id="getOrgInfoByUid" resultType="com.spring.development.module.organization.entity.response.OrgResponse">
+        SELECT name,code,orgflag FROM organization WHERE name=(SELECT orgname from user_info WHERE id = #{id})
     </select>
 
     <update id="cancelOrg">

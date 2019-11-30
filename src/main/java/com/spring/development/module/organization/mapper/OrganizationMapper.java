@@ -1,5 +1,6 @@
 package com.spring.development.module.organization.mapper;
 
+import com.spring.development.module.organization.entity.response.OrgResponse;
 import com.spring.development.module.organization.entity.Organization;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,5 +29,7 @@ public interface OrganizationMapper extends BaseMapper<Organization> {
 
     boolean cancelOrg(@RequestParam("code") String code,@RequestParam("flag") Integer flag);
 
-    List<Organization> getSubOrg(@RequestParam("orgflag") String orgflag);
+    List<OrgResponse> getSubOrg(@RequestParam("orgflag") String orgflag);
+
+    OrgResponse getOrgInfoByUid(@RequestParam("id") Long id);
 }

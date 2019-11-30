@@ -14,8 +14,7 @@ public class UserRoleRequest implements Serializable {
     private String sourceRole;
     private String destRole = "USER";
 
-    public UserRoleRequest(Long uid){
-        this.uid = uid;
+    public UserRoleRequest(){
     }
 
     public UserRoleRequest(Long uid, String destRole){

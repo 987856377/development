@@ -30,7 +30,17 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     public List<User> getByUsername(String username){
+        if (username == null){
+            return null;
+        }
         return userMapper.getByUsername(username);
+    }
+
+    public Long getIdByUsername(String username){
+        if (username == null){
+            return null;
+        }
+        return userMapper.getIdByUsername(username);
     }
 
     public UserDetail loadUserByUsername(String username){

@@ -39,5 +39,7 @@ public interface UserMapper extends BaseMapper<User> {
     UserDetail loadUserByUsername(@Param("username") String username);
 
     boolean updateLastLoginTime(@Param("username") String username, @Param("lastLoginTime") Timestamp lastLoginTime);
+
+    Long getIdByUsername(@Param("username") String username);
 }
 

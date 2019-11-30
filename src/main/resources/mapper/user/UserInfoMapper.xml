@@ -39,6 +39,15 @@
             </if>
         </where>
     </select>
+    <select id="userInfoPage" resultType="com.spring.development.module.user.entity.response.UserResponse">
+        SELECT user.username, user_info.* , user.register_time,user.modify_time,user.last_login_time, user.flag FROM user,user_info WHERE user.id = user_info.id
+    </select>
+    <select id="getUserInfo" resultType="com.spring.development.module.user.entity.response.UserResponse">
+        SELECT user.username, user_info.* , user.register_time,user.modify_time,user.last_login_time, user.flag FROM user,user_info WHERE user.id = user_info.id
+        <if test="username != null">
+            and username = #{username}
+        </if>
+    </select>
 
 </mapper>
 

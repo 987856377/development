@@ -67,9 +67,16 @@ public class UserController {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (user.getId() == null){
-            user.setRegisterTime(new Timestamp(System.currentTimeMillis()));
-            user.setModifyTime(new Timestamp(System.currentTimeMillis()));
-            return ResultJson.success(userService.saveOrUpdate(user));
+            if (userService.getByUsername(user.getUsername()) == null){
+                return ResultJson.failure(ResultCode.BAD_REQUEST,"用户名已被注册");
+            } else {
+                user.setRegisterTime(new Timestamp(System.currentTimeMillis()));
+                user.setModifyTime(new Timestamp(System.currentTimeMillis()));
+                if (userService.saveOrUpdate(user)){
+                    return ResultJson.success(userService.getIdByUsername(user.getUsername()));
+                }
+                return ResultJson.failure(ResultCode.INTERNAL_SERVER_ERROR);
+            }
         }
         user.setModifyTime(new Timestamp(System.currentTimeMillis()));
         return ResultJson.success(userService.saveOrUpdate(user));
@@ -153,6 +160,25 @@ public class UserController {
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         return ResultJson.success(userService.getByUsername(user.getUsername()));
+    }
+
+    /*/*
+     * @Description 提交 json 格式的参数
+     * @param null
+        {
+            "username":"admin"
+        }
+     * @Return
+     * @Author XuZhenkui
+     * @Creed: Talk is cheap,show me the code
+     * @Date 2019/9/22 1:01
+     */
+    @RequestMapping("getIdByUsername")
+    public ResultJson getIdByUsername(@RequestBody User user){
+        if (user.getUsername() == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(userService.getIdByUsername(user.getUsername()));
     }
 
     /*/*
@@ -257,7 +283,6 @@ public class UserController {
     }
 
 
-    @Auth(roles = {"ADMIN","DBA"})
     @RequestMapping("cancelUserById")
     public ResultJson cancelUserById(@RequestBody UserRequest request){
         if (request.getId() == null || request.getFlag() == null){

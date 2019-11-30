@@ -17,47 +17,42 @@ import java.util.List;
  * @Date 2019/10/2 19:31
  */
 public class UserResponse implements Serializable {
-    private Long id;
     private String username;
-    private String realname;
+    private Long id;
+    private String orgcode;
+    private String orgname;
+    private String name;
     private String identity;
     private String sex;
     private String age;
+    private String nation;
     private String phone;
     private String mail;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Timestamp registerTime;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Timestamp modifyTime;
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Timestamp lastLoginTime;
     private Integer flag;
-    private List<Role> role;
-
     public UserResponse(){}
 
-    public UserResponse(Long id, String username, String realname, String identity, String sex, String age, String phone, String mail, Timestamp registerTime, Timestamp modifyTime, Timestamp lastLoginTime, Integer flag, List<Role> role) {
-        this.id = id;
+    public UserResponse(String username, Long id, String orgcode, String orgname, String name, String identity, String sex, String age, String nation, String phone, String mail, Timestamp registerTime, Timestamp modifyTime, Timestamp lastLoginTime, Integer flag) {
         this.username = username;
-        this.realname = realname;
+        this.id = id;
+        this.orgcode = orgcode;
+        this.orgname = orgname;
+        this.name = name;
         this.identity = identity;
         this.sex = sex;
         this.age = age;
+        this.nation = nation;
         this.phone = phone;
         this.mail = mail;
         this.registerTime = registerTime;
         this.modifyTime = modifyTime;
         this.lastLoginTime = lastLoginTime;
         this.flag = flag;
-        this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -68,12 +63,36 @@ public class UserResponse implements Serializable {
         this.username = username;
     }
 
-    public String getRealname() {
-        return realname;
+    public Long getId() {
+        return id;
     }
 
-    public void setRealname(String realname) {
-        this.realname = realname;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOrgcode() {
+        return orgcode;
+    }
+
+    public void setOrgcode(String orgcode) {
+        this.orgcode = orgcode;
+    }
+
+    public String getOrgname() {
+        return orgname;
+    }
+
+    public void setOrgname(String orgname) {
+        this.orgname = orgname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getIdentity() {
@@ -98,6 +117,14 @@ public class UserResponse implements Serializable {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public String getNation() {
+        return nation;
+    }
+
+    public void setNation(String nation) {
+        this.nation = nation;
     }
 
     public String getPhone() {
@@ -146,13 +173,5 @@ public class UserResponse implements Serializable {
 
     public void setFlag(Integer flag) {
         this.flag = flag;
-    }
-
-    public List<Role> getRole() {
-        return role;
-    }
-
-    public void setRole(List<Role> role) {
-        this.role = role;
     }
 }

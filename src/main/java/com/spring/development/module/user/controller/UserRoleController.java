@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  * @Date 2019/11/12 14:47
  */
 @RestController
-@RequestMapping("/userrole")
+@RequestMapping("userrole")
 public class UserRoleController {
 
     @Resource
@@ -44,7 +44,6 @@ public class UserRoleController {
      * @Creed: Talk is cheap,show me the code
      * @Date 2019/10/2 20:11
      */
-    @Auth(roles = {"ADMIN"})
     @RequestMapping("addUserRole")
     public ResultJson addUserRole(@RequestBody UserRoleRequest request){
         if (request.getUid() == null){
