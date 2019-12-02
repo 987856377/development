@@ -41,6 +41,10 @@
     </select>
     <select id="userInfoPage" resultType="com.spring.development.module.user.entity.response.UserResponse">
         SELECT user.username, user_info.* , user.register_time,user.modify_time,user.last_login_time, user.flag FROM user,user_info WHERE user.id = user_info.id
+        <if test="orgflag != null and orgflag != ''">
+            <bind name="orgFlag" value="orgflag + '%'"/>
+            and user_info.orgcode IN ( select code from organization where orgflag like #{orgFlag})
+        </if>
     </select>
     <select id="getUserInfo" resultType="com.spring.development.module.user.entity.response.UserResponse">
         SELECT user.username, user_info.* , user.register_time,user.modify_time,user.last_login_time, user.flag FROM user,user_info WHERE user.id = user_info.id

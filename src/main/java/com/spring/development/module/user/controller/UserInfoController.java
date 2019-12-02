@@ -7,6 +7,7 @@ import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
 import com.spring.development.module.user.entity.User;
 import com.spring.development.module.user.entity.UserInfo;
+import com.spring.development.module.user.entity.request.UserListRequest;
 import com.spring.development.module.user.entity.request.UserRequest;
 import com.spring.development.module.user.entity.response.UserResponse;
 import com.spring.development.module.user.service.UserInfoService;
@@ -169,8 +170,8 @@ public class UserInfoController {
      */
     @PreAuthorize("hasAnyAuthority('ADMIN','DBA')")
     @RequestMapping("getUserInfoPage")
-    public ResultJson getUserInfoPage(@RequestBody Page<UserResponse> page){
-        return ResultJson.success(userInfoService.userInfoPage(page));
+    public ResultJson getUserInfoPage(@RequestBody UserListRequest request){
+        return ResultJson.success(userInfoService.userInfoPage(request));
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','DBA')")

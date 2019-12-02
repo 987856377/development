@@ -20,7 +20,7 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
     List<UserInfo> getUserInfoByOrgCodeOrName(@Param("orgcode") String orgcode, @Param("orgname") String orgname);
 
-    Page<UserResponse> userInfoPage(Page<UserResponse> page);
+    Page<UserResponse> userInfoPage(Page<UserResponse> page, @Param("orgflag") String orgflag);
 
     UserResponse getUserInfo(@Param("username") String username);
 }
