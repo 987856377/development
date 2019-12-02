@@ -47,6 +47,6 @@ public class LogAspect {
     @AfterReturning(returning = "ret" , pointcut = "log()")
     public void doAfterReturning(Object ret){
         //处理完请求后，返回内容
-        logger.info("\n请求URL: "+request.getRequestURL().toString()+"\n入参:"+ Arrays.toString(joinPoint.getArgs())+"\n出参:"+ JSON.toJSONString(ret) +"\n执行时间: "+ (System.currentTimeMillis() - startTime.get())+" 毫秒");
+        logger.info("\n请求URL: "+request.getRequestURI()+"\n入参:"+ Arrays.toString(joinPoint.getArgs())+"\n出参:"+ JSON.toJSONString(ret) +"\n执行时间: "+ (System.currentTimeMillis() - startTime.get())+" 毫秒");
     }
 }
