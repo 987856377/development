@@ -118,7 +118,6 @@ public class UserRoleController {
             "uid": 1
         }
      */
-    @Auth(roles = {"ADMIN"})
     @RequestMapping("getRoleList")
     public ResultJson getRoleList(@RequestBody UserRoleRequest request){
         if (request.getUid() == null){

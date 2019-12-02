@@ -45,8 +45,8 @@
             </if>
         </where>
     </select>
-    <select id="getRoleList" resultType="java.lang.String">
-        select distinct code from role, user_role
+    <select id="getRoleList" resultType="com.spring.development.module.user.entity.Role">
+        select DISTINCT role.id, role.title, role.code from role, user_role
         <where>
             role.id = user_role.rid
             <if test="uid != null">

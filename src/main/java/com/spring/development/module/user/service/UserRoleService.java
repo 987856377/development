@@ -1,6 +1,7 @@
 package com.spring.development.module.user.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.spring.development.module.user.entity.Role;
 import com.spring.development.module.user.entity.request.UserRoleRequest;
 import com.spring.development.module.user.mapper.UserRoleMapper;
 import com.spring.development.module.user.entity.UserRole;
@@ -44,7 +45,7 @@ public class UserRoleService extends ServiceImpl<UserRoleMapper, UserRole> {
         return userRoleMapper.delUserRole(uid, rid);
     }
 
-    public List<String> getRoleList(UserRoleRequest request) {
+    public List<Role> getRoleList(UserRoleRequest request) {
         if (request.getUid() == null){
             return null;
         }

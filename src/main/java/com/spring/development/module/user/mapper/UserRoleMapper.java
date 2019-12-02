@@ -1,6 +1,7 @@
 package com.spring.development.module.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.spring.development.module.user.entity.Role;
 import com.spring.development.module.user.entity.UserRole;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,5 +20,5 @@ public interface UserRoleMapper extends BaseMapper<UserRole> {
     public Boolean delUserRole(@Param("uid") Long uid, @Param("rid") Long rid);
     public List<UserRole> getUserRoleByUid(@Param("uid") Long uid);
 
-    List<String> getRoleList(@Param("uid") Long uid);
+    List<Role> getRoleList(@Param("uid") Long uid);
 }
