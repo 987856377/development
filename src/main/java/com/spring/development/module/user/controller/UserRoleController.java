@@ -100,7 +100,6 @@ public class UserRoleController {
      * @Creed: Talk is cheap,show me the code
      * @Date 2019/10/2 20:11
      */
-    @Auth(roles = {"ADMIN"})
     @RequestMapping("delUserRole")
     public ResultJson delUserRole(@RequestBody UserRoleRequest request){
         if (request.getUid() == null || request.getDestRole() == null || request.getDestRole().equals("")){
@@ -126,4 +125,16 @@ public class UserRoleController {
         return ResultJson.success(userRoleService.getRoleList(request));
     }
 
+    /*
+        {
+                "uid": 1
+            }
+         */
+    @RequestMapping("getRoleListAvalible")
+    public ResultJson getRoleListAvalible(@RequestBody UserRoleRequest request){
+        if (request.getUid() == null){
+            return ResultJson.failure(ResultCode.BAD_REQUEST);
+        }
+        return ResultJson.success(userRoleService.getRoleListAvalible(request));
+    }
 }

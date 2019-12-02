@@ -51,4 +51,11 @@ public class UserRoleService extends ServiceImpl<UserRoleMapper, UserRole> {
         }
         return userRoleMapper.getRoleList(request.getUid());
     }
+
+    public List<Role> getRoleListAvalible(UserRoleRequest request) {
+        if (request.getUid() == null){
+            return null;
+        }
+        return userRoleMapper.getRoleListAvalible(request.getUid());
+    }
 }

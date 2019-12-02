@@ -50,8 +50,12 @@
         <where>
             role.id = user_role.rid
             <if test="uid != null">
-                and user_role.uid = #{uid}
+                and user_role.uid = #{uid} ORDER BY role.id asc
             </if>
         </where>
+    </select>
+    <select id="getRoleListAvalible" resultType="com.spring.development.module.user.entity.Role">
+        SELECT id, title, code FROM role
+            WHERE id >= (select MIN(role.id)from role, user_role WHERE role.id = user_role.rid and user_role.uid = #{uid}) ORDER BY role.id asc
     </select>
 </mapper>
