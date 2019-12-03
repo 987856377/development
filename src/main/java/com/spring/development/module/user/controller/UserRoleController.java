@@ -113,6 +113,7 @@ public class UserRoleController {
     }
 
     /*
+    获取用户拥有的角色
     {
             "uid": 1
         }
@@ -126,6 +127,7 @@ public class UserRoleController {
     }
 
     /*
+    获取用户可以操作的角色
         {
                 "uid": 1
             }
