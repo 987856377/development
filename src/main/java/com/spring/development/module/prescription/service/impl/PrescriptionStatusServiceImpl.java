@@ -1,5 +1,6 @@
 package com.spring.development.module.prescription.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.module.prescription.entity.PrescriptionStatus;
 import com.spring.development.module.prescription.entity.request.PrescriptionRequest;
 import com.spring.development.module.prescription.entity.response.PrescriptionResponse;
@@ -72,11 +73,11 @@ public class PrescriptionStatusServiceImpl extends ServiceImpl<PrescriptionStatu
     }
 
     @Override
-    public List<PrescriptionResponse> getPrescriptionInfo(PrescriptionRequest request) {
+    public Page<PrescriptionResponse> getPrescriptionInfo(PrescriptionRequest request) {
         if (request == null){
             return null;
         }
-        return prescriptionStatusMapper.getPrescriptionInfo(request.getOrgname(),request.getType(),
+        return prescriptionStatusMapper.getPrescriptionInfo(request.getPage(), request.getOrgname(),request.getType(),
                 request.getSymptom(),request.getFlag(),request.getVerify(),request.getEnable());
     }
 }

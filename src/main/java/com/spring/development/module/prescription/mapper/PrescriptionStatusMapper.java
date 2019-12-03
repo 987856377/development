@@ -1,5 +1,6 @@
 package com.spring.development.module.prescription.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.module.prescription.entity.PrescriptionStatus;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spring.development.module.prescription.entity.response.PrescriptionResponse;
@@ -30,7 +31,7 @@ public interface PrescriptionStatusMapper extends BaseMapper<PrescriptionStatus>
 
     List<PrescriptionStatus> getCirculated(@Param("flag") Integer flag);
 
-    List<PrescriptionResponse> getPrescriptionInfo(@Param("orgname") String orgname,  @Param("type") Integer type,
+    Page<PrescriptionResponse> getPrescriptionInfo(Page<PrescriptionResponse> page, @Param("orgname") String orgname, @Param("type") Integer type,
                                                    @Param("symptom") String symptom, @Param("flag") Integer flag,
                                                    @Param("verify") Integer verify, @Param("enable") Integer enable);
 

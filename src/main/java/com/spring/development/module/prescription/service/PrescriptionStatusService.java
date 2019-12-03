@@ -1,5 +1,6 @@
 package com.spring.development.module.prescription.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.module.prescription.entity.PrescriptionStatus;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spring.development.module.prescription.entity.request.PrescriptionRequest;
@@ -27,5 +28,5 @@ public interface PrescriptionStatusService extends IService<PrescriptionStatus> 
 
     List<PrescriptionStatus> getCirculated(PrescriptionStatus prescriptionStatus);
 
-    List<PrescriptionResponse> getPrescriptionInfo(PrescriptionRequest request);
+    Page<PrescriptionResponse> getPrescriptionInfo(PrescriptionRequest request);
 }

@@ -1,6 +1,8 @@
 package com.spring.development.module.prescription.entity.request;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.spring.development.module.prescription.entity.response.PrescriptionResponse;
 
 import java.io.Serializable;
 
@@ -13,6 +15,7 @@ import java.io.Serializable;
  */
 public class PrescriptionRequest implements Serializable {
 
+    private Page<PrescriptionResponse> page;
     private String orgname;
     private Integer type;
     private String symptom;
@@ -24,6 +27,16 @@ public class PrescriptionRequest implements Serializable {
     }
 
     public PrescriptionRequest(String orgname, Integer type, String symptom, Integer flag, Integer verify, Integer enable) {
+        this.orgname = orgname;
+        this.type = type;
+        this.symptom = symptom;
+        this.flag = flag;
+        this.verify = verify;
+        this.enable = enable;
+    }
+
+    public PrescriptionRequest(Page<PrescriptionResponse> page, String orgname, Integer type, String symptom, Integer flag, Integer verify, Integer enable) {
+        this.page = page;
         this.orgname = orgname;
         this.type = type;
         this.symptom = symptom;
@@ -78,5 +91,13 @@ public class PrescriptionRequest implements Serializable {
 
     public void setEnable(Integer enable) {
         this.enable = enable;
+    }
+
+    public Page<PrescriptionResponse> getPage() {
+        return page;
+    }
+
+    public void setPage(Page<PrescriptionResponse> page) {
+        this.page = page;
     }
 }
