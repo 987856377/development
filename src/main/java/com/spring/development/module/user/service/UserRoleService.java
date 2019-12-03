@@ -24,11 +24,11 @@ public class UserRoleService extends ServiceImpl<UserRoleMapper, UserRole> {
     @Resource
     private UserRoleMapper userRoleMapper;
 
-    public Boolean addUserRole(Long uid, Long rid){
+    public Boolean addUserRole(Long uid, Long rid, Integer flag){
         if (uid == null || rid == null){
             return false;
         }
-        return userRoleMapper.create(uid, rid);
+        return userRoleMapper.create(uid, rid, flag);
     }
 
     public Boolean setUserRole(Long uid, Long sourceId, Long destId){

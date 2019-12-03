@@ -33,7 +33,7 @@
     <select id="getRolesByUid" resultType="com.spring.development.module.user.entity.Role">
         select * from role
             where id in (
-                select rid from user_role where uid = #{uid}
+                select rid from user_role where uid = #{uid} and flag = 1
             )
     </select>
 

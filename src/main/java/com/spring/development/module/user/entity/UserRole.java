@@ -26,6 +26,9 @@ public class UserRole extends Model<UserRole> {
     @TableField(value = "rid" )
     private Long rid;
 
+    @TableField(value = "flag" )
+    private Integer flag = 1;
+
     public UserRole(){}
 
     public UserRole(Long uid, Long rid) {
@@ -37,6 +40,13 @@ public class UserRole extends Model<UserRole> {
         this.id = id;
         this.uid = uid;
         this.rid = rid;
+    }
+
+    public UserRole(Long id, Long uid, Long rid, Integer flag) {
+        this.id = id;
+        this.uid = uid;
+        this.rid = rid;
+        this.flag = flag;
     }
 
     public Long getId() {
@@ -61,6 +71,14 @@ public class UserRole extends Model<UserRole> {
 
     public void setRid(Long rid) {
         this.rid = rid;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 
     @Override

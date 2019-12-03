@@ -55,7 +55,7 @@ public class UserRoleController {
         if (role == null){
             return ResultJson.failure(ResultCode.UNAUTHORIZED,"对不起,该用户角色未定义,详情请咨询管理员");
         }
-        return ResultJson.success(userRoleService.addUserRole(request.getUid(),role.getId()));
+        return ResultJson.success(userRoleService.addUserRole(request.getUid(),role.getId(),request.getFlag()));
     }
 
     /*/*
