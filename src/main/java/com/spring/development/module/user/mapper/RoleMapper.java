@@ -19,4 +19,6 @@ public interface RoleMapper extends BaseMapper<Role> {
     public Role getRoleByCode(@Param("code") String code);
     public List<String> getRoleCodes();
     public List<Role> getRoleList();
+
+    boolean updateRoleState(@Param("id") Long id,@Param("flag")  Integer flag);
 }

@@ -13,6 +13,7 @@ public class UserRoleRequest implements Serializable {
     private Long uid;
     private String sourceRole;
     private String destRole = "USER";
+    private Integer flag = 1;
 
     public UserRoleRequest(){
     }
@@ -20,6 +21,19 @@ public class UserRoleRequest implements Serializable {
     public UserRoleRequest(Long uid, String destRole){
         this.uid = uid;
         this.destRole = destRole;
+    }
+
+    public UserRoleRequest(Long uid, String destRole, Integer flag) {
+        this.uid = uid;
+        this.destRole = destRole;
+        this.flag = flag;
+    }
+
+    public UserRoleRequest(Long uid, String sourceRole, String destRole, Integer flag) {
+        this.uid = uid;
+        this.sourceRole = sourceRole;
+        this.destRole = destRole;
+        this.flag = flag;
     }
 
     public Long getUid() {
@@ -44,5 +58,13 @@ public class UserRoleRequest implements Serializable {
 
     public void setDestRole(String destRole) {
         this.destRole = destRole;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 }

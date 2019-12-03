@@ -10,6 +10,9 @@
         <result column="modify_time" property="modifyTime"/>
         <result column="flag" property="flag"/>
     </resultMap>
+    <update id="updateRoleState">
+        update role set flag = #{flag} where id = #{id}
+    </update>
 
     <select id="getRoleByCode" resultMap="roleMap">
         select * from role

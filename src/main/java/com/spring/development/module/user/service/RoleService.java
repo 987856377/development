@@ -1,6 +1,7 @@
 package com.spring.development.module.user.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.spring.development.module.user.entity.request.RoleRequest;
 import com.spring.development.module.user.mapper.RoleMapper;
 import com.spring.development.module.user.entity.Role;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,12 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
 
     public List<Role> getRoleList(){
         return roleMapper.getRoleList();
+    }
+
+    public boolean updateRoleState(RoleRequest request) {
+        if (request.getId() == null || request.getFlag() == null){
+            return false;
+        }
+        return roleMapper.updateRoleState(request.getId(), request.getFlag());
     }
 }

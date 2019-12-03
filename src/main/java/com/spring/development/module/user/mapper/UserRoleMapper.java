@@ -22,5 +22,5 @@ public interface UserRoleMapper extends BaseMapper<UserRole> {
 
     List<Role> getRoleList(@Param("uid") Long uid);
 
-    List<Role> getRoleListAvalible(@Param("uid") Long uid);
+    List<Role> getRoleListAvalible(@Param("uid") Long uid, @Param("flag") Integer flag);
 }

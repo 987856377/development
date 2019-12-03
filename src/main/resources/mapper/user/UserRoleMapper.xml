@@ -58,7 +58,9 @@
         SELECT id, title, code, flag FROM role
             WHERE id >= (select MIN(role.id)from role, user_role WHERE
                 role.id = user_role.rid and role.flag=1 and user_role.uid = #{uid})
-                and role.flag=1
+                <if test="flag != null">
+                    and role.flag = #{flag}
+                </if>
              ORDER BY role.id asc
     </select>
 </mapper>
