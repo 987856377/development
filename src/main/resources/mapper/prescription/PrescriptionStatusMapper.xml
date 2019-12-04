@@ -54,7 +54,7 @@
                 <if test="verify != null">
                     ,verify = #{verify}
                     <choose>
-                        <when test="verify == 9">
+                        <when test="verify == 0">
                             flag=0, enable = 0,
                         </when>
                         <when test="verify == 1">
