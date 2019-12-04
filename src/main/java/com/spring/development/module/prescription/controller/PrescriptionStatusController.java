@@ -95,12 +95,12 @@ public class PrescriptionStatusController {
         "verify":0
         }
      */
-    @RequestMapping("getPrescriptionInfo")
-    public ResultJson getPrescriptionInfo(@RequestBody PrescriptionRequest request){
+    @RequestMapping("getPrescriptionList")
+    public ResultJson getPrescriptionList(@RequestBody PrescriptionRequest request){
         if (request == null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
-        return ResultJson.success(prescriptionStatusService.getPrescriptionInfo(request));
+        return ResultJson.success(prescriptionStatusService.getPrescriptionList(request));
     }
 
 }

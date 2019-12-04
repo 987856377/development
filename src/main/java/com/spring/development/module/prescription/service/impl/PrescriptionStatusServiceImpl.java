@@ -73,11 +73,11 @@ public class PrescriptionStatusServiceImpl extends ServiceImpl<PrescriptionStatu
     }
 
     @Override
-    public Page<PrescriptionResponse> getPrescriptionInfo(PrescriptionRequest request) {
+    public Page<PrescriptionResponse> getPrescriptionList(PrescriptionRequest request) {
         if (request == null){
             return null;
         }
-        return prescriptionStatusMapper.getPrescriptionInfo(request.getPage(), request.getOrgname(),request.getType(),
+        return prescriptionStatusMapper.getPrescriptionList(request.getPage(), request.getOrgname(), request.getDepartment(), request.getType(),
                 request.getSymptom(),request.getFlag(),request.getVerify(),request.getEnable());
     }
 }

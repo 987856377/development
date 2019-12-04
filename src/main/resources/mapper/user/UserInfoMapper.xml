@@ -19,10 +19,10 @@
     <select id="getUserNamesByOrgCode" resultType="java.lang.String">
         select name from user_info
         <where>
-            <if test="orgcode != null">
+            <if test="orgcode != null and orgcode != ''">
                 orgcode = #{orgcode}
             </if>
-            <if test="name != null">
+            <if test="name != null and name != ''">
                 and orgname = #{orgname}
             </if>
         </where>
@@ -31,10 +31,10 @@
     <select id="getUserInfoByOrgCodeOrName" resultType="com.spring.development.module.user.entity.UserInfo">
         select * from user_info
         <where>
-            <if test="orgcode != null">
+            <if test="orgcode != null and orgcode != ''">
                 orgcode = #{orgcode}
             </if>
-            <if test="orgname != null">
+            <if test="orgname != null and orgname != ''">
                 and orgname = #{name}
             </if>
         </where>
@@ -48,7 +48,7 @@
     </select>
     <select id="getUserInfo" resultType="com.spring.development.module.user.entity.response.UserResponse">
         SELECT user.username, user_info.* , user.register_time,user.modify_time,user.last_login_time, user.flag FROM user,user_info WHERE user.id = user_info.id
-        <if test="username != null">
+        <if test="username != null and username != ''">
             and username = #{username}
         </if>
     </select>

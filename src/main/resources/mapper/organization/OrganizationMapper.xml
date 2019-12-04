@@ -46,35 +46,35 @@
                 and orgflag like #{orgFlag}
             </if>
 
-            <if test="classify != null">
+            <if test="classify != null and classify != ''">
                 and classify = #{classify}
             </if>
 
-            <if test="type != null">
+            <if test="type != null and type != ''">
                 and type = #{type}
             </if>
 
-            <if test="host != null">
+            <if test="host != null and host != ''">
                 and host = #{host}
             </if>
 
-            <if test="relation != null">
+            <if test="relation != null and relation != ''">
                 and relation = #{relation}
             </if>
 
-            <if test="phone != null">
+            <if test="phone != null and phone != ''">
                 and phone = #{phone}
             </if>
 
-            <if test="responser != null">
+            <if test="responser != null and responser != ''">
                 and responser = #{responser}
             </if>
 
-            <if test="officer != null">
+            <if test="officer != null and officer != ''">
                 and officer = #{officer}
             </if>
 
-            <if test="supervising != null">
+            <if test="supervising != null and supervising != ''">
                 <bind name="super" value="'%' + supervising + '%'"/>
                 and supervising like #{super}
             </if>
@@ -98,7 +98,7 @@
         <where>
             <if test="orgflag != null and orgflag != ''">
                 <bind name="orgFlag" value="orgflag + '%'"/>
-                orgflag like #{orgFlag}
+                orgflag like #{orgFlag} and flag = 1
             </if>
             order by orgflag asc
         </where>
@@ -115,7 +115,7 @@
             </if>
         </set>
         <where>
-            <if test="code != null">
+            <if test="code != null and code != ''">
                 code = #{code}
             </if>
         </where>

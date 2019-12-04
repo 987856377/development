@@ -17,7 +17,7 @@
     <select id="getRoleByCode" resultMap="roleMap">
         select * from role
         <where>
-            <if test="code != null">
+            <if test="code != null and code != ''">
                 code = #{code}
             </if>
         </where>
@@ -25,7 +25,7 @@
     <select id="getRoleById" resultMap="roleMap">
         select * from role
         <where>
-            <if test="id != null">
+            <if test="id != null and id != ''">
                 id = #{id}
             </if>
         </where>

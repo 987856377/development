@@ -31,15 +31,15 @@
                         </when>
                     </choose>
                 </if>
-                <if test="forbiddenTime != null">
+                <if test="forbiddenTime != null and forbiddenTime != ''">
                     ,forbidden_time = #{forbiddenTime},
                 </if>
-                <if test="extra != null">
+                <if test="extra != null and extra != ''">
                     ,extra = #{extra}
                 </if>
             </set>
             <where>
-                <if test="pid != null">
+                <if test="pid != null and pid != ''">
                     pid = #{pid}
                 </if>
             </where>
@@ -48,7 +48,7 @@
     <update id="verifyPrescription">
         update prescription_status
             <set>
-                <if test="operator != null">
+                <if test="operator != null and operator != ''">
                     ,operator = #{operator}
                 </if>
                 <if test="verify != null">
@@ -62,15 +62,15 @@
                         </when>
                     </choose>
                 </if>
-                <if test="verifyTime != null">
+                <if test="verifyTime != null and verifyTime != ''">
                     ,verify_time = #{verifyTime}
                 </if>
-                <if test="extra != null">
+                <if test="extra != null and extra != ''">
                     ,extra = #{extra}
                 </if>
             </set>
             <where>
-                <if test="pid != null">
+                <if test="pid != null and pid != ''">
                     pid = #{pid}
                 </if>
             </where>
@@ -82,12 +82,12 @@
             <if test="enable != null">
                 enable = #{enable}
             </if>
-            <if test="extra != null">
+            <if test="extra != null and extra != ''">
                 ,extra = #{extra}
             </if>
         </set>
         <where>
-            <if test="pid != null">
+            <if test="pid != null and pid != ''">
                 pid = #{pid}
             </if>
         </where>
@@ -109,7 +109,7 @@
             </where>
         </if>
     </select>
-    <select id="getPrescriptionInfo"
+    <select id="getPrescriptionList"
             resultType="com.spring.development.module.prescription.entity.response.PrescriptionResponse">
         SELECT prescription_detail.* ,
                 prescription_status.flag,prescription_status.operator,prescription_status.operator_name,
@@ -118,13 +118,16 @@
             from prescription_status,prescription_detail
         <where>
             prescription_detail.id = prescription_status.pid
-            <if test="orgname != null">
+            <if test="orgname != null and orgname != ''">
                 and orgname = #{orgname}
+            </if>
+            <if test="department != null and department != ''">
+                and department = #{department}
             </if>
             <if test="type != null">
                 and prescription_detail.type = #{type}
             </if>
-            <if test="symptom != null">
+            <if test="symptom != null and symptom != ''">
                 <bind name="sym" value="'%' + symptom + '%'"/>
                 and prescription_detail.symptom like #{sym}
             </if>

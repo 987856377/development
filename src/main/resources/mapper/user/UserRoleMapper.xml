@@ -11,25 +11,25 @@
     <insert id="create">
         insert into user_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="uid != null">uid,</if>
-            <if test="rid != null">rid,</if>
+            <if test="uid != null and uid != ''">uid,</if>
+            <if test="rid != null and rid != ''">rid,</if>
             <if test="flag != null">flag,</if>
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
-            <if test="uid != null">#{uid},</if>
-            <if test="rid != null">#{rid},</if>
+            <if test="uid != null and uid != ''">#{uid},</if>
+            <if test="rid != null and rid != ''">#{rid},</if>
             <if test="flag != null">#{flag},</if>
         </trim>
     </insert>
     <update id="setUserRole">
         update user_role
         <set>
-            <if test="destId != null">
+            <if test="destId != null and destId != ''">
                 rid=#{destId}
             </if>
         </set>
         <where>
-            <if test="uid != null">
+            <if test="uid != null and uid != ''">
                 uid=#{uid} and rid = #{sourceId}
             </if>
         </where>
@@ -43,7 +43,7 @@
     <select id="getUserRoleByUid" resultType="com.spring.development.module.user.entity.UserRole">
         select * from user_role
         <where>
-            <if test="uid != null">
+            <if test="uid != null and uid != ''">
                 uid=#{uid}
             </if>
         </where>
@@ -52,7 +52,7 @@
         select DISTINCT role.id, role.title, role.code, role.flag from role, user_role
         <where>
             role.id = user_role.rid
-            <if test="uid != null">
+            <if test="uid != null and uid != ''">
                 and user_role.uid = #{uid} and role.flag=1 ORDER BY role.id asc
             </if>
         </where>

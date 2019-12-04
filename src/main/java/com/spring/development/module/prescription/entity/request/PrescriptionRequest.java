@@ -17,6 +17,7 @@ public class PrescriptionRequest implements Serializable {
 
     private Page<PrescriptionResponse> page;
     private String orgname;
+    private String department;
     private Integer type;
     private String symptom;
     private Integer flag;
@@ -45,12 +46,31 @@ public class PrescriptionRequest implements Serializable {
         this.enable = enable;
     }
 
+    public PrescriptionRequest(Page<PrescriptionResponse> page, String orgname, String department, Integer type, String symptom, Integer flag, Integer verify, Integer enable) {
+        this.page = page;
+        this.orgname = orgname;
+        this.department = department;
+        this.type = type;
+        this.symptom = symptom;
+        this.flag = flag;
+        this.verify = verify;
+        this.enable = enable;
+    }
+
     public String getOrgname() {
         return orgname;
     }
 
     public void setOrgname(String orgname) {
         this.orgname = orgname;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public Integer getType() {

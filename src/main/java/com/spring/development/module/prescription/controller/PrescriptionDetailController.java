@@ -34,6 +34,7 @@ public class PrescriptionDetailController {
         "type":1,
         "doctorName":"马乾光",
         "doctorPhone":"13783939561",
+        "department":"",
         "checkDoctor":"龚振星",
         "checkPhone":"13193681197",
         "symptom":"感冒",

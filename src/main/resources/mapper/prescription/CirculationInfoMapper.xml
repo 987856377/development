@@ -30,15 +30,15 @@
             <if test="acceptStatus != null">
                 accept_status = #{acceptStatus}
             </if>
-            <if test="changeTime != null">
+            <if test="changeTime != null and changeTime != ''">
                 ,change_time = #{changeTime}
             </if>
-            <if test="extra != null">
+            <if test="extra != null and extra != ''">
                 ,extra = #{extra}
             </if>
         </set>
         <where>
-            <if test="id != null">
+            <if test="id != null and id != ''">
                 id = #{id}
             </if>
         </where>

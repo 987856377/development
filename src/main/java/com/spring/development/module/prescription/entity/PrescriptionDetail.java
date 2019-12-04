@@ -71,6 +71,11 @@ public class PrescriptionDetail extends Model<PrescriptionDetail> {
     private String doctorPhone;
 
     /**
+     * 归属科室
+     */
+    private String department;
+
+    /**
      * 审核医生
      */
     private String checkDoctor;
