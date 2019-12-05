@@ -32,7 +32,7 @@
                     </choose>
                 </if>
                 <if test="forbiddenTime != null and forbiddenTime != ''">
-                    ,forbidden_time = #{forbiddenTime},
+                    ,forbidden_time = #{forbiddenTime}
                 </if>
                 <if test="extra != null and extra != ''">
                     ,extra = #{extra}
@@ -49,16 +49,16 @@
         update prescription_status
             <set>
                 <if test="operator != null and operator != ''">
-                    ,operator = #{operator}
+                    operator = #{operator}
                 </if>
                 <if test="verify != null">
                     ,verify = #{verify}
                     <choose>
                         <when test="verify == 0">
-                            flag=0, enable = 0,
+                            flag=0, enable = 0
                         </when>
                         <when test="verify == 1">
-                            flag=1,
+                            flag=1
                         </when>
                     </choose>
                 </if>
@@ -118,6 +118,9 @@
             from prescription_status,prescription_detail
         <where>
             prescription_detail.id = prescription_status.pid
+            <if test="id != null and id != ''">
+                and prescription_detail.id = #{id}
+            </if>
             <if test="orgname != null and orgname != ''">
                 and orgname = #{orgname}
             </if>

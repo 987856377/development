@@ -16,6 +16,7 @@ import java.io.Serializable;
 public class PrescriptionRequest implements Serializable {
 
     private Page<PrescriptionResponse> page;
+    private Long id;
     private String orgname;
     private String department;
     private Integer type;
@@ -55,6 +56,26 @@ public class PrescriptionRequest implements Serializable {
         this.flag = flag;
         this.verify = verify;
         this.enable = enable;
+    }
+
+    public PrescriptionRequest(Page<PrescriptionResponse> page, Long id, String orgname, String department, Integer type, String symptom, Integer flag, Integer verify, Integer enable) {
+        this.page = page;
+        this.id = id;
+        this.orgname = orgname;
+        this.department = department;
+        this.type = type;
+        this.symptom = symptom;
+        this.flag = flag;
+        this.verify = verify;
+        this.enable = enable;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getOrgname() {

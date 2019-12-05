@@ -77,7 +77,7 @@ public class PrescriptionStatusServiceImpl extends ServiceImpl<PrescriptionStatu
         if (request == null){
             return null;
         }
-        return prescriptionStatusMapper.getPrescriptionList(request.getPage(), request.getOrgname(), request.getDepartment(), request.getType(),
+        return prescriptionStatusMapper.getPrescriptionList(request.getPage(), request.getId(), request.getOrgname(), request.getDepartment(), request.getType(),
                 request.getSymptom(),request.getFlag(),request.getVerify(),request.getEnable());
     }
 }

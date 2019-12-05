@@ -31,7 +31,8 @@ public interface PrescriptionStatusMapper extends BaseMapper<PrescriptionStatus>
 
     List<PrescriptionStatus> getCirculated(@Param("flag") Integer flag);
 
-    Page<PrescriptionResponse> getPrescriptionList(Page<PrescriptionResponse> page, @Param("orgname") String orgname,
+    Page<PrescriptionResponse> getPrescriptionList(Page<PrescriptionResponse> page,
+                                                    @Param("id") Long id, @Param("orgname") String orgname,
                                                    @Param("department") String department, @Param("type") Integer type,
                                                    @Param("symptom") String symptom, @Param("flag") Integer flag,
                                                    @Param("verify") Integer verify, @Param("enable") Integer enable);
