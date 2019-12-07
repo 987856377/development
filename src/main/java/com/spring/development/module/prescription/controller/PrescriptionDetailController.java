@@ -50,7 +50,7 @@ public class PrescriptionDetailController {
         create trigger t_insert_detail
             after insert on prescription_detail
             for each row
-		        insert into prescription_status(pid,flag,verify,enable) values (NEW.id,0,0,0);
+		        insert into prescription_status(pid,flag,verify,enable) values (NEW.id,0,9,0);
 }
      */
     @RequestMapping("saveOrUpdate")

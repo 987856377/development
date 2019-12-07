@@ -2,9 +2,11 @@ package com.spring.development.module.prescription.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
 import com.spring.development.module.prescription.entity.CirculationInfo;
+import com.spring.development.module.prescription.entity.request.CirculationInfoRequest;
 import com.spring.development.module.prescription.entity.request.PrescriptionRequest;
 import com.spring.development.module.prescription.service.CirculationInfoService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -80,6 +82,21 @@ public class CirculationInfoController {
         QueryWrapper<CirculationInfo> wrapper = new QueryWrapper();
         wrapper.eq("pid",circulationInfo.getPid());
         return ResultJson.success(circulationInfoService.list(wrapper));
+    }
+
+    /*
+    {
+        "code":"3C151659",
+        }
+     */
+    @RequestMapping("getCirculationInfoList")
+    public ResultJson getCirculationInfoList(@RequestBody CirculationInfoRequest request){
+        if (request.getCode() == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        QueryWrapper<CirculationInfo> wrapper = new QueryWrapper();
+        wrapper.eq("origin_code",request.getCode()).or().eq("achieve_code",request.getCode());
+        return ResultJson.success(circulationInfoService.page(request.getPage(),wrapper));
     }
 
 }
