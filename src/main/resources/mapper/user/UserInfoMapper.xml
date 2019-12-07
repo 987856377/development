@@ -37,6 +37,7 @@
             <if test="orgname != null and orgname != ''">
                 and orgname = #{name}
             </if>
+            and id in (SELECT id from `user` WHERE flag = 1)
         </where>
     </select>
     <select id="userInfoPage" resultType="com.spring.development.module.user.entity.response.UserResponse">
