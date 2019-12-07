@@ -21,16 +21,16 @@ public interface UserMapper extends BaseMapper<User> {
 
 //    自定义SQL查询: 1.注解方式 2.xml方式
 //    @Select("select * from user where username = #{username}")
-    public List<User> getByUsername(@Param("username") String username);
+    List<User> getByUsername(@Param("username") String username);
 
 //    @Select("select * from user limit #{offset}, #{pageSize}")
-    public List<User> getUserByPage(@Param("offset") long offset, @Param("pageSize") long pageSize);
+    List<User> getUserByPage(@Param("offset") long offset, @Param("pageSize") long pageSize);
 
 //    自定义SQL查询: 使用Wrapper
 //    @Select("select * from user ${ew.customSqlSegment}")
-    public List<User> getByWrapper(@Param(Constants.WRAPPER) Wrapper wrapper);
+    List<User> getByWrapper(@Param(Constants.WRAPPER) Wrapper wrapper);
 
-    public Long getIdByNameAndCode(@Param("name") String name,@Param("code")  String code);
+    Long getIdByNameAndCode(@Param("name") String name,@Param("code")  String code);
 
     boolean cancelUserOrgCode(@Param("orgcode") String orgcode,@Param("flag")  Integer flag);
 

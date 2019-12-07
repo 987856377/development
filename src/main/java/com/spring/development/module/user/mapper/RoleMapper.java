@@ -14,11 +14,11 @@ import java.util.List;
  * @Date 2019/10/2 15:34
  */
 public interface RoleMapper extends BaseMapper<Role> {
-    public Role getRoleById(@Param("id") Long id);
-    public List<Role> getRolesByUid(@Param("uid") Long uid);
-    public Role getRoleByCode(@Param("code") String code);
-    public List<String> getRoleCodes();
-    public List<Role> getRoleList();
+    Role getRoleById(@Param("id") Long id);
+    List<Role> getRolesByUid(@Param("uid") Long uid);
+    Role getRoleByCode(@Param("code") String code);
+    List<String> getRoleCodes();
+    List<Role> getRoleList();
 
     boolean updateRoleState(@Param("id") Long id,@Param("flag")  Integer flag);
 }
