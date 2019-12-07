@@ -56,7 +56,7 @@ public class PrescriptionStatus extends Model<PrescriptionStatus> {
     private String operatorName;
 
     /**
-     * 审核状态: 1:已审核,0: 待审核:9:停用
+     * 审核状态: 1:已审核,0: 未通过, 9: 待审核
      */
     private Integer verify = 0;
 

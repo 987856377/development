@@ -24,14 +24,14 @@
         update prescription_status
             <set>
                 <if test="flag != null">
-                    flag = #{flag} ,
+                    flag = #{flag}
                     <choose>
                         <when test="flag == 0">
-                            enable = 0,
+                            ,enable = 0
                         </when>
                     </choose>
                 </if>
-                <if test="forbiddenTime != null and forbiddenTime != ''">
+                <if test="forbiddenTime != null">
                     ,forbidden_time = #{forbiddenTime}
                 </if>
                 <if test="extra != null and extra != ''">
@@ -51,18 +51,21 @@
                 <if test="operator != null and operator != ''">
                     operator = #{operator}
                 </if>
+                <if test="operatorName != null and operatorName != ''">
+                    ,operator_name = #{operatorName}
+                </if>
                 <if test="verify != null">
                     ,verify = #{verify}
                     <choose>
                         <when test="verify == 0">
-                            flag=0, enable = 0
+                            ,flag=0, enable = 0
                         </when>
                         <when test="verify == 1">
-                            flag=1
+                            ,flag=1
                         </when>
                     </choose>
                 </if>
-                <if test="verifyTime != null and verifyTime != ''">
+                <if test="verifyTime != null">
                     ,verify_time = #{verifyTime}
                 </if>
                 <if test="extra != null and extra != ''">

@@ -22,8 +22,8 @@ public interface PrescriptionStatusMapper extends BaseMapper<PrescriptionStatus>
     boolean stopCirculate(@Param("pid") Long pid, @Param("flag") Integer flag, @Param("forbiddenTime") Timestamp forbiddenTime,
                           @Param("extra") String extra);
 
-    boolean verifyPrescription(@Param("pid") Long pid, @Param("operator") Long operator, @Param("verify") Integer verify,
-                               @Param("verifyTime") Timestamp verifyTime, @Param("extra") String extra);
+    boolean verifyPrescription(@Param("pid") Long pid, @Param("operator") Long operator, @Param("operatorName") String operatorName,
+                               @Param("verify") Integer verify, @Param("verifyTime") Timestamp verifyTime, @Param("extra") String extra);
 
     boolean enableCirculate(@Param("pid") Long pid, @Param("enable") Integer enable, @Param("extra") String extra);
 

@@ -40,11 +40,11 @@ public class PrescriptionStatusServiceImpl extends ServiceImpl<PrescriptionStatu
 
     @Override
     public boolean verifyPrescription(PrescriptionStatus prescriptionStatus) {
-        if (prescriptionStatus.getPid() == null || prescriptionStatus.getOperator() == null || prescriptionStatus.getVerify() == null
-                || prescriptionStatus.getVerifyTime() == null){
+        if (prescriptionStatus.getPid() == null || prescriptionStatus.getOperator() == null || prescriptionStatus.getOperatorName() == null
+                || prescriptionStatus.getVerify() == null || prescriptionStatus.getVerifyTime() == null){
             return false;
         }
-        return prescriptionStatusMapper.verifyPrescription(prescriptionStatus.getPid(),prescriptionStatus.getOperator(),
+        return prescriptionStatusMapper.verifyPrescription(prescriptionStatus.getPid(),prescriptionStatus.getOperator(),prescriptionStatus.getOperatorName(),
                 prescriptionStatus.getVerify(),prescriptionStatus.getVerifyTime(), prescriptionStatus.getExtra());
     }
 

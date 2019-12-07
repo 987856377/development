@@ -282,12 +282,19 @@ public class UserController {
         return ResultJson.success(userService.page(page));
     }
 
-
     @RequestMapping("cancelUserById")
     public ResultJson cancelUserById(@RequestBody UserRequest request){
         if (request.getId() == null || request.getFlag() == null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         return ResultJson.success(userService.cancelUserById(request.getId(), request.getFlag()));
+    }
+
+    @RequestMapping("getRealNameById")
+    public ResultJson getRealNameById(@RequestBody UserRequest request){
+        if (request.getId() == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(userService.getRealNameById(request.getId()));
     }
 }

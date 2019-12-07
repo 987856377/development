@@ -42,7 +42,7 @@ public class PrescriptionStatusController {
     }
 
     /*
-        description: 只需传 pid, oprator, verify, extra
+        description: 只需传 pid, operator,operatorName, verify, extra
      */
     @RequestMapping("verifyPrescription")
     public ResultJson verifyPrescription(@RequestBody PrescriptionStatus prescriptionStatus){

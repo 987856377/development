@@ -79,4 +79,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         }
         return userMapper.cancelUserById(id,flag);
     }
+
+    public String getRealNameById(Long id) {
+        if (id == null){
+            return null;
+        }
+        return userMapper.getRealNameById(id);
+    }
 }
