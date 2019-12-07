@@ -149,6 +149,15 @@
         </where>
         order by prescription_detail.id asc
     </select>
+    <select id="getPrescriptionById"
+            resultType="com.spring.development.module.prescription.entity.response.PrescriptionResponse">
+        SELECT prescription_detail.* ,
+                prescription_status.flag,prescription_status.operator,prescription_status.operator_name,
+                prescription_status.verify,prescription_status.verify_time,prescription_status.forbidden_time,
+                prescription_status.enable,prescription_status.extra
+            from prescription_status,prescription_detail
+            where prescription_detail.id = prescription_status.pid and prescription_detail.id = #{pid}
+    </select>
 
 
 </mapper>

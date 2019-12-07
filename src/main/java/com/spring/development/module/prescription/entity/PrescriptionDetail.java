@@ -53,7 +53,7 @@ public class PrescriptionDetail extends Model<PrescriptionDetail> {
     /**
      * 录入处方者姓名
      */
-    private Long uname;
+    private String uname;
 
     /**
      * 处方类型: 1. 普通处方  2. 特殊处方
@@ -120,6 +120,11 @@ public class PrescriptionDetail extends Model<PrescriptionDetail> {
      * 建议价格
      */
     private BigDecimal price;
+
+    /**
+     * 处方来源: 1:本机构,9:外来
+     */
+    private Integer origin = 1;
 
 
     @Override

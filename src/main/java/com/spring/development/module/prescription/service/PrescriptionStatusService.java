@@ -29,4 +29,6 @@ public interface PrescriptionStatusService extends IService<PrescriptionStatus> 
     List<PrescriptionStatus> getCirculated(PrescriptionStatus prescriptionStatus);
 
     Page<PrescriptionResponse> getPrescriptionList(PrescriptionRequest request);
+
+    PrescriptionResponse getPrescriptionById(PrescriptionStatus prescriptionStatus);
 }

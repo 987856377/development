@@ -37,4 +37,5 @@ public interface PrescriptionStatusMapper extends BaseMapper<PrescriptionStatus>
                                                    @Param("symptom") String symptom, @Param("flag") Integer flag,
                                                    @Param("verify") Integer verify, @Param("enable") Integer enable);
 
+    PrescriptionResponse getPrescriptionById(@Param("pid") Long pid);
 }

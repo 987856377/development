@@ -80,4 +80,12 @@ public class PrescriptionStatusServiceImpl extends ServiceImpl<PrescriptionStatu
         return prescriptionStatusMapper.getPrescriptionList(request.getPage(), request.getId(), request.getOrgname(), request.getDepartment(), request.getType(),
                 request.getSymptom(),request.getFlag(),request.getVerify(),request.getEnable());
     }
+
+    @Override
+    public PrescriptionResponse getPrescriptionById(PrescriptionStatus prescriptionStatus) {
+        if (prescriptionStatus.getPid() == null){
+            return null;
+        }
+        return prescriptionStatusMapper.getPrescriptionById(prescriptionStatus.getPid());
+    }
 }

@@ -106,6 +106,11 @@ public class PrescriptionResponse implements Serializable {
     private BigDecimal price;
 
     /**
+     * 处方来源: 1:本机构,9:外来
+     */
+    private Integer origin;
+
+    /**
      * 流转状态: 1:正常,0:停用
      */
     private Integer flag;
@@ -197,6 +202,36 @@ public class PrescriptionResponse implements Serializable {
         this.medicine = medicine;
         this.advice = advice;
         this.price = price;
+        this.flag = flag;
+        this.operator = operator;
+        this.operatorName = operatorName;
+        this.verify = verify;
+        this.verifyTime = verifyTime;
+        this.forbiddenTime = forbiddenTime;
+        this.enable = enable;
+        this.extra = extra;
+    }
+
+    public PrescriptionResponse(Long id, String orgcode, String orgname, Long uid, String uname, Integer type, String doctorName, String doctorPhone, String department, String checkDoctor, String checkPhone, String symptom, String sex, Integer age, Timestamp date, String medicine, String advice, BigDecimal price, Integer origin, Integer flag, Long operator, String operatorName, Integer verify, Timestamp verifyTime, Timestamp forbiddenTime, Integer enable, String extra) {
+        this.id = id;
+        this.orgcode = orgcode;
+        this.orgname = orgname;
+        this.uid = uid;
+        this.uname = uname;
+        this.type = type;
+        this.doctorName = doctorName;
+        this.doctorPhone = doctorPhone;
+        this.department = department;
+        this.checkDoctor = checkDoctor;
+        this.checkPhone = checkPhone;
+        this.symptom = symptom;
+        this.sex = sex;
+        this.age = age;
+        this.date = date;
+        this.medicine = medicine;
+        this.advice = advice;
+        this.price = price;
+        this.origin = origin;
         this.flag = flag;
         this.operator = operator;
         this.operatorName = operatorName;
@@ -349,6 +384,14 @@ public class PrescriptionResponse implements Serializable {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Integer origin) {
+        this.origin = origin;
     }
 
     public Integer getFlag() {

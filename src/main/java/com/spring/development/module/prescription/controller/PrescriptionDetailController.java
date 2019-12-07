@@ -31,6 +31,7 @@ public class PrescriptionDetailController {
     {
         "orgcode":"3C151659",
         "uid":1,
+        "uname":"马乾光",
         "type":1,
         "doctorName":"马乾光",
         "doctorPhone":"13783939561",

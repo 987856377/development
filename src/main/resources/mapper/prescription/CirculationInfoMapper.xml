@@ -30,7 +30,7 @@
             <if test="acceptStatus != null">
                 accept_status = #{acceptStatus}
             </if>
-            <if test="changeTime != null and changeTime != ''">
+            <if test="changeTime != null">
                 ,change_time = #{changeTime}
             </if>
             <if test="extra != null and extra != ''">

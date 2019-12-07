@@ -103,4 +103,17 @@ public class PrescriptionStatusController {
         return ResultJson.success(prescriptionStatusService.getPrescriptionList(request));
     }
 
+    /*
+    {
+        "pid":"2"
+        }
+     */
+    @RequestMapping("getPrescriptionById")
+    public ResultJson getPrescriptionById(@RequestBody PrescriptionStatus prescriptionStatus){
+        if (prescriptionStatus.getPid() == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(prescriptionStatusService.getPrescriptionById(prescriptionStatus));
+    }
+
 }
