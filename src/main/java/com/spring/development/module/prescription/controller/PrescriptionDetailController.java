@@ -30,6 +30,7 @@ public class PrescriptionDetailController {
     /*
     {
         "orgcode":"3C151659",
+        "orgname":"淄博市中心医院",
         "uid":1,
         "uname":"马乾光",
         "type":1,

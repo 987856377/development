@@ -82,7 +82,7 @@ public class PrescriptionResponse implements Serializable {
     /**
      * 使用年龄
      */
-    private Integer age;
+    private String age;
 
     /**
      * 开方日期
@@ -155,7 +155,7 @@ public class PrescriptionResponse implements Serializable {
     public PrescriptionResponse() {
     }
 
-    public PrescriptionResponse(Long id, String orgcode, String orgname, Long uid, String uname, Integer type, String doctorName, String doctorPhone, String checkDoctor, String checkPhone, String symptom, String sex, Integer age, Timestamp date, String medicine, String advice, BigDecimal price, Integer flag, Long operator, String operatorName, Integer verify, Timestamp verifyTime, Timestamp forbiddenTime, Integer enable, String extra) {
+    public PrescriptionResponse(Long id, String orgcode, String orgname, Long uid, String uname, Integer type, String doctorName, String doctorPhone, String checkDoctor, String checkPhone, String symptom, String sex, String age, Timestamp date, String medicine, String advice, BigDecimal price, Integer flag, Long operator, String operatorName, Integer verify, Timestamp verifyTime, Timestamp forbiddenTime, Integer enable, String extra) {
         this.id = id;
         this.orgcode = orgcode;
         this.orgname = orgname;
@@ -183,7 +183,7 @@ public class PrescriptionResponse implements Serializable {
         this.extra = extra;
     }
 
-    public PrescriptionResponse(Long id, String orgcode, String orgname, Long uid, String uname, Integer type, String doctorName, String doctorPhone, String department, String checkDoctor, String checkPhone, String symptom, String sex, Integer age, Timestamp date, String medicine, String advice, BigDecimal price, Integer flag, Long operator, String operatorName, Integer verify, Timestamp verifyTime, Timestamp forbiddenTime, Integer enable, String extra) {
+    public PrescriptionResponse(Long id, String orgcode, String orgname, Long uid, String uname, Integer type, String doctorName, String doctorPhone, String department, String checkDoctor, String checkPhone, String symptom, String sex, String age, Timestamp date, String medicine, String advice, BigDecimal price, Integer flag, Long operator, String operatorName, Integer verify, Timestamp verifyTime, Timestamp forbiddenTime, Integer enable, String extra) {
         this.id = id;
         this.orgcode = orgcode;
         this.orgname = orgname;
@@ -212,7 +212,7 @@ public class PrescriptionResponse implements Serializable {
         this.extra = extra;
     }
 
-    public PrescriptionResponse(Long id, String orgcode, String orgname, Long uid, String uname, Integer type, String doctorName, String doctorPhone, String department, String checkDoctor, String checkPhone, String symptom, String sex, Integer age, Timestamp date, String medicine, String advice, BigDecimal price, Integer origin, Integer flag, Long operator, String operatorName, Integer verify, Timestamp verifyTime, Timestamp forbiddenTime, Integer enable, String extra) {
+    public PrescriptionResponse(Long id, String orgcode, String orgname, Long uid, String uname, Integer type, String doctorName, String doctorPhone, String department, String checkDoctor, String checkPhone, String symptom, String sex, String age, Timestamp date, String medicine, String advice, BigDecimal price, Integer origin, Integer flag, Long operator, String operatorName, Integer verify, Timestamp verifyTime, Timestamp forbiddenTime, Integer enable, String extra) {
         this.id = id;
         this.orgcode = orgcode;
         this.orgname = orgname;
@@ -346,11 +346,11 @@ public class PrescriptionResponse implements Serializable {
         this.sex = sex;
     }
 
-    public Integer getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

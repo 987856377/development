@@ -98,7 +98,7 @@ public class PrescriptionDetail extends Model<PrescriptionDetail> {
     /**
      * 使用年龄
      */
-    private Integer age;
+    private String age;
 
     /**
      * 开方日期
