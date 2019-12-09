@@ -53,6 +53,9 @@
             and username = #{username}
         </if>
     </select>
+    <select id="getUserInfoByUsername" resultType="com.spring.development.module.user.entity.UserInfo">
+        select * from  user_info where id = (select id from user where username = #{username})
+    </select>
 
 </mapper>
 

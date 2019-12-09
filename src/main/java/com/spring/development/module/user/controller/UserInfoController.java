@@ -174,9 +174,36 @@ public class UserInfoController {
         return ResultJson.success(userInfoService.userInfoPage(request));
     }
 
+    /*/*
+     * @Description
+     * @param page
+        {
+            "username": "admin"
+        }
+     * @Return com.spring.development.common.ResultJson
+     * @Author XuZhenkui
+     * @Creed: Talk is cheap,show me the code
+     * @Date 2019/10/2 20:50
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN','DBA')")
     @RequestMapping("getUserInfo")
     public ResultJson getUserInfo(@RequestBody UserRequest request){
         return ResultJson.success(userInfoService.getUserInfo(request));
+    }
+
+    /*/*
+     * @Description
+     * @param page
+        {
+            "username": "admin"
+        }
+     * @Return com.spring.development.common.ResultJson
+     * @Author XuZhenkui
+     * @Creed: Talk is cheap,show me the code
+     * @Date 2019/10/2 20:50
+     */
+    @RequestMapping("getUserInfoByUsername")
+    public ResultJson getUserInfoByUsername(@RequestBody UserRequest request){
+        return ResultJson.success(userInfoService.getUserInfoByUsername(request));
     }
 }

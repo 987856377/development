@@ -45,4 +45,11 @@ public class UserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> {
         }
         return userInfoMapper.getUserInfo(request.getUsername());
     }
+
+    public UserInfo getUserInfoByUsername(UserRequest request) {
+        if (request.getUsername() == null){
+            return null;
+        }
+        return userInfoMapper.getUserInfoByUsername(request.getUsername());
+    }
 }

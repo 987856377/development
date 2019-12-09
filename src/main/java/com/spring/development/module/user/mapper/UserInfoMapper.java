@@ -23,4 +23,6 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     Page<UserResponse> userInfoPage(Page<UserResponse> page, @Param("orgflag") String orgflag);
 
     UserResponse getUserInfo(@Param("username") String username);
+
+    UserInfo getUserInfoByUsername(@Param("username") String username);
 }
