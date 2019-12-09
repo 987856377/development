@@ -3,6 +3,7 @@ package com.spring.development.module.organization.service.impl;
 import com.spring.development.module.organization.entity.response.OrgResponse;
 import com.spring.development.module.organization.entity.Organization;
 import com.spring.development.module.organization.entity.request.OrgRequest;
+import com.spring.development.module.organization.entity.response.OrgUserResponse;
 import com.spring.development.module.organization.mapper.OrganizationMapper;
 import com.spring.development.module.organization.service.OrganizationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -63,6 +64,17 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         }
         OrgResponse response = organizationMapper.getOrgInfoByUid(request.getId());
         response.setSubOrgList(organizationMapper.getSubOrg(response.getOrgflag()));
+        return response;
+    }
+
+    @Override
+    public OrgUserResponse getOrgCodeAndUsersByName(OrgRequest request) {
+        if (request.getName() == null){
+            return null;
+        }
+        OrgUserResponse response = new OrgUserResponse();
+        response.setCode(organizationMapper.getOrgByName(request.getName()).getCode());
+        response.setTargetUserList(organizationMapper.getOrgCodeAndUsersByName(request.getName()));
         return response;
     }
 }

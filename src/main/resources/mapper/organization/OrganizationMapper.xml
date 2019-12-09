@@ -106,6 +106,9 @@
     <select id="getOrgInfoByUid" resultType="com.spring.development.module.organization.entity.response.OrgResponse">
         SELECT name,code,orgflag FROM organization WHERE name=(SELECT orgname from user_info WHERE id = #{id})
     </select>
+    <select id="getOrgCodeAndUsersByName" resultType="com.spring.development.module.organization.entity.response.TargetUser">
+        SELECT id, name FROM user_info WHERE orgname = #{name}
+    </select>
 
     <update id="cancelOrg">
         update organization

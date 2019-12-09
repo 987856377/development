@@ -200,6 +200,13 @@ public class OrganizationController {
         return ResultJson.failure(ResultCode.INTERNAL_SERVER_ERROR);
     }
 
+    /*
+    *
+    * {
+    *   "orgflag": ""
+    * }
+    *
+    * */
     @RequestMapping("getSubOrg")
     public ResultJson getSubOrg(@RequestBody OrgRequest request){
         if (request.getOrgflag() == null){
@@ -208,6 +215,13 @@ public class OrganizationController {
         return ResultJson.success(organizationService.getSubOrg(request));
     }
 
+    /*
+     *
+     * {
+     *   "id": ""
+     * }
+     *
+     * */
     @RequestMapping("getOrgInfoByUid")
     public ResultJson getOrgInfoByUid(@RequestBody OrgRequest request){
         if (request.getId() == null){
@@ -216,4 +230,18 @@ public class OrganizationController {
         return ResultJson.success(organizationService.getOrgInfoByUid(request));
     }
 
+    /*
+     *
+     * {
+     *   "name": ""
+     * }
+     *
+     * */
+    @RequestMapping("getOrgCodeAndUsersByName")
+    public ResultJson getOrgCodeAndUsersByName(@RequestBody OrgRequest request){
+        if (request.getName() == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(organizationService.getOrgCodeAndUsersByName(request));
+    }
 }

@@ -3,7 +3,8 @@ package com.spring.development.module.organization.mapper;
 import com.spring.development.module.organization.entity.response.OrgResponse;
 import com.spring.development.module.organization.entity.Organization;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.spring.development.module.organization.entity.response.TargetUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,20 +17,22 @@ import java.util.List;
  * @since 2019-11-11
  */
 public interface OrganizationMapper extends BaseMapper<Organization> {
-    List<Organization> getOrg(@RequestParam("id") Long id, @RequestParam("code") String code,
-                              @RequestParam("orgflag") String orgflag,@RequestParam("name") String name,
-                              @RequestParam("classify") Integer classify, @RequestParam("type") Integer type,
-                              @RequestParam("host") Integer host, @RequestParam("relation") Integer relation,
-                              @RequestParam("phone") String phone,@RequestParam("responser") String responser,
-                              @RequestParam("officer") String officer,@RequestParam("supervising") String supervising,
-                              @RequestParam("flag") Integer flag,
-                              @RequestParam("current") Long current, @RequestParam("size") Integer size);
+    List<Organization> getOrg(@Param("id") Long id, @Param("code") String code,
+                              @Param("orgflag") String orgflag,@Param("name") String name,
+                              @Param("classify") Integer classify, @Param("type") Integer type,
+                              @Param("host") Integer host, @Param("relation") Integer relation,
+                              @Param("phone") String phone,@Param("responser") String responser,
+                              @Param("officer") String officer,@Param("supervising") String supervising,
+                              @Param("flag") Integer flag,
+                              @Param("current") Long current, @Param("size") Integer size);
 
-    Organization getOrgByName(@RequestParam("name") String name);
+    Organization getOrgByName(@Param("name") String name);
 
-    boolean cancelOrg(@RequestParam("code") String code,@RequestParam("flag") Integer flag);
+    boolean cancelOrg(@Param("code") String code,@Param("flag") Integer flag);
 
-    List<OrgResponse> getSubOrg(@RequestParam("orgflag") String orgflag);
+    List<OrgResponse> getSubOrg(@Param("orgflag") String orgflag);
 
-    OrgResponse getOrgInfoByUid(@RequestParam("id") Long id);
+    OrgResponse getOrgInfoByUid(@Param("id") Long id);
+
+    List<TargetUser> getOrgCodeAndUsersByName(@Param("name") String name);
 }

@@ -4,6 +4,7 @@ import com.spring.development.module.organization.entity.response.OrgResponse;
 import com.spring.development.module.organization.entity.Organization;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spring.development.module.organization.entity.request.OrgRequest;
+import com.spring.development.module.organization.entity.response.OrgUserResponse;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface OrganizationService extends IService<Organization> {
     List<OrgResponse> getSubOrg(OrgRequest request);
 
     OrgResponse getOrgInfoByUid(OrgRequest request);
+
+    OrgUserResponse getOrgCodeAndUsersByName(OrgRequest request);
 }
