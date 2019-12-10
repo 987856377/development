@@ -1,6 +1,8 @@
 package com.spring.development.module.message.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.module.message.entity.Message;
+import com.spring.development.module.message.entity.MessageRequest;
 import com.spring.development.module.message.mapper.MessageMapper;
 import com.spring.development.module.message.service.MessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  * <p>
@@ -27,11 +28,11 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     private MessageMapper messageMapper;
 
     @Override
-    public List<Message> getMessageList(Message message) {
-        if (message == null){
+    public Page<Message> getMessageList(MessageRequest request) {
+        if (request == null){
             return null;
         }
-        return messageMapper.getMessageList(message.getSender(), message.getReceiver(), message.getSendFlag());
+        return messageMapper.getMessageList(request.getPage(), request.getSender(), request.getReceiver(), request.getSendFlag());
     }
 
     @Override

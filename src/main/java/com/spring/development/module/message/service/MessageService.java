@@ -1,9 +1,10 @@
 package com.spring.development.module.message.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.module.message.entity.Message;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spring.development.module.message.entity.MessageRequest;
 
-import java.util.List;
 
 /**
  * <p>
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public interface MessageService extends IService<Message> {
 
-    List<Message> getMessageList(Message message);
+    Page<Message> getMessageList(MessageRequest request);
 
     Message getMessage(Message message);
 }

@@ -4,6 +4,7 @@ package com.spring.development.module.message.controller;
 import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
 import com.spring.development.module.message.entity.Message;
+import com.spring.development.module.message.entity.MessageRequest;
 import com.spring.development.module.message.mapper.MessageMapper;
 import com.spring.development.module.message.service.MessageService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,11 +59,11 @@ public class MessageController {
         }
      */
     @RequestMapping("getMessageList")
-    public ResultJson getMessageList(@RequestBody Message message){
-        if (message == null){
+    public ResultJson getMessageList(@RequestBody MessageRequest request){
+        if (request == null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
-        return ResultJson.success(messageService.getMessageList(message));
+        return ResultJson.success(messageService.getMessageList(request));
     }
 
     /*
