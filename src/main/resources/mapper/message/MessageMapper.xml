@@ -28,7 +28,7 @@
     <update id="isRead">
         update message
         <set>
-            <if test="readTime != null and readTime != ''">
+            <if test="readTime != null">
                 read_time = #{readTime}
             </if>
             <if test="readFlag != null">

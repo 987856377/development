@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * <p>
@@ -81,4 +82,24 @@ public class MessageController {
         return ResultJson.success(messageService.getMessage(message));
     }
 
+    /*
+        {
+            "ids": [1 ,2]
+        }
+     */
+    @RequestMapping("delMessage")
+    public ResultJson delMessage(@RequestBody List<Long> ids){
+        if (ids == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(messageService.removeByIds(ids));
+    }
+
+    @RequestMapping("isRead")
+    public ResultJson isRead(@RequestBody Message message){
+        if (message == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(messageService.isRead(message));
+    }
 }

@@ -49,4 +49,13 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         }
         return null;
     }
+
+    @Override
+    public boolean isRead(Message message) {
+        if (message.getId() == null || message.getReadFlag() == null) {
+            return false;
+        }
+        message.setReadTime(new Timestamp(System.currentTimeMillis()));
+        return messageMapper.isRead(message.getId(), message.getReadTime(), message.getReadFlag());
+    }
 }

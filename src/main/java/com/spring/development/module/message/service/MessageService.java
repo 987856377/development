@@ -19,4 +19,6 @@ public interface MessageService extends IService<Message> {
     Page<Message> getMessageList(MessageRequest request);
 
     Message getMessage(Message message);
+
+    boolean isRead(Message message);
 }
