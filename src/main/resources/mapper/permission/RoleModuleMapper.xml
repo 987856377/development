@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.permission.mapper.RoleModuleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.development.module.permission.entity.RoleModule">
+        <id column="id" property="id" />
+        <result column="rid" property="rid" />
+        <result column="mid" property="mid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, rid, mid
+    </sql>
+    <select id="getModulesByRoles" resultType="com.spring.development.module.permission.entity.response.RoleModuleResponse">
+        SELECT DISTINCT * FROM module WHERE flag = 1 and level = #{level} and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
+        <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+         ))
+    </select>
+    <select id="getSubModulesByRoles" resultType="com.spring.development.module.permission.entity.response.RoleModuleResponse">
+        SELECT DISTINCT * FROM module WHERE flag = 1 and level = #{level} and parent_id = #{parentId} and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
+        <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ))
+    </select>
+
+    <select id="getModulesByRoleList" resultType="com.spring.development.module.permission.entity.response.RoleModuleResponse">
+        SELECT DISTINCT * FROM module
+         <where>
+             flag = 1
+             <if test="level != null">
+                 and level = #{level}
+             </if>
+             <if test="parentId != null and parentId != ''">
+                 and parent_id = #{parentId}
+             </if>
+             and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
+             <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+                 #{item}
+             </foreach>
+             ))
+         </where>
+    </select>
+
+</mapper>
