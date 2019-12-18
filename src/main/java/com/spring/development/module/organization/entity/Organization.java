@@ -136,6 +136,11 @@ public class Organization extends Model<Organization> {
     private Timestamp date;
 
     /**
+     * 简介
+     */
+    private String introduction;
+
+    /**
      * 1:正常,0: 停用:9:待激活
      */
     private Integer flag = 0;

@@ -20,4 +20,8 @@ import java.util.List;
 public interface RoleModuleService extends IService<RoleModule> {
 
     List<RoleModuleResponse> getModulesByRoles(RoleModuleRequest request);
+
+    boolean addModulesByRole(RoleModuleRequest request);
+
+    boolean delModulesByRole(RoleModuleRequest request);
 }

@@ -35,4 +35,20 @@ public class RoleModuleController {
         return ResultJson.success(roleModuleService.getModulesByRoles(request));
     }
 
+    @RequestMapping("addModulesByRole")
+    public ResultJson addModulesByRole(@RequestBody RoleModuleRequest request){
+        if (request == null) {
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(roleModuleService.addModulesByRole(request));
+    }
+
+    @RequestMapping("delModulesByRole")
+    public ResultJson delModulesByRole(@RequestBody RoleModuleRequest request){
+        if (request == null) {
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(roleModuleService.delModulesByRole(request));
+    }
+
 }

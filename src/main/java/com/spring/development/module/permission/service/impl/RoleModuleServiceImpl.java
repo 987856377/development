@@ -32,16 +32,30 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleMapper, RoleMod
         if (request == null){
             return null;
         }
-//        List<RoleModuleResponse> roleModuleResponses = new ArrayList<>();
-//        roleModuleResponses = roleModuleMapper.getModulesByRoles(request.getUserRoles(),1);
+//        List<RoleModuleResponse> roleModuleResponses = roleModuleMapper.getModulesByRoles(request.getUserRoles(),1);
 //        for (RoleModuleResponse response : roleModuleResponses){
 //            response.setSubModule(roleModuleMapper.getSubModulesByRoles(request.getUserRoles(), response.getId(),2));
 //        }
-        List<RoleModuleResponse> roleModuleResponses = new ArrayList<>();
-        roleModuleResponses = roleModuleMapper.getModulesByRoleList(request.getUserRoles(), "",1);
+        List<RoleModuleResponse> roleModuleResponses = roleModuleMapper.getModulesByRoleList(request.getOwn() ,request.getUserRoles(), "",1);
         for (RoleModuleResponse response : roleModuleResponses){
-            response.setSubModule(roleModuleMapper.getModulesByRoleList(request.getUserRoles(), response.getId().toString(),2));
+            response.setSubModule(roleModuleMapper.getModulesByRoleList(request.getOwn() ,request.getUserRoles(), response.getId().toString(),2));
         }
         return roleModuleResponses;
+    }
+
+    @Override
+    public boolean addModulesByRole(RoleModuleRequest request) {
+        if (request.getMid() == null || request.getRid() == null){
+            return false;
+        }
+        return roleModuleMapper.addModulesByRole(request.getRid(),request.getMid());
+    }
+
+    @Override
+    public boolean delModulesByRole(RoleModuleRequest request) {
+        if (request.getMid() == null || request.getRid() == null){
+            return false;
+        }
+        return roleModuleMapper.delModulesByRole(request.getRid(),request.getMid());
     }
 }

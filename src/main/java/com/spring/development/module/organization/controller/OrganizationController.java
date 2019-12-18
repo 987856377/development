@@ -56,6 +56,7 @@ public class OrganizationController {
             "officer":"许振奎",
             "web":"www.zbzxyy.com",
             "supervising":"淄博市卫生局",
+            "introduction":"淄博市卫生局",
             "flag":1
         }
      */
@@ -243,5 +244,20 @@ public class OrganizationController {
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         return ResultJson.success(organizationService.getOrgCodeAndUsersByName(request));
+    }
+
+    /*
+     *
+     * {
+     *   "code": ""
+     * }
+     *
+     * */
+    @RequestMapping("getOrgIntroductionByCode")
+    public ResultJson getOrgIntroductionByCode(@RequestBody OrgRequest request){
+        if (request.getCode() == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(organizationService.getOrgIntroductionByCode(request));
     }
 }

@@ -25,4 +25,6 @@ public interface OrganizationService extends IService<Organization> {
     OrgResponse getOrgInfoByUid(OrgRequest request);
 
     OrgUserResponse getOrgCodeAndUsersByName(OrgRequest request);
+
+    String getOrgIntroductionByCode(OrgRequest request);
 }

@@ -35,4 +35,6 @@ public interface OrganizationMapper extends BaseMapper<Organization> {
     OrgResponse getOrgInfoByUid(@Param("id") Long id);
 
     List<TargetUser> getOrgCodeAndUsersByName(@Param("name") String name);
+
+    String getOrgIntroductionByCode(@Param("code") String code);
 }

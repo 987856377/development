@@ -77,4 +77,12 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         response.setTargetUserList(organizationMapper.getOrgCodeAndUsersByName(request.getName()));
         return response;
     }
+
+    @Override
+    public String getOrgIntroductionByCode(OrgRequest request) {
+        if (request.getCode() == null){
+            return null;
+        }
+        return organizationMapper.getOrgIntroductionByCode(request.getCode());
+    }
 }

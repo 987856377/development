@@ -13,6 +13,12 @@
     <sql id="Base_Column_List">
         id, rid, mid
     </sql>
+    <insert id="addModulesByRole">
+        insert into role_module(rid, mid) values (#{rid}, #{mid})
+    </insert>
+    <delete id="delModulesByRole">
+        delete from role_module where rid = #{rid} and mid = #{mid}
+    </delete>
     <select id="getModulesByRoles" resultType="com.spring.development.module.permission.entity.response.RoleModuleResponse">
         SELECT DISTINCT * FROM module WHERE flag = 1 and level = #{level} and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
         <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
@@ -38,11 +44,30 @@
              <if test="parentId != null and parentId != ''">
                  and parent_id = #{parentId}
              </if>
-             and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
-             <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
-                 #{item}
-             </foreach>
-             ))
+             <choose>
+                 <when test="own == 1">
+                     and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
+                     <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+                     ))
+                 </when>
+                 <when test="own == 9">
+                     and id not in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
+                     <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+                     ))
+                 </when>
+                 <otherwise>
+                     and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
+                     <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+                     ))
+                 </otherwise>
+             </choose>
+
          </where>
     </select>
 
