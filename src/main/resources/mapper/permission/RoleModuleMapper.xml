@@ -52,7 +52,7 @@
                      </foreach>
                      ))
                  </when>
-                 <when test="own == 9">
+                 <when test="own == 0">
                      and id not in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
                      <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
                          #{item}

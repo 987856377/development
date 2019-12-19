@@ -27,6 +27,12 @@ public class RoleModuleController {
     @Resource
     private RoleModuleService roleModuleService;
 
+    /*
+        {
+            "own":1,
+            "userRoles": ["DBA"]
+        }
+     */
     @RequestMapping("getModulesByRoles")
     public ResultJson getModulesByRoles(@RequestBody RoleModuleRequest request){
         if (request == null) {
