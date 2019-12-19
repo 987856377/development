@@ -40,11 +40,11 @@ public class FileController {
         if (files==null){
             return ResultJson.failure(ResultCode.BAD_REQUEST);
         }
+        File dir = new File(UPLOADED_PATH);
+        if (!dir.exists()){
+            dir.mkdir();
+        }
         for (MultipartFile file:files) {
-            File dir = new File(UPLOADED_PATH);
-            if (!dir.exists()){
-                dir.mkdir();
-            }
             String fileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"@"+file.getOriginalFilename();
             File upFile = new File(dir+"/"+fileName);
             try {
