@@ -8,13 +8,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ import java.util.Map;
 public class FileController {
 
     @Value("${spring.servlet.multipart.location}")
-    private String path;
+    private String UPLOADED_PATH;
 
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     public ResultJson upload(MultipartFile[] files) {
@@ -40,14 +41,12 @@ public class FileController {
             return ResultJson.failure(ResultCode.BAD_REQUEST);
         }
         for (MultipartFile file:files) {
-            File dir = new File(path);
+            File dir = new File(UPLOADED_PATH);
             if (!dir.exists()){
                 dir.mkdir();
             }
-            String fileName = file.getOriginalFilename();
-            String saveFileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"@"+fileName;
-
-            File upFile = new File(dir+"/"+saveFileName);
+            String fileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"@"+file.getOriginalFilename();
+            File upFile = new File(dir+"/"+fileName);
             try {
                 file.transferTo(upFile);
             } catch (IOException e) {
@@ -56,6 +55,52 @@ public class FileController {
             }
         }
         return ResultJson.success();
+    }
+
+    @RequestMapping(value = "/singleFileUpload", method = RequestMethod.POST)
+    public ResultJson singleFileUpload(MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResultJson.failure(ResultCode.BAD_REQUEST);
+        }
+        // Get the file and save it somewhere
+        String fileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"@"+file.getOriginalFilename();
+        Path path = Paths.get(UPLOADED_PATH + "/" + fileName);
+        try {
+            Files.write(path, file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResultJson.failure(ResultCode.INTERNAL_SERVER_ERROR);
+        }
+        return ResultJson.success();
+    }
+
+    @RequestMapping(value = "/mulFileUpload", method = RequestMethod.POST)
+    public ResultJson mulFileUpload(MultipartFile[] files) {
+        if (files == null) {
+            return ResultJson.failure(ResultCode.BAD_REQUEST);
+        }
+        for (MultipartFile file:files) {
+            // Get the file and save it somewhere
+            String fileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"@"+file.getOriginalFilename();
+            Path path = Paths.get(UPLOADED_PATH + "/" + fileName);
+            try {
+                Files.write(path, file.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ResultJson.failure(ResultCode.INTERNAL_SERVER_ERROR);
+            }
+        }
+        return ResultJson.success();
+    }
+
+    @RequestMapping(value = "fileList",method = RequestMethod.GET)
+    public ResultJson downloadFileList() throws IOException {
+        return ResultJson.success(Files.list(Paths.get(UPLOADED_PATH)));
+    }
+
+    @RequestMapping(value = "downloadFile",method = RequestMethod.GET)
+    public ResultJson downloadFile(@RequestParam("filename") String filename) throws IOException {
+        return ResultJson.success(Files.readAllBytes(Paths.get(UPLOADED_PATH + File.separator+filename)));
     }
 
     public void getFiles(File file, Map<String, Object> map){
@@ -75,7 +120,7 @@ public class FileController {
     public ResultJson<Map> downloadList(){
         Map<String, Object> map = new HashMap<>();
 
-        File dir = new File(path);
+        File dir = new File(UPLOADED_PATH);
 
         getFiles(dir,map);
 
@@ -87,7 +132,7 @@ public class FileController {
         if (filename.equals(null) || filename == ""){
             return null;
         }
-        File file = new File(path+File.separator+filename);
+        File file = new File(UPLOADED_PATH + File.separator+filename);
 
         HttpHeaders headers = new HttpHeaders();
         String downloadFileName = new String(filename.getBytes("UTF-8"),"iso-8859-1");
