@@ -21,12 +21,12 @@ public class RoleModuleResponse implements Serializable {
     /**
      * 菜单名称
      */
-    private String title;
+    private String label;
 
     /**
      * 父菜单id
      */
-    private Integer parentId;
+    private Integer pid;
 
     /**
      * 菜单url
@@ -43,19 +43,19 @@ public class RoleModuleResponse implements Serializable {
      */
     private Integer flag;
 
-    List<RoleModuleResponse> subModule;
+    List<RoleModuleResponse> children;
 
     public RoleModuleResponse() {
     }
 
-    public RoleModuleResponse(Long id, String title, Integer parentId, String url, String level, Integer flag, List<RoleModuleResponse> subModule) {
+    public RoleModuleResponse(Long id, String label, Integer pid, String url, String level, Integer flag, List<RoleModuleResponse> children) {
         this.id = id;
-        this.title = title;
-        this.parentId = parentId;
+        this.label = label;
+        this.pid = pid;
         this.url = url;
         this.level = level;
         this.flag = flag;
-        this.subModule = subModule;
+        this.children = children;
     }
 
     public Long getId() {
@@ -66,20 +66,20 @@ public class RoleModuleResponse implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getLabel() {
+        return label;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getPid() {
+        return pid;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 
     public String getUrl() {
@@ -106,11 +106,11 @@ public class RoleModuleResponse implements Serializable {
         this.flag = flag;
     }
 
-    public List<RoleModuleResponse> getSubModule() {
-        return subModule;
+    public List<RoleModuleResponse> getChildren() {
+        return children;
     }
 
-    public void setSubModule(List<RoleModuleResponse> subModule) {
-        this.subModule = subModule;
+    public void setChildren(List<RoleModuleResponse> children) {
+        this.children = children;
     }
 }

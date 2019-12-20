@@ -20,11 +20,11 @@ public interface RoleModuleMapper extends BaseMapper<RoleModule> {
 
     List<RoleModuleResponse> getModulesByRoles(@Param("userRoles") List<String> userRoles, @Param("level") Integer level);
 
-    List<RoleModuleResponse> getSubModulesByRoles(@Param("userRoles") List<String> userRoles, @Param("parentId") Long parentId, @Param("level") Integer level);
+    List<RoleModuleResponse> getSubModulesByRoles(@Param("userRoles") List<String> userRoles, @Param("pid") Long pid, @Param("level") Integer level);
 
-    List<RoleModuleResponse> getModulesByRoleList(@Param("own") Integer own, @Param("userRoles") List<String> userRoles, @Param("parentId") String parentId, @Param("level") Integer level);
+    List<RoleModuleResponse> getModulesByRoleList(@Param("own") Integer own, @Param("userRoles") List<String> userRoles, @Param("pid") String pid, @Param("level") Integer level);
 
-    boolean addModulesByRole(@Param("rid") Long rid, @Param("mid") Long mid);
+    boolean addModulesByRole(@Param("rid") Long rid, @Param("midList") List<Long> midList);
 
-    boolean delModulesByRole(@Param("rid") Long rid, @Param("mid") Long mid);
+    boolean delModulesByRole(@Param("rid") Long rid, @Param("midList") List<Long> midList);
 }

@@ -14,10 +14,14 @@
         id, rid, mid
     </sql>
     <insert id="addModulesByRole">
-        insert into role_module(rid, mid) values (#{rid}, #{mid})
+        <foreach item="item" index="index" collection="midList">
+            insert into role_module(rid, mid) values(#{rid}, #{item})
+        </foreach>
     </insert>
     <delete id="delModulesByRole">
-        delete from role_module where rid = #{rid} and mid = #{mid}
+        <foreach item="item" index="index" collection="midList">
+            delete from role_module where rid = #{rid} and mid = #{item}
+        </foreach>
     </delete>
     <select id="getModulesByRoles" resultType="com.spring.development.module.permission.entity.response.RoleModuleResponse">
         SELECT DISTINCT * FROM module WHERE flag = 1 and level = #{level} and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
@@ -27,7 +31,7 @@
          ))
     </select>
     <select id="getSubModulesByRoles" resultType="com.spring.development.module.permission.entity.response.RoleModuleResponse">
-        SELECT DISTINCT * FROM module WHERE flag = 1 and level = #{level} and parent_id = #{parentId} and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
+        SELECT DISTINCT * FROM module WHERE flag = 1 and level = #{level} and pid = #{pid} and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
         <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
             #{item}
         </foreach>
@@ -41,8 +45,8 @@
              <if test="level != null">
                  and level = #{level}
              </if>
-             <if test="parentId != null and parentId != ''">
-                 and parent_id = #{parentId}
+             <if test="pid != null and pid != ''">
+                 and pid = #{pid}
              </if>
              <choose>
                  <when test="own == 1">

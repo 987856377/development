@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.spring.development.module.permission.entity.Module">
         <id column="id" property="id" />
         <result column="title" property="title" />
-        <result column="parent_id" property="parentId" />
+        <result column="pid" property="pid" />
         <result column="url" property="url" />
         <result column="level" property="level" />
         <result column="flag" property="flag" />
@@ -14,7 +14,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, parent_id, url, level, flag
+        id, title, pid, url, level, flag
     </sql>
 
 </mapper>

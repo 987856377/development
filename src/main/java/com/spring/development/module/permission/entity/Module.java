@@ -32,12 +32,12 @@ public class Module extends Model<Module> {
     /**
      * 菜单名称
      */
-    private String title;
+    private String label;
 
     /**
      * 父菜单id
      */
-    private Integer parentId;
+    private Integer pid;
 
     /**
      * 菜单url

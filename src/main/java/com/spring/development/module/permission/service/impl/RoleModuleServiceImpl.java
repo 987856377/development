@@ -38,24 +38,24 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleMapper, RoleMod
 //        }
         List<RoleModuleResponse> roleModuleResponses = roleModuleMapper.getModulesByRoleList(request.getOwn() ,request.getUserRoles(), "",1);
         for (RoleModuleResponse response : roleModuleResponses){
-            response.setSubModule(roleModuleMapper.getModulesByRoleList(request.getOwn() ,request.getUserRoles(), response.getId().toString(),2));
+            response.setChildren(roleModuleMapper.getModulesByRoleList(request.getOwn() ,request.getUserRoles(), response.getId().toString(),2));
         }
         return roleModuleResponses;
     }
 
     @Override
     public boolean addModulesByRole(RoleModuleRequest request) {
-        if (request.getMid() == null || request.getRid() == null){
+        if (request.getMidList() == null || request.getRid() == null){
             return false;
         }
-        return roleModuleMapper.addModulesByRole(request.getRid(),request.getMid());
+        return roleModuleMapper.addModulesByRole(request.getRid(),request.getMidList());
     }
 
     @Override
     public boolean delModulesByRole(RoleModuleRequest request) {
-        if (request.getMid() == null || request.getRid() == null){
+        if (request.getMidList() == null || request.getRid() == null){
             return false;
         }
-        return roleModuleMapper.delModulesByRole(request.getRid(),request.getMid());
+        return roleModuleMapper.delModulesByRole(request.getRid(),request.getMidList());
     }
 }

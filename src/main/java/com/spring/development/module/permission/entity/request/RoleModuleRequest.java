@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class RoleModuleRequest implements Serializable {
     private Long rid;
-    private Long mid;
+    private List<Long> midList;
 //    flag: 1. 角色拥有的菜单 0. 角色未拥有的菜单
     private Integer own = 1;
     private List<String> userRoles;
@@ -20,14 +20,19 @@ public class RoleModuleRequest implements Serializable {
     public RoleModuleRequest() {
     }
 
+    public RoleModuleRequest(Long rid, List<Long> midList) {
+        this.rid = rid;
+        this.midList = midList;
+    }
+
     public RoleModuleRequest(Integer own, List<String> userRoles) {
         this.own = own;
         this.userRoles = userRoles;
     }
 
-    public RoleModuleRequest(Long rid, Long mid, Integer own, List<String> userRoles) {
+    public RoleModuleRequest(Long rid, List<Long> midList, Integer own, List<String> userRoles) {
         this.rid = rid;
-        this.mid = mid;
+        this.midList = midList;
         this.own = own;
         this.userRoles = userRoles;
     }
@@ -40,12 +45,12 @@ public class RoleModuleRequest implements Serializable {
         this.rid = rid;
     }
 
-    public Long getMid() {
-        return mid;
+    public List<Long> getMidList() {
+        return midList;
     }
 
-    public void setMid(Long mid) {
-        this.mid = mid;
+    public void setMidList(List<Long> midList) {
+        this.midList = midList;
     }
 
     public Integer getOwn() {
