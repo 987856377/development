@@ -50,18 +50,40 @@
              </if>
              <choose>
                  <when test="own == 1">
-                     and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
-                     <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
-                         #{item}
-                     </foreach>
-                     ))
+                    <choose>
+                        <when test="level == 1">
+                            and id IN (SELECT pid FROM module WHERE id in ( SELECT mid FROM role_module WHERE rid in ( SELECT id from role WHERE code in
+                                <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+                                    #{item}
+                                </foreach>
+                            )))
+                        </when>
+                        <when test="level == 2">
+                            and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
+                                <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+                                    #{item}
+                                </foreach>
+                            ))
+                        </when>
+                    </choose>
                  </when>
                  <when test="own == 0">
-                     and id not in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
-                     <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
-                         #{item}
-                     </foreach>
-                     ))
+                     <choose>
+                         <when test="level == 1">
+                             and id IN (SELECT pid FROM module WHERE id NOT in ( SELECT mid FROM role_module WHERE rid in ( SELECT id from role WHERE code in
+                                 <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+                                     #{item}
+                                 </foreach>
+                             )))
+                         </when>
+                         <when test="level == 2">
+                             and id not in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
+                                 <foreach item="item" index="index" collection="userRoles" open="(" separator="," close=")">
+                                     #{item}
+                                 </foreach>
+                             ))
+                         </when>
+                     </choose>
                  </when>
                  <otherwise>
                      and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
