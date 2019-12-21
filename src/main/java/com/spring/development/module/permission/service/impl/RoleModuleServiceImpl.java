@@ -48,7 +48,7 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleMapper, RoleMod
         if (request.getMidList() == null || request.getRid() == null){
             return false;
         }
-        request.getMidList().forEach(mid -> {
+        request.getMidList().forEach((mid) -> {
             roleModuleMapper.addModulesByRole(request.getRid(), mid);
         });
         return true;
@@ -59,7 +59,7 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleMapper, RoleMod
         if (request.getMidList() == null || request.getRid() == null){
             return false;
         }
-        request.getMidList().forEach(mid -> {
+        request.getMidList().forEach((mid) -> {
             roleModuleMapper.delModulesByRole(request.getRid(), mid);
         });
         return true;
