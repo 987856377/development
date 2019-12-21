@@ -14,14 +14,10 @@
         id, rid, mid
     </sql>
     <insert id="addModulesByRole">
-        <foreach item="item" index="index" collection="midList">
-            insert into role_module(rid, mid) values(#{rid}, #{item})
-        </foreach>
+        insert into role_module(rid, mid) values(#{rid}, #{mid})
     </insert>
     <delete id="delModulesByRole">
-        <foreach item="item" index="index" collection="midList">
-            delete from role_module where rid = #{rid} and mid = #{item}
-        </foreach>
+        delete from role_module where rid = #{rid} and mid = #{mid}
     </delete>
     <select id="getModulesByRoles" resultType="com.spring.development.module.permission.entity.response.RoleModuleResponse">
         SELECT DISTINCT * FROM module WHERE flag = 1 and level = #{level} and id in (SELECT mid FROM role_module WHERE rid in (SELECT id from role WHERE code in
