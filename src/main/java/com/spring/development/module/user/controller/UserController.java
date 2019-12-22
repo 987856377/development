@@ -20,10 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -230,9 +227,8 @@ public class UserController {
         if (request.getId() == null || request.getRaw() == null || request.getPassword() == null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
-        String rawPassword = userService.getById(request.getId()).getPassword();
         UpdateWrapper<User> wrapper = new UpdateWrapper<>();
-        if (passwordEncoder.encode(request.getRaw()).matches(rawPassword)) {
+        if (passwordEncoder.matches(request.getRaw(), userService.getById(request.getId()).getPassword())) {
             wrapper.lambda().set(User::getPassword, passwordEncoder.encode(request.getPassword()));
             wrapper.lambda().eq(User::getId, request.getId());
             return ResultJson.success(userService.update(wrapper));
@@ -313,6 +309,14 @@ public class UserController {
         return ResultJson.success(userService.getRealNameById(request.getId()));
     }
 
+    @RequestMapping("getHeaderByUsername")
+    public ResultJson getHeaderByUsername(@RequestBody UserRequest request){
+        if (request.getUsername() == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(userService.getOne(new QueryWrapper<User>().eq("username",request.getUsername())).getHeader());
+    }
+
     @RequestMapping(value = "/headerUpload", method = RequestMethod.POST)
     public ResultJson headerUpload(MultipartFile file) {
         if (file.isEmpty()) {
@@ -334,7 +338,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "download",method = RequestMethod.GET,produces = "text/html;charset=utf-8")
-    public ResponseEntity<byte[]> download(String filename) throws IOException{
+    public ResponseEntity<byte[]> download(@RequestParam("filename") String filename) throws IOException{
         if (filename == null || "".equals(filename)){
             return null;
         }

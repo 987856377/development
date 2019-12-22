@@ -128,7 +128,7 @@ public class FileController {
     }
 
     @RequestMapping(value = "download",method = RequestMethod.GET,produces = "text/html;charset=utf-8")
-    public ResponseEntity<byte[]> download(String filename) throws IOException{
+    public ResponseEntity<byte[]> download(@RequestParam("filename") String filename) throws IOException{
         if (filename == null || "".equals(filename)){
             return null;
         }
