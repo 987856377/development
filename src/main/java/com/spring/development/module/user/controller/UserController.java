@@ -2,31 +2,39 @@ package com.spring.development.module.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.annotation.Auth;
 import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
-import com.spring.development.module.user.entity.Role;
 import com.spring.development.module.user.entity.User;
-import com.spring.development.module.user.entity.UserInfo;
+import com.spring.development.module.user.entity.request.ResetPasswordRequest;
 import com.spring.development.module.user.entity.request.UserRequest;
-import com.spring.development.module.user.entity.request.UserRoleRequest;
-import com.spring.development.module.user.service.RoleService;
-import com.spring.development.module.user.service.UserInfoService;
 import com.spring.development.module.user.service.UserRoleService;
 import com.spring.development.module.user.service.UserService;
 import com.spring.development.util.encrypt.BCryptPasswordEncoder;
 import com.spring.development.util.encrypt.PasswordEncoder;
-import org.springframework.security.access.annotation.Secured;
+import com.sun.imageio.plugins.common.ImageUtil;
+import org.apache.commons.io.FileUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @Description
@@ -38,6 +46,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    private static final String UPLOADED_PATH = "D:/temp/upload/headers/";
+
     @Resource
     private UserService userService;
 
@@ -207,6 +217,7 @@ public class UserController {
      * @param null
         {
             "id":"53519",
+            "raw":"123456",
             "password":"123456"
         }
      * @Return
@@ -215,14 +226,18 @@ public class UserController {
      * @Date 2019/9/22 1:01
      */
     @RequestMapping("resetPassword")
-    public ResultJson resetPassword(@RequestBody User user){
-        if (user.getId() == null || user.getPassword() == null){
+    public ResultJson resetPassword(@RequestBody ResetPasswordRequest request){
+        if (request.getId() == null || request.getRaw() == null || request.getPassword() == null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
+        String rawPassword = userService.getById(request.getId()).getPassword();
         UpdateWrapper<User> wrapper = new UpdateWrapper<>();
-        wrapper.lambda().set(User::getPassword,passwordEncoder.encode(user.getPassword()));
-        wrapper.lambda().eq(User::getId,user.getId());
-        return ResultJson.success(userService.update(wrapper));
+        if (passwordEncoder.encode(request.getRaw()).matches(rawPassword)) {
+            wrapper.lambda().set(User::getPassword, passwordEncoder.encode(request.getPassword()));
+            wrapper.lambda().eq(User::getId, request.getId());
+            return ResultJson.success(userService.update(wrapper));
+        }
+        return ResultJson.failure(ResultCode.CONFLICT);
     }
 
     /*/*
@@ -297,4 +312,41 @@ public class UserController {
         }
         return ResultJson.success(userService.getRealNameById(request.getId()));
     }
+
+    @RequestMapping(value = "/headerUpload", method = RequestMethod.POST)
+    public ResultJson headerUpload(MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        String header = file.getOriginalFilename();
+        // Get the file and save it somewhere
+        Path path = Paths.get(UPLOADED_PATH + header);
+        if (!userService.update(new UpdateWrapper<User>().set("header",file.getOriginalFilename()).eq("username",header.substring(0,header.indexOf("."))))){
+            return ResultJson.failure(ResultCode.INTERNAL_SERVER_ERROR);
+        }
+        try {
+            Files.write(path, file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResultJson.failure(ResultCode.INTERNAL_SERVER_ERROR);
+        }
+        return ResultJson.success();
+    }
+
+    @RequestMapping(value = "download",method = RequestMethod.GET,produces = "text/html;charset=utf-8")
+    public ResponseEntity<byte[]> download(String filename) throws IOException{
+        if (filename == null || "".equals(filename)){
+            return null;
+        }
+        File file = new File(UPLOADED_PATH + File.separator+filename);
+
+        HttpHeaders headers = new HttpHeaders();
+        String downloadFileName = new String(filename.getBytes("UTF-8"),"iso-8859-1");
+
+        headers.setContentDispositionFormData("attachment", downloadFileName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
+    }
+
+
 }

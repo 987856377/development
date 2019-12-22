@@ -27,6 +27,9 @@ public class User extends Model<User> {
     @TableField(value = "password")
     private String password;
 
+    @TableField(value = "header")
+    private String header;
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @TableField(value = "register_time")
     private Timestamp registerTime;
@@ -48,6 +51,17 @@ public class User extends Model<User> {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.registerTime = registerTime;
+        this.modifyTime = modifyTime;
+        this.lastLoginTime = lastLoginTime;
+        this.flag = flag;
+    }
+
+    public User(Long id, String username, String password, String header, Timestamp registerTime, Timestamp modifyTime, Timestamp lastLoginTime, Integer flag) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.header = header;
         this.registerTime = registerTime;
         this.modifyTime = modifyTime;
         this.lastLoginTime = lastLoginTime;
@@ -76,6 +90,14 @@ public class User extends Model<User> {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public Timestamp getRegisterTime() {

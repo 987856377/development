@@ -46,7 +46,7 @@ public class FileController {
         }
         for (MultipartFile file:files) {
             String fileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"@"+file.getOriginalFilename();
-            File upFile = new File(dir+"/"+fileName);
+            File upFile = new File(dir + fileName);
             try {
                 file.transferTo(upFile);
             } catch (IOException e) {
@@ -64,7 +64,7 @@ public class FileController {
         }
         // Get the file and save it somewhere
         String fileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"@"+file.getOriginalFilename();
-        Path path = Paths.get(UPLOADED_PATH + "/" + fileName);
+        Path path = Paths.get(UPLOADED_PATH + fileName);
         try {
             Files.write(path, file.getBytes());
         } catch (IOException e) {
@@ -82,7 +82,7 @@ public class FileController {
         for (MultipartFile file:files) {
             // Get the file and save it somewhere
             String fileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"@"+file.getOriginalFilename();
-            Path path = Paths.get(UPLOADED_PATH + "/" + fileName);
+            Path path = Paths.get(UPLOADED_PATH + fileName);
             try {
                 Files.write(path, file.getBytes());
             } catch (IOException e) {
@@ -112,7 +112,7 @@ public class FileController {
         }
         else{
             String filename = file.getName().substring(file.getName().lastIndexOf("@")+1);
-            map.put(file.getName(), filename);
+            map.put(filename, file.getName());
         }
     }
 
@@ -129,7 +129,7 @@ public class FileController {
 
     @RequestMapping(value = "download",method = RequestMethod.GET,produces = "text/html;charset=utf-8")
     public ResponseEntity<byte[]> download(String filename) throws IOException{
-        if (filename.equals(null) || filename == ""){
+        if (filename == null || "".equals(filename)){
             return null;
         }
         File file = new File(UPLOADED_PATH + File.separator+filename);
