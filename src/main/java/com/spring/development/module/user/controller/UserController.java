@@ -13,7 +13,6 @@ import com.spring.development.module.user.service.UserRoleService;
 import com.spring.development.module.user.service.UserService;
 import com.spring.development.util.encrypt.BCryptPasswordEncoder;
 import com.spring.development.util.encrypt.PasswordEncoder;
-import com.sun.imageio.plugins.common.ImageUtil;
 import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,7 +23,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -318,7 +320,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/headerUpload", method = RequestMethod.POST)
-    public ResultJson headerUpload(MultipartFile file) {
+    public ResultJson headerUpload(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
@@ -336,21 +338,5 @@ public class UserController {
         }
         return ResultJson.success();
     }
-
-    @RequestMapping(value = "download",method = RequestMethod.GET,produces = "text/html;charset=utf-8")
-    public ResponseEntity<byte[]> download(@RequestParam("filename") String filename) throws IOException{
-        if (filename == null || "".equals(filename)){
-            return null;
-        }
-        File file = new File(UPLOADED_PATH + File.separator+filename);
-
-        HttpHeaders headers = new HttpHeaders();
-        String downloadFileName = new String(filename.getBytes("UTF-8"),"iso-8859-1");
-
-        headers.setContentDispositionFormData("attachment", downloadFileName);
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
-    }
-
 
 }
