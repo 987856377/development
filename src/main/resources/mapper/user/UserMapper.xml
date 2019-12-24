@@ -57,6 +57,9 @@
     <select id="getRealNameById" resultType="java.lang.String">
         select name from user_info where id = #{id}
     </select>
+    <select id="getOrgFlagByUid" resultType="java.lang.Integer">
+        SELECT flag FROM organization WHERE code = (SELECT orgcode FROM user_info WHERE id = #{id})
+    </select>
 
     <update id="cancelUserByOrgCode">
         update user

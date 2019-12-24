@@ -76,6 +76,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public boolean cancelUserById(Long id, Integer flag) {
         if (id == null | flag == null){
             return false;
+        } else if (flag == 1 && userMapper.getOrgFlagByUid(id) == 0){
+            return false;
         }
         return userMapper.cancelUserById(id,flag);
     }

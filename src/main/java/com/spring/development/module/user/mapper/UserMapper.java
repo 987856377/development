@@ -36,6 +36,8 @@ public interface UserMapper extends BaseMapper<User> {
 
     boolean cancelUserById(@Param("id") Long id,@Param("flag")  Integer flag);
 
+    Integer getOrgFlagByUid(@Param("id") Long id);
+
     UserDetail loadUserByUsername(@Param("username") String username);
 
     boolean updateLastLoginTime(@Param("username") String username, @Param("lastLoginTime") Timestamp lastLoginTime);
