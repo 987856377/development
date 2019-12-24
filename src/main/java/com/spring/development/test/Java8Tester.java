@@ -1,4 +1,4 @@
-package com.spring.development.util.test;
+package com.spring.development.test;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,14 +1,11 @@
-package com.spring.development.util.test;
+package com.spring.development.test;
 
-import com.spring.development.jwt.JwtUtil;
-import com.spring.development.util.encrypt.BCryptPasswordEncoder;
-import com.spring.development.util.encrypt.PasswordEncoder;
-import org.springframework.security.core.parameters.P;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * @Description

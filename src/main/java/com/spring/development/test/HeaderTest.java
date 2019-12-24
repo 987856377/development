@@ -1,9 +1,9 @@
-package com.spring.development.util.test;
+package com.spring.development.test;
 
 /**
  * @Description
  * @Project development
- * @Package com.spring.development.util.test
+ * @Package com.spring.development.test
  * @Author xuzhenkui
  * @Date 2019/12/22 21:31
  */

@@ -11,29 +11,18 @@ import com.spring.development.module.user.entity.request.ResetPasswordRequest;
 import com.spring.development.module.user.entity.request.UserRequest;
 import com.spring.development.module.user.service.UserRoleService;
 import com.spring.development.module.user.service.UserService;
-import com.spring.development.util.encrypt.BCryptPasswordEncoder;
-import com.spring.development.util.encrypt.PasswordEncoder;
-import org.apache.commons.io.FileUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @Description
