@@ -196,7 +196,7 @@ public class OrganizationController {
         if (organization == null){
             return ResultJson.failure(ResultCode.GONE);
         } else if (organizationService.cancelOrg(organization)){
-            return ResultJson.success(userService.cancelUserOrgCode(organization.getCode(),organization.getFlag()));
+            return ResultJson.success(userService.cancelUserByOrgCode(organization.getCode(),organization.getFlag()));
         }
         return ResultJson.failure(ResultCode.INTERNAL_SERVER_ERROR);
     }

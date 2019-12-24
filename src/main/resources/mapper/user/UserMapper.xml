@@ -58,7 +58,7 @@
         select name from user_info where id = #{id}
     </select>
 
-    <update id="cancelUserOrgCode">
+    <update id="cancelUserByOrgCode">
         update user
         <set>
             <if test="flag != null">

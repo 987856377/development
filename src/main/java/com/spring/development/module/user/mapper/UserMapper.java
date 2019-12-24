@@ -32,7 +32,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     Long getIdByNameAndCode(@Param("name") String name,@Param("code")  String code);
 
-    boolean cancelUserOrgCode(@Param("orgcode") String orgcode,@Param("flag")  Integer flag);
+    boolean cancelUserByOrgCode(@Param("orgcode") String orgcode,@Param("flag")  Integer flag);
 
     boolean cancelUserById(@Param("id") Long id,@Param("flag")  Integer flag);
 

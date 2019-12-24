@@ -66,11 +66,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return userMapper.updateLastLoginTime(username, lastLoginTime);
     }
 
-    public boolean cancelUserOrgCode(String orgcode, Integer flag) {
+    public boolean cancelUserByOrgCode(String orgcode, Integer flag) {
         if (orgcode == null || flag == null){
             return false;
         }
-        return userMapper.cancelUserOrgCode(orgcode,flag);
+        return userMapper.cancelUserByOrgCode(orgcode,flag);
     }
 
     public boolean cancelUserById(Long id, Integer flag) {
