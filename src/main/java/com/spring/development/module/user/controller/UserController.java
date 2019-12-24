@@ -11,6 +11,8 @@ import com.spring.development.module.user.entity.request.ResetPasswordRequest;
 import com.spring.development.module.user.entity.request.UserRequest;
 import com.spring.development.module.user.service.UserRoleService;
 import com.spring.development.module.user.service.UserService;
+import com.spring.development.util.FileUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.Console;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 /**
  * @Description
@@ -34,7 +38,8 @@ import java.sql.Timestamp;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private static final String UPLOADED_PATH = "D:/temp/upload/headers/";
+    @Value("${spring.servlet.header.location}")
+    private String HEADER_PATH;
 
     @Resource
     private UserService userService;
@@ -309,16 +314,23 @@ public class UserController {
     }
 
     @RequestMapping(value = "/headerUpload", method = RequestMethod.POST)
-    public ResultJson headerUpload(MultipartFile file) throws IOException {
+    public ResultJson headerUpload(MultipartFile file) {
         if (file.isEmpty()) {
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         String header = file.getOriginalFilename();
-        // Get the file and save it somewhere
-        Path path = Paths.get(UPLOADED_PATH + header);
-        if (!userService.update(new UpdateWrapper<User>().set("header",file.getOriginalFilename()).eq("username",header.substring(0,header.indexOf("."))))){
-            return ResultJson.failure(ResultCode.INTERNAL_SERVER_ERROR);
+
+        String[] acceptTypes = {"png","jpg","bmp","jpeg","gif"};
+        String type = header.substring(header.indexOf(".")+1);
+        if (!Arrays.asList(acceptTypes).contains(type)){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
+
+        // Get the file and save it somewhere
+        if (!userService.update(new UpdateWrapper<User>().set("header",file.getOriginalFilename()).eq("username",header.substring(0,header.indexOf("."))))){
+            return ResultJson.failure(ResultCode.CONFLICT);
+        }
+        Path path = Paths.get(HEADER_PATH + file.getOriginalFilename());
         try {
             Files.write(path, file.getBytes());
         } catch (IOException e) {
