@@ -320,7 +320,7 @@ public class UserController {
         }
         String header = file.getOriginalFilename();
 
-        String[] acceptTypes = {"png","jpg","bmp","jpeg","gif"};
+        String[] acceptTypes = {"png","jpg","bmp","jpeg","gif","PNG","JPG","BMP","JPEG","GIF"};
         String type = header.substring(header.indexOf(".")+1);
         if (!Arrays.asList(acceptTypes).contains(type)){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
