@@ -58,4 +58,12 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         message.setReadTime(new Timestamp(System.currentTimeMillis()));
         return messageMapper.isRead(message.getId(), message.getReadTime(), message.getReadFlag());
     }
+
+    @Override
+    public Integer getUnReadCount(Message message) {
+        if (message.getReceiver() == null) {
+            return 0;
+        }
+        return messageMapper.getUnReadCount(message.getReceiver());
+    }
 }

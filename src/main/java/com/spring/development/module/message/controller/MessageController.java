@@ -102,4 +102,12 @@ public class MessageController {
         }
         return ResultJson.success(messageService.isRead(message));
     }
+
+    @RequestMapping("getUnReadCount")
+    public ResultJson getUnReadCount(@RequestBody Message message){
+        if (message == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(messageService.getUnReadCount(message));
+    }
 }

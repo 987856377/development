@@ -20,4 +20,6 @@ public interface MessageMapper extends BaseMapper<Message> {
     Page<Message> getMessageList(Page<Message> page, @Param("sender") Long sender, @Param("receiver") Long receiver, @Param("sendFlag") Integer sendFlag);
     Message getMessage(@Param("id") Long id, @Param("sender") Long sender, @Param("receiver") Long receiver, @Param("sendFlag") Integer sendFlag);
     boolean isRead(@Param("id") Long id, @Param("readTime") Timestamp readTime, @Param("readFlag") Integer readFlag);
+
+    Integer getUnReadCount(@Param("receiver") Long receiver);
 }
