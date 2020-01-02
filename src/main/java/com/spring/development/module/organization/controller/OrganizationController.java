@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
 import com.spring.development.module.organization.entity.Organization;
+import com.spring.development.module.organization.entity.request.CountRequest;
 import com.spring.development.module.organization.entity.request.OrgRequest;
 import com.spring.development.module.organization.service.OrganizationService;
 import com.spring.development.module.user.entity.UserInfo;
@@ -244,6 +245,28 @@ public class OrganizationController {
         }
         return ResultJson.success(organizationService.getOrgCodeAndUsersByName(request));
     }
+
+    /*
+     *
+     * {
+     *   "code": ""
+     * }
+     *
+     * */
+    @RequestMapping("countOrganization")
+    public ResultJson countOrganization(@RequestBody CountRequest request){
+        if (request.getBegin() == null){
+            request.setBegin(new Timestamp(System.currentTimeMillis()));
+        } else if (request.getEnd() == null){
+            request.setEnd(new Timestamp(System.currentTimeMillis()));
+        } else if (request.getBegin().after(request.getEnd())){
+            Timestamp timestamp = request.getBegin();
+            request.setBegin(request.getEnd());
+            request.setEnd(timestamp);
+        }
+        return ResultJson.success(organizationService.count(request));
+    }
+
 
     /*
      *

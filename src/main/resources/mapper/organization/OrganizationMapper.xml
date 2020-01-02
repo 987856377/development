@@ -113,6 +113,23 @@
     <select id="getOrgIntroductionByCode" resultType="java.lang.String">
         select introduction from organization where code = #{code}
     </select>
+    <select id="count" resultType="com.spring.development.module.organization.entity.response.CountResponse">
+        <if test="classify != null">
+            SELECT name, (SELECT COUNT(0) FROM organization WHERE classify= #{classify} ) value FROM org_classify WHERE id = #{classify}
+            UNION
+        </if>
+        <if test="type != null">
+            SELECT name, (SELECT COUNT(0) FROM organization WHERE type= #{type} ) value FROM org_type WHERE id = #{type}
+            UNION
+        </if>
+        <if test="host != null">
+            SELECT name, (SELECT COUNT(0) FROM organization WHERE host= #{host} ) value FROM org_host WHERE id = #{host}
+            UNION
+        </if>
+        <if test="relation != null">
+            SELECT name, (SELECT COUNT(0) FROM organization WHERE relation= #{relation} ) value FROM org_relation WHERE id = #{relation}
+        </if>
+    </select>
 
     <update id="cancelOrg">
         update organization

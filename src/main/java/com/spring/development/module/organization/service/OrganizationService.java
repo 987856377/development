@@ -1,5 +1,7 @@
 package com.spring.development.module.organization.service;
 
+import com.spring.development.module.organization.entity.request.CountRequest;
+import com.spring.development.module.organization.entity.response.CountResponse;
 import com.spring.development.module.organization.entity.response.OrgResponse;
 import com.spring.development.module.organization.entity.Organization;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -27,4 +29,6 @@ public interface OrganizationService extends IService<Organization> {
     OrgUserResponse getOrgCodeAndUsersByName(OrgRequest request);
 
     String getOrgIntroductionByCode(OrgRequest request);
+
+    List<CountResponse> count(CountRequest request);
 }

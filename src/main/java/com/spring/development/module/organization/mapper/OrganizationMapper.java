@@ -1,5 +1,6 @@
 package com.spring.development.module.organization.mapper;
 
+import com.spring.development.module.organization.entity.response.CountResponse;
 import com.spring.development.module.organization.entity.response.OrgResponse;
 import com.spring.development.module.organization.entity.Organization;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -37,4 +38,6 @@ public interface OrganizationMapper extends BaseMapper<Organization> {
     List<TargetUser> getOrgCodeAndUsersByName(@Param("name") String name);
 
     String getOrgIntroductionByCode(@Param("code") String code);
+
+    List<CountResponse> count(@Param("classify") Integer classify, @Param("type") Integer type, @Param("host") Integer host, @Param("relation") Integer relation);
 }

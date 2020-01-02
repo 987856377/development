@@ -1,5 +1,7 @@
 package com.spring.development.module.organization.service.impl;
 
+import com.spring.development.module.organization.entity.request.CountRequest;
+import com.spring.development.module.organization.entity.response.CountResponse;
 import com.spring.development.module.organization.entity.response.OrgResponse;
 import com.spring.development.module.organization.entity.Organization;
 import com.spring.development.module.organization.entity.request.OrgRequest;
@@ -84,5 +86,10 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
             return null;
         }
         return organizationMapper.getOrgIntroductionByCode(request.getCode());
+    }
+
+    @Override
+    public List<CountResponse> count(CountRequest request) {
+        return organizationMapper.count(request.getClassify(),request.getType(),request.getHost(),request.getRelation());
     }
 }
