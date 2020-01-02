@@ -1,5 +1,8 @@
 package com.spring.development.module.organization.entity.request;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spring.development.module.organization.entity.Organization;
+
 import java.io.Serializable;
 
 /**
@@ -23,13 +26,12 @@ public class OrgRequest implements Serializable {
     private String officer;
     private String supervising;
     private Integer flag;
-    private Long current;
-    private Integer size;
+    private Page<Organization> page;
 
     public OrgRequest() {
     }
 
-    public OrgRequest(Long id, String code, String orgflag, String name, Integer classify, Integer type, Integer host, Integer relation, String phone, String responser, String officer, String supervising, Integer flag, Long current, Integer size) {
+    public OrgRequest(Long id, String code, String orgflag, String name, Integer classify, Integer type, Integer host, Integer relation, String phone, String responser, String officer, String supervising, Integer flag, Page<Organization> page) {
         this.id = id;
         this.code = code;
         this.orgflag = orgflag;
@@ -43,8 +45,7 @@ public class OrgRequest implements Serializable {
         this.officer = officer;
         this.supervising = supervising;
         this.flag = flag;
-        this.current = current;
-        this.size = size;
+        this.page = page;
     }
 
     public Long getId() {
@@ -151,19 +152,11 @@ public class OrgRequest implements Serializable {
         this.flag = flag;
     }
 
-    public Long getCurrent() {
-        return current;
+    public Page<Organization> getPage() {
+        return page;
     }
 
-    public void setCurrent(Long current) {
-        this.current = current;
-    }
-
-    public Integer getSize() {
-        return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setPage(Page<Organization> page) {
+        this.page = page;
     }
 }

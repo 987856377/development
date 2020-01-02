@@ -33,7 +33,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         return organizationMapper.getOrg(request.getId(),request.getCode(),request.getOrgflag(),request.getName(),
                 request.getClassify(),request.getType(),request.getHost(),request.getRelation(),
                 request.getPhone(), request.getResponser(),request.getOfficer(),request.getSupervising(),
-                request.getFlag(),request.getCurrent(),request.getSize());
+                request.getFlag(),request.getPage().getCurrent(),request.getPage().getSize());
     }
 
     @Override

@@ -163,21 +163,20 @@ public class OrganizationController {
         if (request == null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
-        if (request.getCurrent() <=0 || request.getSize() <= 0){
-            request.setCurrent((long) 1);
-            request.setSize(10);
+        if (request.getPage().getCurrent() <=0 || request.getPage().getSize() <= 0){
+            request.getPage().setCurrent((long) 1);
+            request.getPage().setSize(10);
         }
 //        设置数据索引偏移量
-        Long offset = (request.getCurrent()-1)*request.getSize();
-        request.setCurrent(offset);
+        Long offset = (request.getPage().getCurrent()-1)*request.getPage().getSize();
+        request.getPage().setCurrent(offset);
         return ResultJson.success(organizationService.getOrg(request));
     }
 
     @RequestMapping("getOrgList")
-    public ResultJson getOrgList(@RequestBody Page<Organization> page){
-        return ResultJson.success(organizationService.page(page));
+    public ResultJson getOrgList(@RequestBody OrgRequest request){
+        return ResultJson.success(organizationService.page(request.getPage()));
     }
-
 
     /*
     {

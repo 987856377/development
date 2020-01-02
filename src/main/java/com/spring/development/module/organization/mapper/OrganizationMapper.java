@@ -24,7 +24,7 @@ public interface OrganizationMapper extends BaseMapper<Organization> {
                               @Param("phone") String phone,@Param("responser") String responser,
                               @Param("officer") String officer,@Param("supervising") String supervising,
                               @Param("flag") Integer flag,
-                              @Param("current") Long current, @Param("size") Integer size);
+                              @Param("current") Long current, @Param("size") Long size);
 
     Organization getOrgByName(@Param("name") String name);
 
