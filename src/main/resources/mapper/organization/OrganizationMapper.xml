@@ -113,22 +113,34 @@
     <select id="getOrgIntroductionByCode" resultType="java.lang.String">
         select introduction from organization where code = #{code}
     </select>
-    <select id="count" resultType="com.spring.development.module.organization.entity.response.CountResponse">
-        <if test="classify != null">
-            SELECT name, (SELECT COUNT(0) FROM organization WHERE classify= #{classify} ) value FROM org_classify WHERE id = #{classify}
-            UNION
-        </if>
-        <if test="type != null">
-            SELECT name, (SELECT COUNT(0) FROM organization WHERE type= #{type} ) value FROM org_type WHERE id = #{type}
-            UNION
-        </if>
-        <if test="host != null">
-            SELECT name, (SELECT COUNT(0) FROM organization WHERE host= #{host} ) value FROM org_host WHERE id = #{host}
-            UNION
-        </if>
-        <if test="relation != null">
-            SELECT name, (SELECT COUNT(0) FROM organization WHERE relation= #{relation} ) value FROM org_relation WHERE id = #{relation}
-        </if>
+
+    <select id="countTotal"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+         SELECT '总数' name, COUNT(0) value FROM organization WHERE flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="countClassify"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+        SELECT (SELECT name FROM org_classify WHERE id = #{classify} ) name, COUNT(0) value
+            FROM organization
+            WHERE classify = #{classify} and flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="countType"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+        SELECT (SELECT name FROM org_type WHERE id = #{type} ) name, COUNT(0) value
+            FROM organization
+            WHERE type = #{type} and flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="countHost"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+        SELECT (SELECT name FROM org_host WHERE id = #{host} ) name, COUNT(0) value
+            FROM organization
+            WHERE host = #{host} and flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="countRelation"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+         SELECT (SELECT name FROM org_relation WHERE id = #{relation} ) name, COUNT(0) value
+            FROM organization
+            WHERE relation = #{relation} and flag = #{flag} and date between #{begin} and #{end}
     </select>
 
     <update id="cancelOrg">

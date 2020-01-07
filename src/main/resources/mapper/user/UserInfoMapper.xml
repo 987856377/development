@@ -56,6 +56,12 @@
     <select id="getUserInfoByUsername" resultType="com.spring.development.module.user.entity.UserInfo">
         select * from  user_info where id = (select id from user where username = #{username})
     </select>
+    <select id="countUser" resultType="com.spring.development.module.user.entity.response.UserCountData">
+        select orgname, sum(case when sex='男' then 1 else 0 end ) manNum, sum(case when sex='女' then 1 else 0 end ) womanNum, COUNT(id) total
+        FROM user_info
+        WHERE orgname in (SELECT name FROM organization)
+        GROUP BY orgname
+    </select>
 
 </mapper>
 

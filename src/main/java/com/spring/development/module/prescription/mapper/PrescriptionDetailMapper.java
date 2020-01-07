@@ -2,6 +2,9 @@ package com.spring.development.module.prescription.mapper;
 
 import com.spring.development.module.prescription.entity.PrescriptionDetail;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.spring.development.module.prescription.entity.response.PrescriptionCountData;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface PrescriptionDetailMapper extends BaseMapper<PrescriptionDetail> {
 
+    List<PrescriptionCountData> countPrescription();
 }

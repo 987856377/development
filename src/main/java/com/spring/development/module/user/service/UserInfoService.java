@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring.development.module.user.entity.request.UserListRequest;
 import com.spring.development.module.user.entity.request.UserRequest;
+import com.spring.development.module.user.entity.response.UserCountData;
+import com.spring.development.module.user.entity.response.UserCountResponse;
 import com.spring.development.module.user.entity.response.UserResponse;
 import com.spring.development.module.user.mapper.UserInfoMapper;
 import com.spring.development.module.user.entity.UserInfo;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,5 +54,17 @@ public class UserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> {
             return null;
         }
         return userInfoMapper.getUserInfoByUsername(request.getUsername());
+    }
+
+    public UserCountResponse countUser() {
+        UserCountResponse response = new UserCountResponse();
+        List<UserCountData> dataList = userInfoMapper.countUser();
+        dataList.forEach(data -> {
+            response.getOrgNameList().add(data.getOrgname());
+            response.getOrgManList().add(data.getManNum());
+            response.getOrgWomanList().add(data.getWomanNum());
+            response.getOrgTotalList().add(data.getTotal());
+        });
+        return response;
     }
 }

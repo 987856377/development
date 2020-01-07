@@ -15,19 +15,19 @@ public class CountRequest implements Serializable {
     private Integer type;
     private Integer host;
     private Integer relation;
-    private Integer radio;
+    private Integer flag = 1;
     private Timestamp begin;
     private Timestamp end;
 
     public CountRequest() {
     }
 
-    public CountRequest(Integer classify, Integer type, Integer host, Integer relation, Integer radio, Timestamp begin, Timestamp end) {
+    public CountRequest(Integer classify, Integer type, Integer host, Integer relation, Integer flag, Timestamp begin, Timestamp end) {
         this.classify = classify;
         this.type = type;
         this.host = host;
         this.relation = relation;
-        this.radio = radio;
+        this.flag = flag;
         this.begin = begin;
         this.end = end;
     }
@@ -64,12 +64,12 @@ public class CountRequest implements Serializable {
         this.relation = relation;
     }
 
-    public Integer getRadio() {
-        return radio;
+    public Integer getFlag() {
+        return flag;
     }
 
-    public void setRadio(Integer radio) {
-        this.radio = radio;
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 
     public Timestamp getBegin() {

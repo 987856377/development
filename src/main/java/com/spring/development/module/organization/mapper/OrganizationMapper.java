@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spring.development.module.organization.entity.response.TargetUser;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -39,5 +40,9 @@ public interface OrganizationMapper extends BaseMapper<Organization> {
 
     String getOrgIntroductionByCode(@Param("code") String code);
 
-    List<CountResponse> count(@Param("classify") Integer classify, @Param("type") Integer type, @Param("host") Integer host, @Param("relation") Integer relation);
+    CountResponse countClassify(@Param("classify") Integer classify,@Param("flag") Integer flag,@Param("begin") Timestamp begin, @Param("end") Timestamp end);
+    CountResponse countType(@Param("type") Integer type,@Param("flag") Integer flag,@Param("begin") Timestamp begin, @Param("end") Timestamp end);
+    CountResponse countHost(@Param("host") Integer host,@Param("flag") Integer flag,@Param("begin") Timestamp begin, @Param("end") Timestamp end);
+    CountResponse countRelation(@Param("relation") Integer relation,@Param("flag") Integer flag,@Param("begin") Timestamp begin, @Param("end") Timestamp end);
+    CountResponse countTotal(@Param("flag") Integer flag,@Param("begin") Timestamp begin, @Param("end") Timestamp end);
 }

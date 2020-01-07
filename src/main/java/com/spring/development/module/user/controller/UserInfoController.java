@@ -206,4 +206,9 @@ public class UserInfoController {
     public ResultJson getUserInfoByUsername(@RequestBody UserRequest request){
         return ResultJson.success(userInfoService.getUserInfoByUsername(request));
     }
+
+    @RequestMapping("countUser")
+    public ResultJson countUser(){
+        return ResultJson.success(userInfoService.countUser());
+    }
 }

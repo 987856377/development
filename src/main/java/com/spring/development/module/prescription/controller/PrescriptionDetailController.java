@@ -63,4 +63,9 @@ public class PrescriptionDetailController {
         return ResultJson.success(prescriptionDetailService.saveOrUpdate(prescriptionDetail));
     }
 
+    @RequestMapping("countPrescription")
+    public ResultJson countPrescription(){
+        return ResultJson.success(prescriptionDetailService.countPrescription());
+    }
+
 }

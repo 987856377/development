@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -256,10 +259,17 @@ public class OrganizationController {
     @RequestMapping("countOrganization")
     public ResultJson countOrganization(@RequestBody CountRequest request){
         if (request.getBegin() == null){
-            request.setBegin(new Timestamp(System.currentTimeMillis()));
-        } else if (request.getEnd() == null){
+            Date date = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR,-1);
+            date = calendar.getTime();
+            request.setBegin(new Timestamp(date.getTime()));
+        }
+        if (request.getEnd() == null){
             request.setEnd(new Timestamp(System.currentTimeMillis()));
-        } else if (request.getBegin().after(request.getEnd())){
+        }
+        if (request.getBegin().after(request.getEnd())){
             Timestamp timestamp = request.getBegin();
             request.setBegin(request.getEnd());
             request.setEnd(timestamp);

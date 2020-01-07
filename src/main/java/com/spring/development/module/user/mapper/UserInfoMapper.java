@@ -3,6 +3,7 @@ package com.spring.development.module.user.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.module.user.entity.UserInfo;
+import com.spring.development.module.user.entity.response.UserCountData;
 import com.spring.development.module.user.entity.response.UserResponse;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,4 +26,6 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     UserResponse getUserInfo(@Param("username") String username);
 
     UserInfo getUserInfoByUsername(@Param("username") String username);
+
+    List<UserCountData> countUser();
 }

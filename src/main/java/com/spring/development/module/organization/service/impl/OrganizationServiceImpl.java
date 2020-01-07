@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -90,6 +93,22 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
 
     @Override
     public List<CountResponse> count(CountRequest request) {
-        return organizationMapper.count(request.getClassify(),request.getType(),request.getHost(),request.getRelation());
+        List<CountResponse> responseList = new ArrayList<>();
+        if (request.getClassify() == null && request.getHost() == null && request.getType() == null && request.getRelation() == null){
+            return Collections.singletonList(organizationMapper.countTotal(request.getFlag(),request.getBegin(),request.getEnd()    ));
+        }
+        if (request.getClassify() != null){
+            responseList.add(organizationMapper.countClassify(request.getClassify(),request.getFlag(),request.getBegin(),request.getEnd()));
+        }
+        if (request.getType() != null){
+            responseList.add(organizationMapper.countType(request.getType(),request.getFlag(),request.getBegin(),request.getEnd()));
+        }
+        if (request.getHost() != null){
+            responseList.add(organizationMapper.countHost(request.getHost(),request.getFlag(),request.getBegin(),request.getEnd()));
+        }
+        if (request.getRelation() != null){
+            responseList.add(organizationMapper.countRelation(request.getRelation(),request.getFlag(),request.getBegin(),request.getEnd()));
+        }
+        return responseList;
     }
 }

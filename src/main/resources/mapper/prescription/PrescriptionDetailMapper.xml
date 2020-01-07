@@ -27,5 +27,12 @@
     <sql id="Base_Column_List">
         id, orgcode,orgname, uid,uname, type, doctor_name, doctor_phone, check_doctor, check_phone, symptom, sex, age, date, medicine, advice, price
     </sql>
+    <select id="countPrescription"
+            resultType="com.spring.development.module.prescription.entity.response.PrescriptionCountData">
+        select orgname, sum(case when origin=1 then 1 else 0 end ) local, sum(case when origin=9 then 1 else 0 end ) outside, COUNT(id) total
+        FROM prescription_detail
+        WHERE orgname in (SELECT name FROM organization)
+        GROUP BY orgname
+    </select>
 
 </mapper>
