@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -31,12 +32,10 @@ public class PrescriptionDetailServiceImpl extends ServiceImpl<PrescriptionDetai
     public PrescriptionCountResponse countPrescription() {
         PrescriptionCountResponse response = new PrescriptionCountResponse();
         List<PrescriptionCountData> dataList = prescriptionDetailMapper.countPrescription();
-        dataList.forEach(data -> {
-            response.getOrgNameList().add(data.getOrgname());
-            response.getPreLocalList().add(data.getLocal());
-            response.getPreOutsideList().add(data.getOutside());
-            response.getPreTotalList().add(data.getTotal());
-        });
+        response.setOrgNameList(dataList.stream().map(PrescriptionCountData::getOrgname).collect(Collectors.toList()));
+        response.setPreLocalList(dataList.stream().map(PrescriptionCountData::getLocal).collect(Collectors.toList()));
+        response.setPreOutsideList(dataList.stream().map(PrescriptionCountData::getOutside).collect(Collectors.toList()));
+        response.setPreTotalList(dataList.stream().map(PrescriptionCountData::getTotal).collect(Collectors.toList()));
         return response;
     }
 }

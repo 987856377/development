@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Description
@@ -59,12 +59,10 @@ public class UserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> {
     public UserCountResponse countUser() {
         UserCountResponse response = new UserCountResponse();
         List<UserCountData> dataList = userInfoMapper.countUser();
-        dataList.forEach(data -> {
-            response.getOrgNameList().add(data.getOrgname());
-            response.getOrgManList().add(data.getManNum());
-            response.getOrgWomanList().add(data.getWomanNum());
-            response.getOrgTotalList().add(data.getTotal());
-        });
+        response.setOrgNameList(dataList.stream().map(UserCountData::getOrgname).collect(Collectors.toList()));
+        response.setOrgManList(dataList.stream().map(UserCountData::getManNum).collect(Collectors.toList()));
+        response.setOrgWomanList(dataList.stream().map(UserCountData::getWomanNum).collect(Collectors.toList()));
+        response.setOrgTotalList(dataList.stream().map(UserCountData::getTotal).collect(Collectors.toList()));
         return response;
     }
 }
