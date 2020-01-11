@@ -15,19 +15,25 @@ public class PrescriptionCountResponse implements Serializable {
     private List<String> orgNameList;
     private List<Long> preLocalList;
     private List<Long> preOutsideList;
+    private List<Long> preNormalList;
+    private List<Long> preSpecialList;
     private List<Long> preTotalList;
 
     public PrescriptionCountResponse() {
         orgNameList = new ArrayList<>();
         preLocalList = new ArrayList<>();
         preOutsideList = new ArrayList<>();
+        preNormalList = new ArrayList<>();
+        preSpecialList = new ArrayList<>();
         preTotalList = new ArrayList<>();
     }
 
-    public PrescriptionCountResponse(List<String> orgNameList, List<Long> preLocalList, List<Long> preOutsideList, List<Long> preTotalList) {
+    public PrescriptionCountResponse(List<String> orgNameList, List<Long> preLocalList, List<Long> preOutsideList, List<Long> preNormalList, List<Long> preSpecialList, List<Long> preTotalList) {
         this.orgNameList = orgNameList;
         this.preLocalList = preLocalList;
         this.preOutsideList = preOutsideList;
+        this.preNormalList = preNormalList;
+        this.preSpecialList = preSpecialList;
         this.preTotalList = preTotalList;
     }
 
@@ -53,6 +59,22 @@ public class PrescriptionCountResponse implements Serializable {
 
     public void setPreOutsideList(List<Long> preOutsideList) {
         this.preOutsideList = preOutsideList;
+    }
+
+    public List<Long> getPreNormalList() {
+        return preNormalList;
+    }
+
+    public void setPreNormalList(List<Long> preNormalList) {
+        this.preNormalList = preNormalList;
+    }
+
+    public List<Long> getPreSpecialList() {
+        return preSpecialList;
+    }
+
+    public void setPreSpecialList(List<Long> preSpecialList) {
+        this.preSpecialList = preSpecialList;
     }
 
     public List<Long> getPreTotalList() {

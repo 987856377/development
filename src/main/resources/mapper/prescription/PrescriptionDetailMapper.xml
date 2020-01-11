@@ -29,7 +29,10 @@
     </sql>
     <select id="countPrescription"
             resultType="com.spring.development.module.prescription.entity.response.PrescriptionCountData">
-        select orgname, sum(case when origin=1 then 1 else 0 end ) local, sum(case when origin=9 then 1 else 0 end ) outside, COUNT(id) total
+        select orgname, sum(case when origin=1 then 1 else 0 end ) local, sum(case when origin=9 then 1 else 0 end ) outside,
+        sum(case when type=1 then 1 else 0 end ) normal,
+        sum(case when type=2 then 1 else 0 end ) special,
+        COUNT(id) total
         FROM prescription_detail
         WHERE orgname in (SELECT name FROM organization)
         GROUP BY orgname

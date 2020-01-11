@@ -35,6 +35,8 @@ public class PrescriptionDetailServiceImpl extends ServiceImpl<PrescriptionDetai
         response.setOrgNameList(dataList.stream().map(PrescriptionCountData::getOrgname).collect(Collectors.toList()));
         response.setPreLocalList(dataList.stream().map(PrescriptionCountData::getLocal).collect(Collectors.toList()));
         response.setPreOutsideList(dataList.stream().map(PrescriptionCountData::getOutside).collect(Collectors.toList()));
+        response.setPreNormalList(dataList.stream().map(PrescriptionCountData::getNormal).collect(Collectors.toList()));
+        response.setPreSpecialList(dataList.stream().map(PrescriptionCountData::getSpecial).collect(Collectors.toList()));
         response.setPreTotalList(dataList.stream().map(PrescriptionCountData::getTotal).collect(Collectors.toList()));
         return response;
     }

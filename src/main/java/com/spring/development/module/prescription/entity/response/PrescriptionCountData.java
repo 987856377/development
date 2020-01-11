@@ -13,15 +13,19 @@ public class PrescriptionCountData implements Serializable {
     private String orgname;
     private Long local;
     private Long outside;
+    private Long normal;
+    private Long special;
     private Long total;
 
     public PrescriptionCountData() {
     }
 
-    public PrescriptionCountData(String orgname, Long local, Long outside, Long total) {
+    public PrescriptionCountData(String orgname, Long local, Long outside, Long normal, Long special, Long total) {
         this.orgname = orgname;
         this.local = local;
         this.outside = outside;
+        this.normal = normal;
+        this.special = special;
         this.total = total;
     }
 
@@ -47,6 +51,22 @@ public class PrescriptionCountData implements Serializable {
 
     public void setOutside(Long outside) {
         this.outside = outside;
+    }
+
+    public Long getNormal() {
+        return normal;
+    }
+
+    public void setNormal(Long normal) {
+        this.normal = normal;
+    }
+
+    public Long getSpecial() {
+        return special;
+    }
+
+    public void setSpecial(Long special) {
+        this.special = special;
     }
 
     public Long getTotal() {
