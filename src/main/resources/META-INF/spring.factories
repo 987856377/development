@@ -1,0 +1,5 @@
+# 程序启动错误分析器
+org.springframework.boot.diagnostics.FailureAnalyzer=com.spring.development.global.ApplicationConstraintViolationFailureAnalyzer
+# 环境处理器, 加载资源文件, 将文件中的属性添加到应用环境中
+org.springframework.boot.env.EnvironmentPostProcessor=com.spring.development.global.ApplicationEnvironmentPostProcessor
+
