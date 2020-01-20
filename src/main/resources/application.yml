@@ -1,2 +1,16 @@
 custom-resource:
     hello world
+
+---
+
+spring:
+    profiles: development
+server:
+    port: 8090
+
+---
+
+spring:
+    profiles: production
+server:
+    port: 8090
