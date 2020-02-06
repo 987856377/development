@@ -84,4 +84,16 @@ public class PrescriptionCountResponse implements Serializable {
     public void setPreTotalList(List<Long> preTotalList) {
         this.preTotalList = preTotalList;
     }
+
+    @Override
+    public String toString() {
+        return "PrescriptionCountResponse{" +
+                "orgNameList=" + orgNameList +
+                ", preLocalList=" + preLocalList +
+                ", preOutsideList=" + preOutsideList +
+                ", preNormalList=" + preNormalList +
+                ", preSpecialList=" + preSpecialList +
+                ", preTotalList=" + preTotalList +
+                '}';
+    }
 }

@@ -62,6 +62,11 @@
         WHERE orgname in (SELECT name FROM organization)
         GROUP BY orgname
     </select>
+    <select id="getOne" resultType="com.spring.development.module.user.entity.UserInfo">
+        select * from user_info
+        where identity = #{identity} or phone = #{phone} or mail = #{mail}
+        group by id having id != #{id}
+    </select>
 
 </mapper>
 

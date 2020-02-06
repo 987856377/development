@@ -143,4 +143,20 @@ public class UserInfo extends Model<UserInfo> {
     public void setMail(String mail) {
         this.mail = mail;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "id=" + id +
+                ", orgcode='" + orgcode + '\'' +
+                ", orgname='" + orgname + '\'' +
+                ", name='" + name + '\'' +
+                ", identity='" + identity + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age=" + age +
+                ", nation='" + nation + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mail='" + mail + '\'' +
+                '}';
+    }
 }

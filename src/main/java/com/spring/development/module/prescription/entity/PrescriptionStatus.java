@@ -88,4 +88,19 @@ public class PrescriptionStatus extends Model<PrescriptionStatus> {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "PrescriptionStatus{" +
+                "id=" + id +
+                ", pid=" + pid +
+                ", flag=" + flag +
+                ", operator=" + operator +
+                ", operatorName='" + operatorName + '\'' +
+                ", verify=" + verify +
+                ", verifyTime=" + verifyTime +
+                ", forbiddenTime=" + forbiddenTime +
+                ", enable=" + enable +
+                ", extra='" + extra + '\'' +
+                '}';
+    }
 }

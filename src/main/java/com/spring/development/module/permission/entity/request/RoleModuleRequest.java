@@ -68,4 +68,14 @@ public class RoleModuleRequest implements Serializable {
     public void setUserRoles(List<String> userRoles) {
         this.userRoles = userRoles;
     }
+
+    @Override
+    public String toString() {
+        return "RoleModuleRequest{" +
+                "rid=" + rid +
+                ", midList=" + midList +
+                ", own=" + own +
+                ", userRoles=" + userRoles +
+                '}';
+    }
 }

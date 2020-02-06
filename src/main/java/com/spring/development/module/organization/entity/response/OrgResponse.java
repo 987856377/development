@@ -50,4 +50,14 @@ public class OrgResponse implements Serializable {
     public void setSubOrgList(List<OrgResponse> subOrgList) {
         this.subOrgList = subOrgList;
     }
+
+    @Override
+    public String toString() {
+        return "OrgResponse{" +
+                "name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", orgflag='" + orgflag + '\'' +
+                ", subOrgList=" + subOrgList +
+                '}';
+    }
 }

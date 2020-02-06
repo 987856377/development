@@ -40,4 +40,12 @@ public class CirculationInfoRequest implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
+
+    @Override
+    public String toString() {
+        return "CirculationInfoRequest{" +
+                "page=" + page +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }

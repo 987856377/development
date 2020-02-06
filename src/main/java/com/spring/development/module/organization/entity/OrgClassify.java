@@ -34,4 +34,11 @@ public class OrgClassify extends Model<OrgClassify> {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "OrgClassify{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

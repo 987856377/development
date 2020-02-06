@@ -174,4 +174,25 @@ public class UserResponse implements Serializable {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "UserResponse{" +
+                "username='" + username + '\'' +
+                ", id=" + id +
+                ", orgcode='" + orgcode + '\'' +
+                ", orgname='" + orgname + '\'' +
+                ", name='" + name + '\'' +
+                ", identity='" + identity + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age='" + age + '\'' +
+                ", nation='" + nation + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mail='" + mail + '\'' +
+                ", registerTime=" + registerTime +
+                ", modifyTime=" + modifyTime +
+                ", lastLoginTime=" + lastLoginTime +
+                ", flag=" + flag +
+                '}';
+    }
 }

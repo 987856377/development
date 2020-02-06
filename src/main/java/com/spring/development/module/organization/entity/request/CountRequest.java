@@ -87,4 +87,17 @@ public class CountRequest implements Serializable {
     public void setEnd(Timestamp end) {
         this.end = end;
     }
+
+    @Override
+    public String toString() {
+        return "CountRequest{" +
+                "classify=" + classify +
+                ", type=" + type +
+                ", host=" + host +
+                ", relation=" + relation +
+                ", flag=" + flag +
+                ", begin=" + begin +
+                ", end=" + end +
+                '}';
+    }
 }

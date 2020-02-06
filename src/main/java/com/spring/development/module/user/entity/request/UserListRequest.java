@@ -39,4 +39,12 @@ public class UserListRequest implements Serializable {
     public void setOrgflag(String orgflag) {
         this.orgflag = orgflag;
     }
+
+    @Override
+    public String toString() {
+        return "UserListRequest{" +
+                "page=" + page +
+                ", orgflag='" + orgflag + '\'' +
+                '}';
+    }
 }

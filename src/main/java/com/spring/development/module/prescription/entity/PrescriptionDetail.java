@@ -132,4 +132,28 @@ public class PrescriptionDetail extends Model<PrescriptionDetail> {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "PrescriptionDetail{" +
+                "id=" + id +
+                ", orgcode='" + orgcode + '\'' +
+                ", orgname='" + orgname + '\'' +
+                ", uid=" + uid +
+                ", uname='" + uname + '\'' +
+                ", type=" + type +
+                ", doctorName='" + doctorName + '\'' +
+                ", doctorPhone='" + doctorPhone + '\'' +
+                ", department='" + department + '\'' +
+                ", checkDoctor='" + checkDoctor + '\'' +
+                ", checkPhone='" + checkPhone + '\'' +
+                ", symptom='" + symptom + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age='" + age + '\'' +
+                ", date=" + date +
+                ", medicine='" + medicine + '\'' +
+                ", advice='" + advice + '\'' +
+                ", price=" + price +
+                ", origin=" + origin +
+                '}';
+    }
 }

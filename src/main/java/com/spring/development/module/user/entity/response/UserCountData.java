@@ -56,4 +56,14 @@ public class UserCountData implements Serializable {
     public void setTotal(Long total) {
         this.total = total;
     }
+
+    @Override
+    public String toString() {
+        return "UserCountData{" +
+                "orgname='" + orgname + '\'' +
+                ", manNum=" + manNum +
+                ", womanNum=" + womanNum +
+                ", total=" + total +
+                '}';
+    }
 }

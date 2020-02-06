@@ -457,4 +457,37 @@ public class PrescriptionResponse implements Serializable {
     public void setExtra(String extra) {
         this.extra = extra;
     }
+
+    @Override
+    public String toString() {
+        return "PrescriptionResponse{" +
+                "id=" + id +
+                ", orgcode='" + orgcode + '\'' +
+                ", orgname='" + orgname + '\'' +
+                ", uid=" + uid +
+                ", uname='" + uname + '\'' +
+                ", type=" + type +
+                ", doctorName='" + doctorName + '\'' +
+                ", doctorPhone='" + doctorPhone + '\'' +
+                ", department='" + department + '\'' +
+                ", checkDoctor='" + checkDoctor + '\'' +
+                ", checkPhone='" + checkPhone + '\'' +
+                ", symptom='" + symptom + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age='" + age + '\'' +
+                ", date=" + date +
+                ", medicine='" + medicine + '\'' +
+                ", advice='" + advice + '\'' +
+                ", price=" + price +
+                ", origin=" + origin +
+                ", flag=" + flag +
+                ", operator=" + operator +
+                ", operatorName='" + operatorName + '\'' +
+                ", verify=" + verify +
+                ", verifyTime=" + verifyTime +
+                ", forbiddenTime=" + forbiddenTime +
+                ", enable=" + enable +
+                ", extra='" + extra + '\'' +
+                '}';
+    }
 }

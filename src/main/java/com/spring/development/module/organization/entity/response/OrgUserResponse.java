@@ -39,4 +39,12 @@ public class OrgUserResponse implements Serializable {
     public void setTargetUserList(List<TargetUser> targetUserList) {
         this.targetUserList = targetUserList;
     }
+
+    @Override
+    public String toString() {
+        return "OrgUserResponse{" +
+                "code='" + code + '\'' +
+                ", targetUserList=" + targetUserList +
+                '}';
+    }
 }

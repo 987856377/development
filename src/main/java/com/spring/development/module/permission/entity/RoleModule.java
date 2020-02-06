@@ -45,4 +45,12 @@ public class RoleModule extends Model<RoleModule> {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "RoleModule{" +
+                "id=" + id +
+                ", rid=" + rid +
+                ", mid=" + mid +
+                '}';
+    }
 }

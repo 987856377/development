@@ -159,4 +159,24 @@ public class OrgRequest implements Serializable {
     public void setPage(Page<Organization> page) {
         this.page = page;
     }
+
+    @Override
+    public String toString() {
+        return "OrgRequest{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", orgflag='" + orgflag + '\'' +
+                ", name='" + name + '\'' +
+                ", classify=" + classify +
+                ", type=" + type +
+                ", host=" + host +
+                ", relation=" + relation +
+                ", phone='" + phone + '\'' +
+                ", responser='" + responser + '\'' +
+                ", officer='" + officer + '\'' +
+                ", supervising='" + supervising + '\'' +
+                ", flag=" + flag +
+                ", page=" + page +
+                '}';
+    }
 }

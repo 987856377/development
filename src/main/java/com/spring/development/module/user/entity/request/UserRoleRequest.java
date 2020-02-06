@@ -67,4 +67,14 @@ public class UserRoleRequest implements Serializable {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "UserRoleRequest{" +
+                "uid=" + uid +
+                ", sourceRole='" + sourceRole + '\'' +
+                ", destRole='" + destRole + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
 }

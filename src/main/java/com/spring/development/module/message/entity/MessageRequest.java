@@ -58,4 +58,14 @@ public class MessageRequest implements Serializable {
     public void setSendFlag(Integer sendFlag) {
         this.sendFlag = sendFlag;
     }
+
+    @Override
+    public String toString() {
+        return "MessageRequest{" +
+                "page=" + page +
+                ", sender=" + sender +
+                ", receiver=" + receiver +
+                ", sendFlag=" + sendFlag +
+                '}';
+    }
 }

@@ -70,7 +70,7 @@ public class UserController {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (user.getId() == null){
-            if (userService.getByUsername(user.getUsername()) == null){
+            if (userService.getIdByUsername(user.getUsername()) != null){
                 return ResultJson.failure(ResultCode.BAD_REQUEST,"用户名已被注册");
             } else {
                 user.setRegisterTime(new Timestamp(System.currentTimeMillis()));

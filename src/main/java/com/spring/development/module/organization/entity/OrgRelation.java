@@ -34,4 +34,11 @@ public class OrgRelation extends Model<OrgRelation> {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "OrgRelation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

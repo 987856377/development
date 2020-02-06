@@ -36,4 +36,12 @@ public class RoleRequest implements Serializable {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "RoleRequest{" +
+                "id=" + id +
+                ", flag=" + flag +
+                '}';
+    }
 }

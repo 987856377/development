@@ -141,4 +141,19 @@ public class PrescriptionRequest implements Serializable {
     public void setPage(Page<PrescriptionResponse> page) {
         this.page = page;
     }
+
+    @Override
+    public String toString() {
+        return "PrescriptionRequest{" +
+                "page=" + page +
+                ", id=" + id +
+                ", orgname='" + orgname + '\'' +
+                ", department='" + department + '\'' +
+                ", type=" + type +
+                ", symptom='" + symptom + '\'' +
+                ", flag=" + flag +
+                ", verify=" + verify +
+                ", enable=" + enable +
+                '}';
+    }
 }

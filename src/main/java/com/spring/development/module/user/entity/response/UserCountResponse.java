@@ -62,4 +62,14 @@ public class UserCountResponse implements Serializable {
     public void setOrgTotalList(List<Long> orgTotalList) {
         this.orgTotalList = orgTotalList;
     }
+
+    @Override
+    public String toString() {
+        return "UserCountResponse{" +
+                "orgNameList=" + orgNameList +
+                ", orgManList=" + orgManList +
+                ", orgWomanList=" + orgWomanList +
+                ", orgTotalList=" + orgTotalList +
+                '}';
+    }
 }

@@ -60,4 +60,15 @@ public class Module extends Model<Module> {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "Module{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", pid=" + pid +
+                ", url='" + url + '\'' +
+                ", level='" + level + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
 }

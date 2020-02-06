@@ -76,4 +76,16 @@ public class PrescriptionCountData implements Serializable {
     public void setTotal(Long total) {
         this.total = total;
     }
+
+    @Override
+    public String toString() {
+        return "PrescriptionCountData{" +
+                "orgname='" + orgname + '\'' +
+                ", local=" + local +
+                ", outside=" + outside +
+                ", normal=" + normal +
+                ", special=" + special +
+                ", total=" + total +
+                '}';
+    }
 }

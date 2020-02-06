@@ -107,4 +107,23 @@ public class CirculationInfo extends Model<CirculationInfo> {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "CirculationInfo{" +
+                "id=" + id +
+                ", pid=" + pid +
+                ", sender=" + sender +
+                ", senderName='" + senderName + '\'' +
+                ", originCode='" + originCode + '\'' +
+                ", originName='" + originName + '\'' +
+                ", originTime=" + originTime +
+                ", achieveCode='" + achieveCode + '\'' +
+                ", achieveName='" + achieveName + '\'' +
+                ", receiver=" + receiver +
+                ", receiverName='" + receiverName + '\'' +
+                ", acceptStatus=" + acceptStatus +
+                ", changeTime=" + changeTime +
+                ", extra='" + extra + '\'' +
+                '}';
+    }
 }

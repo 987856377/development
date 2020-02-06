@@ -36,4 +36,12 @@ public class CountResponse implements Serializable {
     public void setValue(Integer value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "CountResponse{" +
+                "name='" + name + '\'' +
+                ", value=" + value +
+                '}';
+    }
 }

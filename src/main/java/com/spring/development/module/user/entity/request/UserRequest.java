@@ -116,4 +116,20 @@ public class UserRequest implements Serializable {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "UserRequest{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", orgcode='" + orgcode + '\'' +
+                ", identity='" + identity + '\'' +
+                ", sex='" + sex + '\'' +
+                ", nation='" + nation + '\'' +
+                ", phone='" + phone + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
 }

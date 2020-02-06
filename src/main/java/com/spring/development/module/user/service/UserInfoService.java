@@ -65,4 +65,11 @@ public class UserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> {
         response.setOrgTotalList(dataList.stream().map(UserCountData::getTotal).collect(Collectors.toList()));
         return response;
     }
+
+    public UserInfo getOne(UserInfo userInfo) {
+        if (userInfo.getId() == null || userInfo.getIdentity() == null || userInfo.getPhone() == null|| userInfo.getMail() == null){
+            return null;
+        }
+        return userInfoMapper.getOne(userInfo.getId(),userInfo.getIdentity(),userInfo.getPhone(),userInfo.getMail());
+    }
 }

@@ -112,4 +112,24 @@ public class Message extends Model<Message> {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", sender=" + sender +
+                ", senderName='" + senderName + '\'' +
+                ", sendOrgCode='" + sendOrgCode + '\'' +
+                ", sendOrgName='" + sendOrgName + '\'' +
+                ", sendTime=" + sendTime +
+                ", sendFlag=" + sendFlag +
+                ", receiver=" + receiver +
+                ", receiverName='" + receiverName + '\'' +
+                ", acceptOrgCode='" + acceptOrgCode + '\'' +
+                ", acceptOrgName='" + acceptOrgName + '\'' +
+                ", readTime=" + readTime +
+                ", subject='" + subject + '\'' +
+                ", content='" + content + '\'' +
+                ", readFlag=" + readFlag +
+                '}';
+    }
 }

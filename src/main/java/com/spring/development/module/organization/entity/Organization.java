@@ -298,4 +298,29 @@ public class Organization extends Model<Organization> {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "Organization{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", orgflag='" + orgflag + '\'' +
+                ", name='" + name + '\'' +
+                ", classify=" + classify +
+                ", type=" + type +
+                ", host=" + host +
+                ", relation=" + relation +
+                ", postcode='" + postcode + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", mail='" + mail + '\'' +
+                ", responser='" + responser + '\'' +
+                ", officer='" + officer + '\'' +
+                ", web='" + web + '\'' +
+                ", supervising='" + supervising + '\'' +
+                ", date=" + date +
+                ", introduction='" + introduction + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
 }

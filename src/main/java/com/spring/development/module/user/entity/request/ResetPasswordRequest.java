@@ -46,4 +46,13 @@ public class ResetPasswordRequest implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "ResetPasswordRequest{" +
+                "id=" + id +
+                ", raw='" + raw + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

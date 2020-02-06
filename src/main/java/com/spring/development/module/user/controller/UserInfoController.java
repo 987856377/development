@@ -64,19 +64,16 @@ public class UserInfoController {
         if (userInfo==null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
-        else if (userInfo.getId() == null || userInfo.getName() == null || userInfo.getIdentity() == null || userInfo.getPhone() == null){
+        else if (userInfo.getId() == null || userInfo.getName() == null || userInfo.getIdentity() == null || userInfo.getPhone() == null|| userInfo.getMail() == null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE, "请完善用户信息");
         }
-        QueryWrapper wrapper = new QueryWrapper();
-        wrapper.ne("name",userInfo.getName());
-        wrapper.eq("phone",userInfo.getPhone());
-        wrapper.eq("identity",userInfo.getIdentity());
-        if (userInfoService.getOne(wrapper) != null || !validPhone(userInfo.getPhone())){
-            return ResultJson.failure(ResultCode.BAD_REQUEST,"手机号已被使用或手机号格式有误");
-        }
+
         User user = userService.getById(userInfo.getId());
         if (user == null){
             ResultJson.failure(ResultCode.CONFLICT,"完善用户信息失败, 获取不到用户 id");
+        }
+        if (userInfoService.getOne(userInfo) != null || !validPhone(userInfo.getPhone()) || !validEmail(userInfo.getMail())){
+            return ResultJson.failure(ResultCode.BAD_REQUEST,"身份证号, 手机号, 邮箱已被注册或格式不合法");
         }
         return ResultJson.success(userInfoService.saveOrUpdate(userInfo));
     }
@@ -94,6 +91,20 @@ public class UserInfoController {
             } else {
                 return false;
             }
+        }
+    }
+
+    public static boolean validEmail(String email){
+        if (null==email || "".equals(email)){
+            return false;
+        }
+        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p = Pattern.compile(regEx1);
+        Matcher m = p.matcher(email);
+        if(m.matches()){
+            return true;
+        }else{
+            return false;
         }
     }
 

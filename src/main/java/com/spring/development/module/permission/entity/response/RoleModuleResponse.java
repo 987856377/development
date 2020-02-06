@@ -113,4 +113,17 @@ public class RoleModuleResponse implements Serializable {
     public void setChildren(List<RoleModuleResponse> children) {
         this.children = children;
     }
+
+    @Override
+    public String toString() {
+        return "RoleModuleResponse{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", pid=" + pid +
+                ", url='" + url + '\'' +
+                ", level='" + level + '\'' +
+                ", flag=" + flag +
+                ", children=" + children +
+                '}';
+    }
 }
