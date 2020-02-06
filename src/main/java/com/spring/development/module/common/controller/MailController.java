@@ -72,9 +72,7 @@ public class MailController {
         sendTime.setTime(this.sendDate);
         sendTime.add(Calendar.MINUTE,30);
         verifyTime.setTime(new Date());
-        if (request.getPassword() == null || verifyTime.after(sendTime)){
-            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE,"验证码已过期");
-        } else if (!this.verifyCode.equals(request.getVerifyCode())){
+        if (request.getPassword() == null || verifyTime.after(sendTime) || !this.verifyCode.equals(request.getVerifyCode())){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE,"验证码不正确");
         }
 
