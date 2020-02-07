@@ -41,6 +41,9 @@
             </if>
         </where>
     </update>
+    <update id="sendDraftMessage">
+        update message set send_flag = 1 where id = #{id}
+    </update>
     <select id="getMessageList" resultType="com.spring.development.module.message.entity.Message">
         select * from message
         <where>

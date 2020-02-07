@@ -110,4 +110,12 @@ public class MessageController {
         }
         return ResultJson.success(messageService.getUnReadCount(message));
     }
+
+    @RequestMapping("sendDraftMessage")
+    public ResultJson sendDraftMessage(@RequestBody Message message){
+        if (message == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(messageService.sendDraftMessage(message));
+    }
 }

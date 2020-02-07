@@ -23,4 +23,6 @@ public interface MessageService extends IService<Message> {
     boolean isRead(Message message);
 
     Integer getUnReadCount(Message message);
+
+    Integer sendDraftMessage(Message message);
 }

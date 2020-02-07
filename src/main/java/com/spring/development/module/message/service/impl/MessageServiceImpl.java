@@ -66,4 +66,12 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         }
         return messageMapper.getUnReadCount(message.getReceiver());
     }
+
+    @Override
+    public Integer sendDraftMessage(Message message) {
+        if (message.getId() == null) {
+            return 0;
+        }
+        return messageMapper.sendDraftMessage(message.getId());
+    }
 }

@@ -22,4 +22,6 @@ public interface MessageMapper extends BaseMapper<Message> {
     boolean isRead(@Param("id") Long id, @Param("readTime") Timestamp readTime, @Param("readFlag") Integer readFlag);
 
     Integer getUnReadCount(@Param("receiver") Long receiver);
+
+    Integer sendDraftMessage(@Param("id") Long id);
 }
