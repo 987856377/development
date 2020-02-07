@@ -46,7 +46,8 @@ public class JwtUtil implements Serializable {
         try {
             Claims claims = getClaimsFromToken(token);
             subject = claims.getSubject();
-            username = subject.substring(0,subject.indexOf("-"));
+            username = subject;
+//            username = subject.substring(0,subject.indexOf("-"));
         } catch (Exception e) {
             username = null;
         }

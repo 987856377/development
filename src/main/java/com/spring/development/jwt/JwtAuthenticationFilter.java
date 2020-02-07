@@ -68,18 +68,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             if (user != null) {
                 return new UsernamePasswordAuthenticationToken(user, null, auth);
             }
-
-//            // parse the token.
-//            String user = Jwts.parser()
-//                    .setSigningKey("JsonWebToken")
-//                    .parseClaimsJws(token.replace("Bearer ", ""))
-//                    .getBody()
-//                    .getSubject();
-//
-//            if (user != null) {
-//                System.out.println(user);
-//                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-//            }
             return null;
         }
         return null;
