@@ -11,7 +11,7 @@
         <result column="flag" property="flag"/>
     </resultMap>
     <update id="updateRoleState">
-        update role set flag = #{flag} where id = #{id}
+        update role set flag = #{flag}, modify_time = #{timestamp} where id = #{id}
     </update>
 
     <select id="getRoleByCode" resultMap="roleMap">

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spring.development.module.user.entity.Role;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -20,5 +21,5 @@ public interface RoleMapper extends BaseMapper<Role> {
     List<String> getRoleCodes();
     List<Role> getRoleList();
 
-    boolean updateRoleState(@Param("id") Long id,@Param("flag")  Integer flag);
+    boolean updateRoleState(@Param("id") Long id, @Param("timestamp") Timestamp timestamp, @Param("flag")  Integer flag);
 }

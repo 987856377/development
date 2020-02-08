@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -60,7 +62,7 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
         if (request.getId() == null || request.getFlag() == null){
             return false;
         }
-        if (roleMapper.updateRoleState(request.getId(),request.getFlag())){
+        if (roleMapper.updateRoleState(request.getId(),new Timestamp(System.currentTimeMillis()),request.getFlag())){
             return userRoleMapper.updateRoleStateFlag(request.getId(), request.getFlag());
         }
         return false;
