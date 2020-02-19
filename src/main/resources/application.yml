@@ -1,16 +1,104 @@
 custom-resource:
     hello world
 
+# 开发环境
 ---
-
+server:
+    port: 8090
 spring:
     profiles: development
+    datasource:
+        dynamic:
+            primary: master #设置默认的数据源或者数据源组,默认值即为master
+            datasource:
+                master:
+                    username: root
+                    password: root
+                    driver-class-name: com.mysql.cj.jdbc.Driver
+                    url: jdbc:mysql://localhost:3306/development?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
+                slave:
+                    username: root
+                    password: root
+                    driver-class-name: com.mysql.cj.jdbc.Driver
+                    url: jdbc:mysql://localhost:3306/development_slave?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
+    mail:
+        host: smtp.qq.com
+        username: 987856377@qq.com
+        password: iqfcjfffvevybbie
+        default-encoding: UTF-8
+        properties.mail.smtp.auth: true
+        properties.mail.smtp.starttls.enable: true
+        properties.mail.smtp.starttls.required: true
+    redis:
+        host: localhost
+        port: 6379
+        database: 0
+        password:
+        jedis.pool.max-idle: 8
+        jedis.pool.max-wait: 60000
+        jedis.pool.min-idle: 0
+        timeout: 0
+    kafka:
+        bootstrap-servers: localhost:9092
+        producer.batch-size: 65536
+        producer.buffer-memory: 524288
+        producer.key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        producer.value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+        consumer.group-id: development
+        consumer.enable-auto-commit: true
+        consumer.auto-commit-interval: 1000
+        consumer.auto-offset-reset: earliest
+        consumer.key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        consumer.value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+# 生产环境
+---
 server:
     port: 8090
-
----
-
 spring:
     profiles: production
-server:
-    port: 8090
+    datasource:
+        dynamic:
+            primary: master #设置默认的数据源或者数据源组,默认值即为master
+            datasource:
+                master:
+                    username: root
+                    password: root
+                    driver-class-name: com.mysql.cj.jdbc.Driver
+                    url: jdbc:mysql://localhost:3306/development?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
+                slave:
+                    username: root
+                    password: root
+                    driver-class-name: com.mysql.cj.jdbc.Driver
+                    url: jdbc:mysql://localhost:3306/development_slave?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
+    mail:
+        host: smtp.qq.com
+        username: 987856377@qq.com
+        password: iqfcjfffvevybbie
+        default-encoding: UTF-8
+        properties.mail.smtp.auth: true
+        properties.mail.smtp.starttls.enable: true
+        properties.mail.smtp.starttls.required: true
+    redis:
+        host: localhost
+        port: 6379
+        database: 0
+        password:
+        jedis.pool.max-idle: 8
+        jedis.pool.max-wait: 60000
+        jedis.pool.min-idle: 0
+        timeout: 0
+    kafka:
+        bootstrap-servers: localhost:9092
+        producer.batch-size: 65536
+        producer.buffer-memory: 524288
+        producer.key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        producer.value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+        consumer.group-id: development
+        consumer.enable-auto-commit: true
+        consumer.auto-commit-interval: 1000
+        consumer.auto-offset-reset: earliest
+        consumer.key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        consumer.value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
