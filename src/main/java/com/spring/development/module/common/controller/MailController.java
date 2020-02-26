@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -82,6 +83,7 @@ public class MailController {
 
         UpdateWrapper<User> wrapper = new UpdateWrapper<>();
         wrapper.lambda().set(User::getPassword, passwordEncoder.encode(request.getPassword()));
+        wrapper.lambda().set(User::getModifyTime, new Timestamp(System.currentTimeMillis()));
         wrapper.lambda().eq(User::getId, id);
         return ResultJson.success(userService.update(wrapper));
     }

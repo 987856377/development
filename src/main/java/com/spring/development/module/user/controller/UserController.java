@@ -226,6 +226,7 @@ public class UserController {
         UpdateWrapper<User> wrapper = new UpdateWrapper<>();
         if (passwordEncoder.matches(request.getRaw(), userService.getById(request.getId()).getPassword())) {
             wrapper.lambda().set(User::getPassword, passwordEncoder.encode(request.getPassword()));
+            wrapper.lambda().set(User::getModifyTime, new Timestamp(System.currentTimeMillis()));
             wrapper.lambda().eq(User::getId, request.getId());
             return ResultJson.success(userService.update(wrapper));
         }

@@ -56,8 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private CustomUserDetailsService customUserDetailsService;
 
-    @Resource
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+//    @Resource
+//    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Resource
     private CustomAccessDeniedHandler customAccessDeniedHandler;
@@ -98,7 +98,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .addFilter(new JwtLoginFilter(authenticationManager()))
                     .addFilter(new JwtAuthenticationFilter(authenticationManager()));
         // 添加JWT filter
-        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        // JwtAuthenticationTokenFilter 与 JwtAuthenticationFilter 功能大体一致, JwtAuthenticationTokenFilter 会增加请求调用时间, 先屏蔽
+//        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         //基于token，所以不需要session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

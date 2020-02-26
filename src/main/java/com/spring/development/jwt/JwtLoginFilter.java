@@ -1,26 +1,21 @@
 package com.spring.development.jwt;
 
-import com.spring.development.module.user.mapper.UserMapper;
-import com.spring.development.module.user.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -103,4 +98,6 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         response.getWriter().println("{\"code\":409,\"message\":\"用户名密码验证失败\",\"data\":\"\"}");
         response.getWriter().flush();
     }
+
+
 }

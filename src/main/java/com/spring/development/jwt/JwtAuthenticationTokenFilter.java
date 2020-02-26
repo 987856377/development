@@ -21,7 +21,8 @@ import java.io.IOException;
 /**
  * OncePerRequestFilter过滤器保证一次请求只调用一次doFilterInternal方法;如内部的forward不会再多执行一次
  */
-@Component
+// 不启用 JwtAuthenticationTokenFilter , 将 @Component 注释掉, 如果启用, 在取消注释
+//@Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
