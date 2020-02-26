@@ -1,5 +1,6 @@
 package com.spring.development.jwt;
 
+import com.spring.development.datasource.JdbcDataSource;
 import com.zaxxer.hikari.HikariDataSource;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -38,12 +39,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtLoginFilter.class);
 
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceBuilder.create()
-            .type(HikariDataSource.class)
-            .driverClassName("com.mysql.cj.jdbc.Driver")
-            .url("jdbc:mysql://localhost:3306/development?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false")
-            .username("root")
-            .password("root").build());
+    private JdbcTemplate jdbcTemplate = new JdbcTemplate(JdbcDataSource.getDataSource());
 
     private AuthenticationManager authenticationManager;
 
