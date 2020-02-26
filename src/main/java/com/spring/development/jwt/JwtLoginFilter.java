@@ -1,10 +1,13 @@
 package com.spring.development.jwt;
 
+import com.zaxxer.hikari.HikariDataSource;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -33,6 +37,13 @@ import java.util.stream.Collectors;
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtLoginFilter.class);
+
+    private JdbcTemplate jdbcTemplate = new JdbcTemplate(DataSourceBuilder.create()
+            .type(HikariDataSource.class)
+            .driverClassName("com.mysql.cj.jdbc.Driver")
+            .url("jdbc:mysql://localhost:3306/development?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false")
+            .username("root")
+            .password("root").build());
 
     private AuthenticationManager authenticationManager;
 
@@ -67,6 +78,9 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
                     .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))  // 设置过期时间1天
                     .signWith(SignatureAlgorithm.HS512, "JsonWebToken")        //采用什么算法是可以自己选择的，不一定非要采用HS512
                     .compact();
+
+            String sql = "update user set last_login_time = ? where username = ?";
+            jdbcTemplate.update(sql, new Timestamp(System.currentTimeMillis()), authResult.getName());
 
 //            Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
 //            // 定义存放角色集合的对象
