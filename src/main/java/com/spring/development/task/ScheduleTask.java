@@ -36,7 +36,7 @@ public class ScheduleTask {
 
     @Async
     @Scheduled(cron = "0 0/30 * * * ?") //间隔30分钟
-    public void UnReadMessageTask(){
+    public void unReadMessageTask(){
         List<String> list = messageService.getUserMail();
         if (list != null)
         list.stream().forEach(e -> {
