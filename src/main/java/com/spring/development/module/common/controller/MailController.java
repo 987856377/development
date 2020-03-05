@@ -54,14 +54,14 @@ public class MailController {
         Mail mail = new Mail();
         mail.setSendTo(request.getSendTo());
         this.sendTo = request.getSendTo();
-        mail.setSubject("重置密码");
+        mail.setSubject("处方流转平台");
         StringBuilder builder = new StringBuilder("您的验证码是: ");
         String verifyCode = String
                 .valueOf(new Random().nextInt(899999) + 100000);
         this.verifyCode = verifyCode;
         builder.append(verifyCode).append("\n验证码 30 分钟内有效, 请谨慎保存!");
         mail.setContent(builder.toString());
-        mailService.sendVerificationCode(mail);
+        mailService.send(mail);
         this.sendDate = new Date(System.currentTimeMillis());
         return ResultJson.success();
     }

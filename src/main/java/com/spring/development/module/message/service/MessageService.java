@@ -5,6 +5,8 @@ import com.spring.development.module.message.entity.Message;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spring.development.module.message.entity.MessageRequest;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -25,4 +27,6 @@ public interface MessageService extends IService<Message> {
     Integer getUnReadCount(Message message);
 
     Integer sendDraftMessage(Message message);
+
+    List<String> getUserMail();
 }

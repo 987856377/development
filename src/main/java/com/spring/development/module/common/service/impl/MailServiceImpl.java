@@ -28,8 +28,9 @@ public class MailServiceImpl implements MailService {
 
     @Value("${spring.mail.username}")
     private String sendFrom;
+
     @Override
-    public void sendVerificationCode(Mail mail) {
+    public void send(Mail mail) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(sendFrom);
         simpleMailMessage.setTo(mail.getSendTo());
@@ -37,9 +38,9 @@ public class MailServiceImpl implements MailService {
         simpleMailMessage.setText(mail.getContent());
         try{
             javaMailSender.send(simpleMailMessage);
-            logger.info(mail.getSendTo() + "的验证码邮件已经发送");
+            logger.info(mail.getSendTo() + "的邮件已经发送");
         }catch (Exception e){
-            logger.error("发送普通邮件时发生异常: " + mail.getSendTo(),e);
+            logger.error("发送邮件时发生异常: " + mail.getSendTo(),e);
         }
     }
 }

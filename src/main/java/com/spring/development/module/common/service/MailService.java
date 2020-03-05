@@ -10,5 +10,5 @@ import com.spring.development.module.common.entity.Mail;
  * @Date 2020/2/6 12:41
  */
 public interface MailService {
-    void sendVerificationCode(Mail mail);
+    void send(Mail mail);
 }

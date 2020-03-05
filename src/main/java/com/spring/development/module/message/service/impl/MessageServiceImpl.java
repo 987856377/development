@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * <p>
@@ -73,5 +74,10 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
             return 0;
         }
         return messageMapper.sendDraftMessage(message.getId());
+    }
+
+    @Override
+    public List<String> getUserMail() {
+        return messageMapper.getUserMail();
     }
 }

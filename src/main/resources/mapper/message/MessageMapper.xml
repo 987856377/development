@@ -79,5 +79,11 @@
     <select id="getUnReadCount" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM message WHERE receiver = #{receiver} AND read_flag = 0
     </select>
+    <select id="getUserMail" resultType="java.lang.String">
+        SELECT DISTINCT user_info.mail
+        FROM user,user_info,message
+        WHERE message.read_time IS NULL AND user.id = user_info.id AND user.id = message.receiver AND user.flag = 1
+            AND send_time >= DATE_ADD(NOW(),INTERVAL -30 MINUTE)
+    </select>
 
 </mapper>

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * <p>
@@ -24,4 +25,6 @@ public interface MessageMapper extends BaseMapper<Message> {
     Integer getUnReadCount(@Param("receiver") Long receiver);
 
     Integer sendDraftMessage(@Param("id") Long id);
+
+    List<String> getUserMail();
 }
