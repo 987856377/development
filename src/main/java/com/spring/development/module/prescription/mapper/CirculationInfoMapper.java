@@ -3,6 +3,7 @@ package com.spring.development.module.prescription.mapper;
 import com.spring.development.module.prescription.entity.CirculationInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
  * @author XuZhenkui
  * @since 2019-11-12
  */
+@Repository
 public interface CirculationInfoMapper extends BaseMapper<CirculationInfo> {
 
     boolean acceptPrescription(@Param("id") Long id, @Param("acceptStatus") Integer acceptStatus, @Param("changeTime") Timestamp changeTime, @Param("extra") String extra);

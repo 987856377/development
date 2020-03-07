@@ -6,6 +6,7 @@ import com.spring.development.module.organization.entity.Organization;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spring.development.module.organization.entity.response.TargetUser;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author XuZhenkui
  * @since 2019-11-11
  */
+@Repository
 public interface OrganizationMapper extends BaseMapper<Organization> {
     List<Organization> getOrg(@Param("id") Long id, @Param("code") String code,
                               @Param("orgflag") String orgflag,@Param("name") String name,

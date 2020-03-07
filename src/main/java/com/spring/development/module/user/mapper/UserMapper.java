@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.spring.development.module.user.entity.User;
 import com.spring.development.module.user.entity.UserDetail;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * @Author xuzhenkui
  * @Date 2019/9/18 14:59
  */
+@Repository
 public interface UserMapper extends BaseMapper<User> {
 
 //    自定义SQL查询: 1.注解方式 2.xml方式

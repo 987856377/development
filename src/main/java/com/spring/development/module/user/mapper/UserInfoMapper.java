@@ -6,6 +6,7 @@ import com.spring.development.module.user.entity.UserInfo;
 import com.spring.development.module.user.entity.response.UserCountData;
 import com.spring.development.module.user.entity.response.UserResponse;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @Author xuzhenkui
  * @Date 2019/10/2 16:25
  */
+@Repository
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
     List<String> getUserNamesByOrgCode(@Param("orgcode") String orgcode, @Param("orgname") String orgname);
 

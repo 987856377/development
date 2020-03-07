@@ -5,6 +5,7 @@ import com.spring.development.module.prescription.entity.PrescriptionStatus;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spring.development.module.prescription.entity.response.PrescriptionResponse;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author XuZhenkui
  * @since 2019-11-12
  */
+@Repository
 public interface PrescriptionStatusMapper extends BaseMapper<PrescriptionStatus> {
 
     boolean stopCirculate(@Param("pid") Long pid, @Param("flag") Integer flag, @Param("forbiddenTime") Timestamp forbiddenTime,

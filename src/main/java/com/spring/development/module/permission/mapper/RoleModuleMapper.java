@@ -5,6 +5,7 @@ import com.spring.development.module.permission.entity.RoleModule;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spring.development.module.permission.entity.response.RoleModuleResponse;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @author XuZhenkui
  * @since 2019-12-12
  */
+@Repository
 public interface RoleModuleMapper extends BaseMapper<RoleModule> {
 
     List<RoleModuleResponse> getModulesByRoles(@Param("userRoles") List<String> userRoles, @Param("level") Integer level);

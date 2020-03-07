@@ -12,6 +12,7 @@ import com.spring.development.module.organization.service.OrganizationService;
 import com.spring.development.module.user.entity.UserInfo;
 import com.spring.development.module.user.service.UserInfoService;
 import com.spring.development.module.user.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -177,6 +178,7 @@ public class OrganizationController {
         return ResultJson.success(organizationService.getOrg(request));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','DBA')")
     @RequestMapping("getOrgList")
     public ResultJson getOrgList(@RequestBody OrgRequest request){
         return ResultJson.success(organizationService.page(request.getPage()));
