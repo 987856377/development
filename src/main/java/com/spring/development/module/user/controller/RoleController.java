@@ -5,6 +5,7 @@ import com.spring.development.common.ResultJson;
 import com.spring.development.module.user.entity.Role;
 import com.spring.development.module.user.entity.request.RoleRequest;
 import com.spring.development.module.user.service.RoleService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,7 @@ public class RoleController {
     @Resource
     private RoleService roleService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','DBA')")
     @RequestMapping("saveOrUpdate")
     public ResultJson saveOrUpdate(@RequestBody Role role){
         if (role==null){
@@ -46,6 +48,7 @@ public class RoleController {
         return ResultJson.success(roleService.getRoleList());
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','DBA')")
     @RequestMapping("updateRoleState")
     public ResultJson updateRoleState(@RequestBody RoleRequest request){
         return ResultJson.success(roleService.updateRoleState(request));

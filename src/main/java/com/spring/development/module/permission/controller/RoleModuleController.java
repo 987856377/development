@@ -5,6 +5,7 @@ import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
 import com.spring.development.module.permission.entity.request.RoleModuleRequest;
 import com.spring.development.module.permission.service.RoleModuleService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -41,6 +42,7 @@ public class RoleModuleController {
         return ResultJson.success(roleModuleService.getModulesByRoles(request));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','DBA')")
     @RequestMapping("addModulesByRole")
     public ResultJson addModulesByRole(@RequestBody RoleModuleRequest request){
         if (request == null) {
@@ -49,6 +51,7 @@ public class RoleModuleController {
         return ResultJson.success(roleModuleService.addModulesByRole(request));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','DBA')")
     @RequestMapping("delModulesByRole")
     public ResultJson delModulesByRole(@RequestBody RoleModuleRequest request){
         if (request == null) {
