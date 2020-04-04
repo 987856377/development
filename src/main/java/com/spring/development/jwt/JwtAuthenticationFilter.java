@@ -60,13 +60,13 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         if (token != null) {
             Claims claims = Jwts.parser().setSigningKey("JsonWebToken").parseClaimsJws(token.replace("Bearer ", ""))
                     .getBody();
-            String user  = claims.getSubject();
+            String username  = claims.getAudience();
             @SuppressWarnings("unchecked")
             List<String> roles = claims.get("roles", List.class);
             List<SimpleGrantedAuthority> auth = roles.stream().map(s -> new SimpleGrantedAuthority(s)).collect(Collectors.toList());
 
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, auth);
+            if (username != null) {
+                return new UsernamePasswordAuthenticationToken(username, null, auth);
             }
             return null;
         }

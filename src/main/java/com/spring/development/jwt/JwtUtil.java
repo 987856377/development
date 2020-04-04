@@ -1,31 +1,47 @@
 package com.spring.development.jwt;
 
+import com.spring.development.module.user.entity.Role;
 import com.spring.development.module.user.entity.User;
+import com.spring.development.module.user.entity.UserDetail;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil implements Serializable {
 
-    private String generateToken(Map<String, Object> claims) {
-        Date expirationDate = new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000);
-        return Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, "JsonWebToken").compact();
+    private static final String ISSUER = "Prescription Circulation Platform";   // 发行机构
+    private static final String SUBJECT = "Authorization Token";                // 主题
+    private static final long EXPIRATION = 1000 * 60 * 60 * 24 * 7;             // 过期时间为一周
+
+    private static final String APPSECRET = "JsonWebToken";                     // 签名密钥
+
+
+    private String tokenBuilder(Claims claims) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuer(ISSUER)      // 发行人
+                .setSubject(SUBJECT)    // 主题
+                .setAudience(claims.get("username").toString())  // 接收方 用户
+                .setIssuedAt(new Date())    // 发行时间
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))  // 设置过期时间7天
+                .signWith(SignatureAlgorithm.HS512, APPSECRET)        // 签名算法
+                .compact();
     }
 
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
-            claims = Jwts.parser().setSigningKey("JsonWebToken").parseClaimsJws(token.replace("Bearer ", "")).getBody();
+            claims = Jwts.parser().setSigningKey(APPSECRET).parseClaimsJws(token.replace("Bearer ", "")).getBody();
         } catch (Exception e) {
             claims = null;
         }
@@ -33,21 +49,24 @@ public class JwtUtil implements Serializable {
     }
 
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>(2);
-        claims.put(Claims.SUBJECT, userDetails.getUsername());
-        claims.put(Claims.ISSUED_AT, new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000));
-        return generateToken(claims);
+        Claims claims = Jwts.claims();
+        claims.put("username", userDetails.getUsername());
+        claims.put("roles", userDetails.getAuthorities().stream().map(s -> s.getAuthority()).collect(Collectors.toList()));
+        return tokenBuilder(claims);
+    }
+
+    public String generateToken(Authentication authentication) {
+        Claims claims = Jwts.claims();
+        claims.put("username", authentication.getName());
+        claims.put("roles", authentication.getAuthorities().stream().map(s -> s.getAuthority()).collect(Collectors.toList()));
+        return tokenBuilder(claims);
     }
 
     public String getUsernameFromToken(String token) {
-        String subject;
         String username;
-
         try {
             Claims claims = getClaimsFromToken(token);
-            subject = claims.getSubject();
-            username = subject;
-//            username = subject.substring(0,subject.indexOf("-"));
+            username = claims.getAudience();
         } catch (Exception e) {
             username = null;
         }
@@ -64,18 +83,6 @@ public class JwtUtil implements Serializable {
         }
     }
 
-    public String refreshToken(String token) {
-        String refreshedToken;
-        try {
-            Claims claims = getClaimsFromToken(token);
-            claims.put(Claims.ISSUED_AT, new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000));
-            refreshedToken = generateToken(claims);
-        } catch (Exception e) {
-            refreshedToken = null;
-        }
-        return refreshedToken;
-    }
-
     public Boolean validateToken(String token, UserDetails userDetails) {
         User user = (User) userDetails;
         String username = getUsernameFromToken(token);
@@ -84,7 +91,8 @@ public class JwtUtil implements Serializable {
 
     public static void main(String[] args) {
         JwtUtil util = new JwtUtil();
-        String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbi1bREJBLCBBRE1JTl0iLCJleHAiOjE1NzQwNTM5Nzd9.oWKIiltjZ6VYt5wlSvwj1QIvZDskvA4YJJaD2sUSn79AB0Wooljr9frxTWMopWyMhKN8GTevnULWlNCimwFEyA";
+
+        String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZXMiOlsiQURNSU4iLCJEQkEiLCJBVURJVCJdLCJpc3MiOiJQcmVzY3JpcHRpb24gQ2lyY3VsYXRpb24gUGxhdGZvcm0iLCJzdWIiOiJBdXRob3JpemF0aW9uIFRva2VuIiwiYXVkIjoiYWRtaW4iLCJpYXQiOjE1ODU5ODU2ODEsImV4cCI6MTU4NjU5MDQ4MX0.3IGusrZXpu_HkiZhf3B-MbKzKZrVFnS1CuD-iHLr4PEJU9kHIkQieIl5piSlqvJuXLxM-uXLw05TCZNALjgSJA";
 
         String user = Jwts.parser()
                 .setSigningKey("JsonWebToken")
@@ -95,11 +103,21 @@ public class JwtUtil implements Serializable {
         Claims claimsFromToken = util.getClaimsFromToken(token);
         System.out.println(claimsFromToken);
 
-        System.out.println(claimsFromToken.getSubject());
+        System.out.println(claimsFromToken.get("username"));
+        System.out.println(claimsFromToken.getAudience());
 
-        String t = util.getUsernameFromToken(token);
-        System.out.println(t.substring(0,t.indexOf("-")));
-        System.out.println(user);
+        UserDetail userDetail = new UserDetail();
+        userDetail.setUsername("frank");
+        List<Role> list = new ArrayList();
+        Role role = new Role();
+        role.setCode("ADMIN");
+        list.add(role);
+        userDetail.setRoles(list);
+
+        String token1 = "Bearer " + util.generateToken((UserDetails) userDetail);
+        System.out.println(token1);
+
+        System.out.println(util.getUsernameFromToken(token1));
     }
 }
 

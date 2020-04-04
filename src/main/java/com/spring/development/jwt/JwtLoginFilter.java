@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -38,6 +40,12 @@ import java.util.stream.Collectors;
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtLoginFilter.class);
+
+    private static final String ISSUER = "Prescription Circulation Platform";   // 发行机构
+    private static final String SUBJECT = "Authorization Token";                // 主题
+    private static final long EXPIRATION = 1000 * 60 * 60 * 24 * 7;             // 过期时间为一周
+
+    private static final String APPSECRET = "JsonWebToken";                     // 签名密钥
 
     private JdbcTemplate jdbcTemplate = new JdbcTemplate(JdbcDataSource.getDataSource());
 
@@ -66,31 +74,25 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         try {
 
+//            JwtUtil jwtUtil = new JwtUtil();
+//            String token = jwtUtil.generateToken(authResult);
+
             Claims claims = Jwts.claims();
+            claims.put("username",authResult.getName());
             claims.put("roles", authResult.getAuthorities().stream().map(s -> s.getAuthority()).collect(Collectors.toList()));
+
             String token = Jwts.builder()
                     .setClaims(claims)
-                    .setSubject(authResult.getName())
-                    .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))  // 设置过期时间1天
-                    .signWith(SignatureAlgorithm.HS512, "JsonWebToken")        //采用什么算法是可以自己选择的，不一定非要采用HS512
+                    .setIssuer(ISSUER)      // 发行人
+                    .setSubject(SUBJECT)    // 主题
+                    .setAudience(authResult.getName())      // 接收方 用户
+                    .setIssuedAt(new Date())                // 发行时间
+                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))  // 设置过期时间7天
+                    .signWith(SignatureAlgorithm.HS512, APPSECRET)        // 签名算法
                     .compact();
 
             String sql = "update user set last_login_time = ? where username = ?";
             jdbcTemplate.update(sql, new Timestamp(System.currentTimeMillis()), authResult.getName());
-
-//            Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
-//            // 定义存放角色集合的对象
-//            List roleList = new ArrayList<>();
-//            for (GrantedAuthority grantedAuthority : authorities) {
-//                //noinspection unchecked
-//                roleList.add(grantedAuthority.getAuthority());
-//            }
-//
-//            String token = Jwts.builder()
-//                    .setSubject(authResult.getName() + "-" + roleList)
-//                    .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000)) // 设置过期时间1天
-//                    .signWith(SignatureAlgorithm.HS512, "JsonWebToken") //采用什么算法是可以自己选择的，不一定非要采用HS512
-//                    .compact();
 
             // 登录成功后，返回token到header里面
             response.addHeader("Authorization", "Bearer " + token);
