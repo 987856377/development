@@ -1,6 +1,7 @@
 package com.spring.development.jwt;
 
 import com.spring.development.datasource.JdbcDataSource;
+import com.spring.development.util.PropertyUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -41,17 +42,24 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtLoginFilter.class);
 
+    /*
     private static final String ISSUER = "Prescription Circulation Platform";   // 发行机构
     private static final String SUBJECT = "Authorization Token";                // 主题
     private static final long EXPIRATION = 1000 * 60 * 60 * 24 * 7;             // 过期时间为一周
 
     private static final String APPSECRET = "JsonWebToken";                     // 签名密钥
+    */
+
+    private final String ISSUER = (String) PropertyUtil.load("JWT_ISSUER","application.properties").get(0);
+    private final String SUBJECT = (String) PropertyUtil.load("JWT_SUBJECT","application.properties").get(0);
+    private final String EXPIRATION = (String) PropertyUtil.load("JWT_EXPIRATION","application.properties").get(0);
+    private final String APPSECRET = (String) PropertyUtil.load("JWT_APPSECRET","application.properties").get(0);
 
     private JdbcTemplate jdbcTemplate = new JdbcTemplate(JdbcDataSource.getDataSource());
 
     private AuthenticationManager authenticationManager;
 
-    public JwtLoginFilter(AuthenticationManager authenticationManager) {
+    public JwtLoginFilter(AuthenticationManager authenticationManager) throws IOException {
         this.authenticationManager = authenticationManager;
     }
 
@@ -87,7 +95,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
                     .setSubject(SUBJECT)    // 主题
                     .setAudience(authResult.getName())      // 接收方 用户
                     .setIssuedAt(new Date())                // 发行时间
-                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))  // 设置过期时间7天
+                    .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(EXPIRATION)))  // 设置过期时间7天
                     .signWith(SignatureAlgorithm.HS512, APPSECRET)        // 签名算法
                     .compact();
 
