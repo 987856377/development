@@ -54,6 +54,14 @@ public class ResultJson<T> implements Serializable {
         return new ResultJson(resultCode,o);
     }
 
+    public ResultJson() {
+    }
+
+    public ResultJson(int code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
 
     public ResultJson(ResultCode resultCode){
         setResultCode(resultCode);
