@@ -41,8 +41,11 @@
              <if test="level != null">
                  and level = #{level}
              </if>
-             <if test="pid != null and pid != ''">
-                 and pid = #{pid}
+             <if test="pidList != null">
+                 and pid in
+                     <foreach item="item" index="index" collection="pidList" open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
              </if>
              <choose>
                  <when test="own == 1">

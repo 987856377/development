@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -32,13 +34,13 @@ public class RoleModuleServiceImpl extends ServiceImpl<RoleModuleMapper, RoleMod
         if (request == null){
             return null;
         }
-//        List<RoleModuleResponse> roleModuleResponses = roleModuleMapper.getModulesByRoles(request.getUserRoles(),1);
-//        for (RoleModuleResponse response : roleModuleResponses){
-//            response.setSubModule(roleModuleMapper.getSubModulesByRoles(request.getUserRoles(), response.getId(),2));
-//        }
-        List<RoleModuleResponse> roleModuleResponses = roleModuleMapper.getModulesByRoleList(request.getOwn() ,request.getUserRoles(), "",1);
-        for (RoleModuleResponse response : roleModuleResponses){
-            response.setChildren(roleModuleMapper.getModulesByRoleList(request.getOwn() ,request.getUserRoles(), response.getId().toString(),2));
+        List<RoleModuleResponse> roleModuleResponses = roleModuleMapper.getModulesByRoleList(request.getOwn() ,request.getUserRoles(), null,1);
+        if (roleModuleResponses.size() != 0) {
+            List<Long> pidList = roleModuleResponses.stream().map(RoleModuleResponse::getId).collect(Collectors.toList());
+            List<RoleModuleResponse> modulesByRoleList = roleModuleMapper.getModulesByRoleList(request.getOwn(), request.getUserRoles(), pidList, 2);
+            if (modulesByRoleList.size() != 0) {
+                roleModuleResponses.forEach(s -> s.setChildren(modulesByRoleList.stream().filter(k -> Objects.equals(s.getId(),k.getPid())).collect(Collectors.toList())));
+            }
         }
         return roleModuleResponses;
     }

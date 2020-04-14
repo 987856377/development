@@ -26,7 +26,7 @@ public class RoleModuleResponse implements Serializable {
     /**
      * 父菜单id
      */
-    private Integer pid;
+    private Long pid;
 
     /**
      * 菜单url
@@ -48,7 +48,7 @@ public class RoleModuleResponse implements Serializable {
     public RoleModuleResponse() {
     }
 
-    public RoleModuleResponse(Long id, String label, Integer pid, String url, String level, Integer flag, List<RoleModuleResponse> children) {
+    public RoleModuleResponse(Long id, String label, Long pid, String url, String level, Integer flag, List<RoleModuleResponse> children) {
         this.id = id;
         this.label = label;
         this.pid = pid;
@@ -74,11 +74,11 @@ public class RoleModuleResponse implements Serializable {
         this.label = label;
     }
 
-    public Integer getPid() {
+    public Long getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setPid(Long pid) {
         this.pid = pid;
     }
 
