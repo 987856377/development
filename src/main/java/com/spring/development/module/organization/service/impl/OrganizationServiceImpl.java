@@ -111,4 +111,13 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         }
         return responseList;
     }
+
+    @Override
+    public List<Organization> getPeerAndSubOrgListByOrgFlag(OrgRequest request) {
+        if (request.getOrgflag() == null || "".equals(request.getOrgflag())){
+            return null;
+        }
+        String parentOrgFlag = request.getOrgflag().substring(0,request.getOrgflag().length()-2);
+        return organizationMapper.getPeerAndSubOrgListByOrgFlag(parentOrgFlag);
+    }
 }

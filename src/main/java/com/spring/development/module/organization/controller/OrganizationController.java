@@ -137,7 +137,7 @@ public class OrganizationController {
      */
     @RequestMapping("getOrgByName")
     public ResultJson getOrgByName(@RequestBody OrgRequest request){
-        if (request.getName() == null){
+        if (request.getName() == null || "".equals(request.getName())){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         QueryWrapper wrapper = new QueryWrapper();
@@ -193,7 +193,7 @@ public class OrganizationController {
      */
     @RequestMapping("cancelOrg")
     public ResultJson cancelOrg(@RequestBody OrgRequest request){
-        if (request.getName() == null || request.getFlag() == null){
+        if (request.getName() == null || request.getFlag() == null || "".equals(request.getName())){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         Organization organization = organizationService.getOrgByName(request.getName());
@@ -215,7 +215,7 @@ public class OrganizationController {
     * */
     @RequestMapping("getSubOrg")
     public ResultJson getSubOrg(@RequestBody OrgRequest request){
-        if (request.getOrgflag() == null){
+        if (request.getOrgflag() == null || "".equals(request.getOrgflag())){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         return ResultJson.success(organizationService.getSubOrg(request));
@@ -245,7 +245,7 @@ public class OrganizationController {
      * */
     @RequestMapping("getOrgCodeAndUsersByName")
     public ResultJson getOrgCodeAndUsersByName(@RequestBody OrgRequest request){
-        if (request.getName() == null){
+        if (request.getName() == null || "".equals(request.getName())){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         return ResultJson.success(organizationService.getOrgCodeAndUsersByName(request));
@@ -289,9 +289,24 @@ public class OrganizationController {
      * */
     @RequestMapping("getOrgIntroductionByCode")
     public ResultJson getOrgIntroductionByCode(@RequestBody OrgRequest request){
-        if (request.getCode() == null){
+        if (request.getCode() == null || "".equals(request.getCode())){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         return ResultJson.success(organizationService.getOrgIntroductionByCode(request));
+    }
+
+    /*
+     * 获取上级机构下的所有下级机构
+     * {
+     *   "orgflag": "3X0121"
+     * }
+     *
+     * */
+    @RequestMapping("getPeerAndSubOrgListByOrgFlag")
+    public ResultJson getPeerAndSubOrgListByOrgFlag(@RequestBody OrgRequest request){
+        if (request.getOrgflag() == null || "".equals(request.getOrgflag())){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        return ResultJson.success(organizationService.getPeerAndSubOrgListByOrgFlag(request));
     }
 }

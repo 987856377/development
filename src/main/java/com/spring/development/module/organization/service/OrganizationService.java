@@ -31,4 +31,6 @@ public interface OrganizationService extends IService<Organization> {
     String getOrgIntroductionByCode(OrgRequest request);
 
     List<CountResponse> count(CountRequest request);
+
+    List<Organization> getPeerAndSubOrgListByOrgFlag(OrgRequest request);
 }

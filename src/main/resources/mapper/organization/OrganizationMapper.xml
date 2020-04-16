@@ -27,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, name, classify, type, host, relation, postcode, address, phone, mail, responser, officer, web, supervising, date, introduction,flag
+        id, code, orgflag, name, classify, type, host, relation, postcode, address, phone, mail, responser, officer, web, supervising, date, introduction,flag
     </sql>
 
     <select id="getOrg" resultType="com.spring.development.module.organization.entity.Organization">
@@ -141,6 +141,17 @@
          SELECT (SELECT name FROM org_relation WHERE id = #{relation} ) name, COUNT(0) value
             FROM organization
             WHERE relation = #{relation} and flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="getPeerAndSubOrgListByOrgFlag"
+            resultType="com.spring.development.module.organization.entity.Organization">
+        select <include refid="Base_Column_List"/> from organization
+        <where>
+            <if test="orgflag != null and orgflag != ''">
+                <bind name="orgFlag" value="orgflag + '%'"/>
+                orgflag like #{orgFlag} and flag = 1
+            </if>
+            order by orgflag asc
+        </where>
     </select>
 
     <update id="cancelOrg">
