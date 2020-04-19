@@ -39,4 +39,12 @@ public class UserAndInfoRequest implements Serializable {
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
     }
+
+    @Override
+    public String toString() {
+        return "UserAndInfoRequest{" +
+                "user=" + user.toString() +
+                ", userInfo=" + userInfo.toString() +
+                '}';
+    }
 }
