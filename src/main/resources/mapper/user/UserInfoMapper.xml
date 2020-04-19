@@ -67,6 +67,12 @@
         where identity = #{identity} or phone = #{phone} or mail = #{mail}
         group by id having id != #{id}
     </select>
+    <select id="getUserAndOrgInfoByUsername"
+            resultType="com.spring.development.module.user.entity.response.UserOrgInfoResponse">
+        SELECT user_info.id,user_info.name,user_info.orgcode,user_info.orgname,organization.orgflag
+        FROM user,user_info,organization
+        WHERE user.id = user_info.id and user_info.orgcode = organization.code and user.username = #{username}
+    </select>
 
 </mapper>
 

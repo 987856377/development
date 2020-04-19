@@ -21,6 +21,8 @@ import java.util.List;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
+    boolean create(@Param("user") User user);
+
 //    自定义SQL查询: 1.注解方式 2.xml方式
 //    @Select("select * from user where username = #{username}")
     List<User> getByUsername(@Param("username") String username);

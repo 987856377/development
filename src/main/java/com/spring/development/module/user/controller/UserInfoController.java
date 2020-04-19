@@ -1,24 +1,24 @@
 package com.spring.development.module.user.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spring.development.annotation.Auth;
 import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
 import com.spring.development.module.user.entity.User;
 import com.spring.development.module.user.entity.UserInfo;
+import com.spring.development.module.user.entity.request.UserAndInfoRequest;
 import com.spring.development.module.user.entity.request.UserListRequest;
 import com.spring.development.module.user.entity.request.UserRequest;
-import com.spring.development.module.user.entity.response.UserResponse;
 import com.spring.development.module.user.service.UserInfoService;
 import com.spring.development.module.user.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +38,62 @@ public class UserInfoController {
 
     @Resource
     private UserInfoService userInfoService;
+
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    /*/*
+         * @Description
+         * @param userInfo
+            {"user":{
+                "username":"admin123456",
+                 "password":"as"
+                 "flag":"1",
+                },
+             "userInfo":{
+                "orgcode": "3C151659",
+                "orgname": "淄博市中心医院",
+                "name": "许振奎",
+                "nation":"汉族",
+                "identity":410928199122151659,
+                "sex":"男",
+                "age":22,
+                "phone":18531323215,
+                "mail":"aha11k@gmail.com"
+            }}
+         * @Return com.spring.development.common.ResultJson
+         * @Author XuZhenkui
+         * @Creed: Talk is cheap,show me the code
+         * @Date 2019/10/2 19:01
+    */
+    @RequestMapping("create")
+    public ResultJson create(@RequestBody UserAndInfoRequest request){
+        User user = request.getUser();
+        UserInfo userInfo = request.getUserInfo();
+        if (user==null || user.getUsername() == null || "".equals(user.getUsername())
+                || user.getPassword() == null || "".equals(user.getPassword())
+                || userInfo==null
+                || userInfo.getName() == null || userInfo.getIdentity() == null
+                || userInfo.getPhone() == null|| userInfo.getMail() == null){
+            return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
+        }
+        if (userInfoService.getOne(userInfo) != null || !validPhone(userInfo.getPhone()) || !validEmail(userInfo.getMail())){
+            return ResultJson.failure(ResultCode.BAD_REQUEST,"身份证号, 手机号, 邮箱已被注册或格式不合法");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (userService.getIdByUsername(user.getUsername()) != null){
+            return ResultJson.failure(ResultCode.BAD_REQUEST,"用户名已被注册");
+        } else {
+            user.setRegisterTime(new Timestamp(System.currentTimeMillis()));
+            user.setModifyTime(new Timestamp(System.currentTimeMillis()));
+            boolean isUserCreated = userService.create(user);
+            userInfo.setId(user.getId());
+            boolean isUserInfoCreated = userInfoService.save(userInfo);
+            if (isUserCreated && isUserInfoCreated){
+                return ResultJson.success(user.getId());
+            }
+            return ResultJson.failure(ResultCode.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     /*/*
          * @Description
@@ -221,5 +277,21 @@ public class UserInfoController {
     @RequestMapping("countUser")
     public ResultJson countUser(){
         return ResultJson.success(userInfoService.countUser());
+    }
+
+    /*/*
+    * @Description
+    * @param page
+       {
+           "username": "admin"
+       }
+    * @Return com.spring.development.common.ResultJson
+    * @Author XuZhenkui
+    * @Creed: Talk is cheap,show me the code
+    * @Date 2019/10/2 20:50
+    */
+    @RequestMapping("getUserAndOrgInfoByUsername")
+    public ResultJson getUserAndOrgInfoByUsername(@RequestBody UserRequest request){
+        return ResultJson.success(userInfoService.getUserAndOrgInfoByUsername(request));
     }
 }

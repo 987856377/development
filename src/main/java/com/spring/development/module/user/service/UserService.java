@@ -25,6 +25,10 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @Resource
     private UserMapper userMapper;
 
+    public boolean create(User user){
+        return userMapper.create(user);
+    }
+
     public List<User> selectList(Wrapper wrapper){
         return userMapper.selectList(wrapper);
     }

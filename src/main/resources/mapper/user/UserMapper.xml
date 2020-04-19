@@ -11,6 +11,9 @@
         <result column="last_login_time" property="lastLoginTime"/>
         <result column="flag" property="flag"/>
     </resultMap>
+    <insert id="create" parameterType="com.spring.development.module.user.entity.User" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into user(username,password,register_time,modify_time,flag) values (#{user.username},#{user.password},#{user.registerTime},#{user.modifyTime},#{user.flag})
+    </insert>
 
     <select id="getByUsername" parameterType="String" resultMap="userMap">
         select * from user

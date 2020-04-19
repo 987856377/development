@@ -2,10 +2,13 @@ package com.spring.development.module.user.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.spring.development.module.organization.entity.request.OrgRequest;
+import com.spring.development.module.organization.service.OrganizationService;
 import com.spring.development.module.user.entity.request.UserListRequest;
 import com.spring.development.module.user.entity.request.UserRequest;
 import com.spring.development.module.user.entity.response.UserCountData;
 import com.spring.development.module.user.entity.response.UserCountResponse;
+import com.spring.development.module.user.entity.response.UserOrgInfoResponse;
 import com.spring.development.module.user.entity.response.UserResponse;
 import com.spring.development.module.user.mapper.UserInfoMapper;
 import com.spring.development.module.user.entity.UserInfo;
@@ -28,6 +31,9 @@ import java.util.stream.Collectors;
 public class UserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> {
     @Resource
     private UserInfoMapper userInfoMapper;
+
+    @Resource
+    private OrganizationService organizationService;
 
     // 下面两个接口只需要传 orgcode 或 orgname 一个就可以了
     public List<String> getUserNameByOrgCodeOrName(UserInfo userInfo){
@@ -71,5 +77,13 @@ public class UserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> {
             return null;
         }
         return userInfoMapper.getOne(userInfo.getId(),userInfo.getIdentity(),userInfo.getPhone(),userInfo.getMail());
+    }
+
+    public UserOrgInfoResponse getUserAndOrgInfoByUsername(UserRequest request) {
+        UserOrgInfoResponse response = userInfoMapper.getUserAndOrgInfoByUsername(request.getUsername());
+        OrgRequest orgRequest = new OrgRequest();
+        orgRequest.setOrgflag(response.getOrgflag());
+        response.setSubOrgList(organizationService.getSubOrg(orgRequest));
+        return response;
     }
 }
