@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-@EnableCaching
+//@EnableCaching
 public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Organization> implements OrganizationService {
 
     @Resource
@@ -86,7 +86,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         return response;
     }
 
-    @Cacheable(value = "getOrgIntroductionByCode", key = "#request")
+//    @Cacheable(value = "getOrgIntroductionByCode", key = "#request")
     @Override
     public String getOrgIntroductionByCode(OrgRequest request) {
         if (request.getCode() == null){
