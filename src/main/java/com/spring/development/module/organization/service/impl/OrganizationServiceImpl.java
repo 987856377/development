@@ -9,6 +9,8 @@ import com.spring.development.module.organization.entity.response.OrgUserRespons
 import com.spring.development.module.organization.mapper.OrganizationMapper;
 import com.spring.development.module.organization.service.OrganizationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,7 @@ import java.util.List;
  */
 @Service
 @Transactional
+@EnableCaching
 public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Organization> implements OrganizationService {
 
     @Resource
@@ -83,6 +86,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         return response;
     }
 
+    @Cacheable(value = "getOrgIntroductionByCode", key = "#request")
     @Override
     public String getOrgIntroductionByCode(OrgRequest request) {
         if (request.getCode() == null){
@@ -92,10 +96,10 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     }
 
     @Override
-    public List<CountResponse> count(CountRequest request) {
+    public List<CountResponse> countOrganization(CountRequest request) {
         List<CountResponse> responseList = new ArrayList<>();
         if (request.getClassify() == null && request.getHost() == null && request.getType() == null && request.getRelation() == null){
-            return Collections.singletonList(organizationMapper.countTotal(request.getFlag(),request.getBegin(),request.getEnd()    ));
+            return Collections.singletonList(organizationMapper.countTotal(request.getFlag(),request.getBegin(),request.getEnd()));
         }
         if (request.getClassify() != null){
             responseList.add(organizationMapper.countClassify(request.getClassify(),request.getFlag(),request.getBegin(),request.getEnd()));

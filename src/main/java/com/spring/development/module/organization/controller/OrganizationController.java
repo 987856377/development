@@ -2,15 +2,12 @@ package com.spring.development.module.organization.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
 import com.spring.development.module.organization.entity.Organization;
 import com.spring.development.module.organization.entity.request.CountRequest;
 import com.spring.development.module.organization.entity.request.OrgRequest;
 import com.spring.development.module.organization.service.OrganizationService;
-import com.spring.development.module.user.entity.UserInfo;
-import com.spring.development.module.user.service.UserInfoService;
 import com.spring.development.module.user.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -276,7 +273,7 @@ public class OrganizationController {
             request.setBegin(request.getEnd());
             request.setEnd(timestamp);
         }
-        return ResultJson.success(organizationService.count(request));
+        return ResultJson.success(organizationService.countOrganization(request));
     }
 
 
