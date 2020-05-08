@@ -86,7 +86,7 @@ public class CirculationInfo extends Model<CirculationInfo> {
     private String receiverName;
 
     /**
-     * 接收状态 1:已接收 ,0:未接收, 9. 拒绝
+     * 接收状态 1:已接收 ,0:未接收, 9. 拒绝, -1. 已撤回
      */
     private Integer acceptStatus = 0;
 

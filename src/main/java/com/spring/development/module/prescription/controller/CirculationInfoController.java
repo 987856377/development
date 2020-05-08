@@ -51,7 +51,10 @@ public class CirculationInfoController {
         if (circulationInfo == null){
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
-        circulationInfo.setOriginTime(new Timestamp(System.currentTimeMillis()));
+        if(circulationInfo.getAcceptStatus() == 0){
+            circulationInfo.setOriginTime(new Timestamp(System.currentTimeMillis()));
+        }
+        circulationInfo.setChangeTime(new Timestamp(System.currentTimeMillis()));
         return ResultJson.success(circulationInfoService.saveOrUpdate(circulationInfo));
     }
 
