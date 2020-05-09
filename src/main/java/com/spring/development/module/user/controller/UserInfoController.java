@@ -5,6 +5,7 @@ import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
 import com.spring.development.module.user.entity.User;
 import com.spring.development.module.user.entity.UserInfo;
+import com.spring.development.module.user.entity.request.CountUserRequest;
 import com.spring.development.module.user.entity.request.UserAndInfoRequest;
 import com.spring.development.module.user.entity.request.UserListRequest;
 import com.spring.development.module.user.entity.request.UserRequest;
@@ -275,8 +276,8 @@ public class UserInfoController {
     }
 
     @RequestMapping("countUser")
-    public ResultJson countUser(){
-        return ResultJson.success(userInfoService.countUser());
+    public ResultJson countUser(@RequestBody CountUserRequest countUserRequest){
+        return ResultJson.success(userInfoService.countUser(countUserRequest));
     }
 
     /*/*

@@ -59,7 +59,13 @@
     <select id="countUser" resultType="com.spring.development.module.user.entity.response.UserCountData">
         select orgname, sum(case when sex='男' then 1 else 0 end ) manNum, sum(case when sex='女' then 1 else 0 end ) womanNum, COUNT(id) total
         FROM user_info
-        WHERE orgname in (SELECT name FROM organization)
+        WHERE orgname in (
+        SELECT name FROM organization
+        <if test="orgflag != null and orgflag != ''">
+            <bind name="orgFlag" value="orgflag + '%'"/>
+            WHERE orgflag LIKE #{orgFlag}
+        </if>
+        )
         GROUP BY orgname
     </select>
     <select id="getOne" resultType="com.spring.development.module.user.entity.UserInfo">

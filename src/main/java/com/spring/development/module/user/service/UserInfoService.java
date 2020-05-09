@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring.development.module.organization.entity.request.OrgRequest;
 import com.spring.development.module.organization.service.OrganizationService;
+import com.spring.development.module.user.entity.request.CountUserRequest;
 import com.spring.development.module.user.entity.request.UserListRequest;
 import com.spring.development.module.user.entity.request.UserRequest;
 import com.spring.development.module.user.entity.response.UserCountData;
@@ -62,9 +63,9 @@ public class UserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> {
         return userInfoMapper.getUserInfoByUsername(request.getUsername());
     }
 
-    public UserCountResponse countUser() {
+    public UserCountResponse countUser(CountUserRequest countUserRequest) {
         UserCountResponse response = new UserCountResponse();
-        List<UserCountData> dataList = userInfoMapper.countUser();
+        List<UserCountData> dataList = userInfoMapper.countUser(countUserRequest.getOrgflag());
         response.setOrgNameList(dataList.stream().map(UserCountData::getOrgname).collect(Collectors.toList()));
         response.setOrgManList(dataList.stream().map(UserCountData::getManNum).collect(Collectors.toList()));
         response.setOrgWomanList(dataList.stream().map(UserCountData::getWomanNum).collect(Collectors.toList()));

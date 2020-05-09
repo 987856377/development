@@ -1,6 +1,7 @@
 package com.spring.development.module.prescription.service.impl;
 
 import com.spring.development.module.prescription.entity.PrescriptionDetail;
+import com.spring.development.module.prescription.entity.request.CountPrescriptionRequest;
 import com.spring.development.module.prescription.entity.response.PrescriptionCountData;
 import com.spring.development.module.prescription.entity.response.PrescriptionCountResponse;
 import com.spring.development.module.prescription.mapper.PrescriptionDetailMapper;
@@ -29,9 +30,9 @@ public class PrescriptionDetailServiceImpl extends ServiceImpl<PrescriptionDetai
     private PrescriptionDetailMapper prescriptionDetailMapper;
 
     @Override
-    public PrescriptionCountResponse countPrescription() {
+    public PrescriptionCountResponse countPrescription(CountPrescriptionRequest countPrescriptionRequest) {
         PrescriptionCountResponse response = new PrescriptionCountResponse();
-        List<PrescriptionCountData> dataList = prescriptionDetailMapper.countPrescription();
+        List<PrescriptionCountData> dataList = prescriptionDetailMapper.countPrescription(countPrescriptionRequest.getOrgflag());
         response.setOrgNameList(dataList.stream().map(PrescriptionCountData::getOrgname).collect(Collectors.toList()));
         response.setPreLocalList(dataList.stream().map(PrescriptionCountData::getLocal).collect(Collectors.toList()));
         response.setPreOutsideList(dataList.stream().map(PrescriptionCountData::getOutside).collect(Collectors.toList()));

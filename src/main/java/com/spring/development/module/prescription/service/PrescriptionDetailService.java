@@ -2,6 +2,7 @@ package com.spring.development.module.prescription.service;
 
 import com.spring.development.module.prescription.entity.PrescriptionDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spring.development.module.prescription.entity.request.CountPrescriptionRequest;
 import com.spring.development.module.prescription.entity.response.PrescriptionCountResponse;
 
 /**
@@ -14,5 +15,5 @@ import com.spring.development.module.prescription.entity.response.PrescriptionCo
  */
 public interface PrescriptionDetailService extends IService<PrescriptionDetail> {
 
-    PrescriptionCountResponse countPrescription();
+    PrescriptionCountResponse countPrescription(CountPrescriptionRequest countPrescriptionRequest);
 }

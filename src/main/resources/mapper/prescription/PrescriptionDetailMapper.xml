@@ -34,7 +34,13 @@
         sum(case when type=2 then 1 else 0 end ) special,
         COUNT(id) total
         FROM prescription_detail
-        WHERE orgname in (SELECT name FROM organization)
+        WHERE orgname in (
+            SELECT name FROM organization
+            <if test="orgflag != null and orgflag != ''">
+                <bind name="orgFlag" value="orgflag + '%'"/>
+                WHERE orgflag LIKE #{orgFlag}
+            </if>
+        )
         GROUP BY orgname
     </select>
 

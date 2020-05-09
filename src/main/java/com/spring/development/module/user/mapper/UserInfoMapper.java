@@ -30,7 +30,7 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
     UserInfo getUserInfoByUsername(@Param("username") String username);
 
-    List<UserCountData> countUser();
+    List<UserCountData> countUser(@Param("orgflag") String orgflag);
 
     UserInfo getOne(@Param("id") Long id, @Param("identity") String identity, @Param("phone") String phone, @Param("mail") String mail);
 

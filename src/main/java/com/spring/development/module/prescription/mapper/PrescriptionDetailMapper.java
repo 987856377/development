@@ -3,6 +3,7 @@ package com.spring.development.module.prescription.mapper;
 import com.spring.development.module.prescription.entity.PrescriptionDetail;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spring.development.module.prescription.entity.response.PrescriptionCountData;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,5 +19,5 @@ import java.util.List;
 @Repository
 public interface PrescriptionDetailMapper extends BaseMapper<PrescriptionDetail> {
 
-    List<PrescriptionCountData> countPrescription();
+    List<PrescriptionCountData> countPrescription(@Param("orgflag") String orgflag);
 }

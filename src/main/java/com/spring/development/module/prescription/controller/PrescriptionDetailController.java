@@ -4,6 +4,7 @@ package com.spring.development.module.prescription.controller;
 import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
 import com.spring.development.module.prescription.entity.PrescriptionDetail;
+import com.spring.development.module.prescription.entity.request.CountPrescriptionRequest;
 import com.spring.development.module.prescription.service.PrescriptionDetailService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,8 +65,8 @@ public class PrescriptionDetailController {
     }
 
     @RequestMapping("countPrescription")
-    public ResultJson countPrescription(){
-        return ResultJson.success(prescriptionDetailService.countPrescription());
+    public ResultJson countPrescription(@RequestBody CountPrescriptionRequest countPrescriptionRequest){
+        return ResultJson.success(prescriptionDetailService.countPrescription(countPrescriptionRequest));
     }
 
 }

@@ -86,6 +86,7 @@ public class OrganizationController {
             if (one == null){
 //            1. 添加的机构没有上级机构: orgflag 生成规则: 机构的 code 前两位拼接后两位
                 organization.setOrgflag(organization.getCode().substring(0,2)+organization.getCode().substring(organization.getCode().length()-2));
+                organization.setSupervising(organization.getName());
             }else {
 //            2. 添加的机构有上级机构: orgflag生成规则: 上级机构的 orgflag 拼接本机构 code 的后两位
                 organization.setOrgflag(one.getOrgflag() + organization.getCode().substring(organization.getCode().length() - 2));
@@ -178,7 +179,12 @@ public class OrganizationController {
     @PreAuthorize("hasAnyAuthority('ADMIN','DBA')")
     @RequestMapping("getOrgList")
     public ResultJson getOrgList(@RequestBody OrgRequest request){
-        return ResultJson.success(organizationService.page(request.getPage()));
+        if (request.getOrgflag() == null || "".equals(request.getOrgflag())){
+            return ResultJson.success(organizationService.page(request.getPage()));
+        }
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.likeRight("orgflag", request.getOrgflag());
+        return ResultJson.success(organizationService.page(request.getPage(), queryWrapper));
     }
 
     /*
