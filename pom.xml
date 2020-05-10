@@ -144,6 +144,11 @@
 <!--            <groupId>org.springframework.kafka</groupId>-->
 <!--            <artifactId>spring-kafka</artifactId>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <dependency>
             <groupId>cn.hutool</groupId>

@@ -5,10 +5,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.development.common.ResultCode;
 import com.spring.development.common.ResultJson;
+import com.spring.development.module.common.entity.Mail;
+import com.spring.development.module.common.service.MailService;
 import com.spring.development.module.prescription.entity.CirculationInfo;
 import com.spring.development.module.prescription.entity.request.CirculationInfoRequest;
 import com.spring.development.module.prescription.entity.request.PrescriptionRequest;
 import com.spring.development.module.prescription.service.CirculationInfoService;
+import com.spring.development.module.user.entity.UserInfo;
+import com.spring.development.module.user.service.UserInfoService;
+import com.spring.development.util.ThreadPoolExecutorFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -29,8 +36,16 @@ import java.sql.Timestamp;
 @RequestMapping("/prescription/circulationinfo")
 public class CirculationInfoController {
 
+    private Logger logger = LoggerFactory.getLogger(CirculationInfoController.class);
+
     @Resource
     private CirculationInfoService circulationInfoService;
+
+    @Resource
+    private MailService mailService;
+
+    @Resource
+    private UserInfoService userInfoService;
 
     /*
     {
@@ -55,6 +70,15 @@ public class CirculationInfoController {
             circulationInfo.setOriginTime(new Timestamp(System.currentTimeMillis()));
         }
         circulationInfo.setChangeTime(new Timestamp(System.currentTimeMillis()));
+        ThreadPoolExecutorFactory.getThreadPoolExecutor().execute(() -> {
+            Mail mail = new Mail();
+            UserInfo userInfo = userInfoService.getById(circulationInfo.getReceiver());
+            mail.setSendTo(userInfo.getMail());
+            mail.setSubject("处方流转平台");
+            mail.setContent("您有一条新的处方, 请注意查收!");
+            logger.info("处方发送邮件通知: " + mail.toString());
+            mailService.send(mail);
+        });
         return ResultJson.success(circulationInfoService.saveOrUpdate(circulationInfo));
     }
 
