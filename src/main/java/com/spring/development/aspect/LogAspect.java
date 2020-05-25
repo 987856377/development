@@ -2,10 +2,8 @@ package com.spring.development.aspect;
 
 import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,6 +12,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * @Description
@@ -27,26 +26,25 @@ import java.util.Arrays;
 public class LogAspect {
     private Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    ThreadLocal<Long> startTime = new ThreadLocal<>();
-
-    private JoinPoint joinPoint;
-    private ServletRequestAttributes attributes;
-    private HttpServletRequest request;
-
     @Pointcut("execution(public * com.spring.development.module.*.controller.*.*(..))")
     public void log(){}
 
-    @Before(value = "log()")
-    public void doBefore(JoinPoint joinPoint){
-        this.joinPoint = joinPoint;
-        startTime.set(System.currentTimeMillis());
-        attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        request = attributes.getRequest();
-    }
+    @Around("log()")
+    public Object around(ProceedingJoinPoint joinPoint) {
 
-    @AfterReturning(returning = "ret" , pointcut = "log()")
-    public void doAfterReturning(Object ret){
-        //处理完请求后，返回内容
-        logger.info("\n请求URL: "+request.getRequestURI()+"\n入参:"+ Arrays.toString(joinPoint.getArgs())+"\n出参:"+ JSON.toJSONString(ret) +"\n执行时间: "+ (System.currentTimeMillis() - startTime.get())+" 毫秒");
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+
+        try {
+            long startTimeMillis = System.currentTimeMillis();
+            //调用 proceed() 方法才会真正的执行实际被代理的方法
+            Object result = joinPoint.proceed();
+            long execTimeMillis = System.currentTimeMillis() - startTimeMillis;
+            logger.info("\n请求URL: "+request.getRequestURI()+"\n入参:"+ Arrays.toString(joinPoint.getArgs())+"\n出参:"+
+                JSON.toJSONString(result) +"\n执行时间: "+ (System.currentTimeMillis() - startTimeMillis)+" 毫秒");
+            return result;
+        } catch (Throwable throwable) {
+            logger.error(throwable.getMessage(),throwable);
+            throw new RuntimeException(throwable.getMessage());
+        }
     }
 }
