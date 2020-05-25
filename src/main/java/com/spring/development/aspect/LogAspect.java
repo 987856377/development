@@ -38,9 +38,10 @@ public class LogAspect {
             long startTimeMillis = System.currentTimeMillis();
             //调用 proceed() 方法才会真正的执行实际被代理的方法
             Object result = joinPoint.proceed();
-            long execTimeMillis = System.currentTimeMillis() - startTimeMillis;
+
             logger.info("\n请求URL: "+request.getRequestURI()+"\n入参:"+ Arrays.toString(joinPoint.getArgs())+"\n出参:"+
                 JSON.toJSONString(result) +"\n执行时间: "+ (System.currentTimeMillis() - startTimeMillis)+" 毫秒");
+
             return result;
         } catch (Throwable throwable) {
             logger.error(throwable.getMessage(),throwable);
