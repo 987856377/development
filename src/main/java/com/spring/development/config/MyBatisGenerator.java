@@ -53,7 +53,7 @@ public class MyBatisGenerator {
         gc.setOutputDir(projectPath + "/src/main/java");    // 生成路径
         gc.setAuthor("XuZhenkui");  // 作者
         gc.setActiveRecord(true);   // 是否支持AR模式
-        gc.setFileOverride(false);   // 文件覆盖
+//        gc.setFileOverride(true);   // 文件覆盖
         gc.setIdType(IdType.AUTO);  // 主键策略
         gc.setServiceName("%sService");     // 设置生成的service接口名字首字母是否为 I
         gc.setOpen(false);
@@ -133,7 +133,7 @@ public class MyBatisGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);  // 数据库表映射到实体命名策略
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setSuperEntityClass("com.baomidou.mybatisplus.extension.activerecord.Model");
-        strategy.setEntityLombokModel(true);
+        strategy.setEntityLombokModel(false);
         strategy.setRestControllerStyle(true);
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(",")); // 用于生成代码的数据库中的表
         strategy.setControllerMappingHyphenStyle(true);

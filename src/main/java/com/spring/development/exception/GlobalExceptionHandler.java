@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 /**
  * @Description
@@ -31,6 +32,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value =NullPointerException.class)
     public ResultJson exceptionHandler(HttpServletRequest request, NullPointerException e){
         logger.error("发生空指针异常！原因是:",e);
+        return ResultJson.failure(ResultCode.SERVICE_UNAVAILABLE);
+    }
+
+    /**
+     * SQL 执行异常
+     * @param request
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = SQLException.class)
+    public ResultJson sqlExceptionHandler(HttpServletRequest request, NullPointerException e){
+        logger.error("SQL 执行异常！原因是:",e);
         return ResultJson.failure(ResultCode.SERVICE_UNAVAILABLE);
     }
 

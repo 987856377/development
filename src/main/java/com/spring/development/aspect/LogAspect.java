@@ -1,16 +1,21 @@
 package com.spring.development.aspect;
 
 import com.alibaba.fastjson.JSON;
+import com.spring.development.module.log.entity.MethodLog;
+import com.spring.development.module.log.service.MethodLogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -26,6 +31,9 @@ import java.util.Objects;
 public class LogAspect {
     private Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
+    @Resource
+    private MethodLogService methodLogService;
+
     @Pointcut("execution(public * com.spring.development.module.*.controller.*.*(..))")
     public void log(){}
 
@@ -39,9 +47,13 @@ public class LogAspect {
             //调用 proceed() 方法才会真正的执行实际被代理的方法
             Object result = joinPoint.proceed();
 
-            logger.info("\n请求URL: "+request.getRequestURI()+"\n入参:"+ Arrays.toString(joinPoint.getArgs())+"\n出参:"+
-                JSON.toJSONString(result) +"\n执行时间: "+ (System.currentTimeMillis() - startTimeMillis)+" 毫秒");
+            String input = Arrays.toString(joinPoint.getArgs());
+            String ouput = JSON.toJSONString(result);
 
+            long consultTime = System.currentTimeMillis() - startTimeMillis;
+            logger.info("\n请求URL: "+request.getRequestURI()+"\n入参:"+ input +"\n出参:"+ ouput +"\n执行时间: "+ consultTime +" 毫秒");
+
+            methodLogService.save(new MethodLog(request.getRemoteAddr(),request.getLocalAddr(),request.getRequestURI(), LocalDateTime.now() ,input, ouput, String.valueOf(consultTime)));
             return result;
         } catch (Throwable throwable) {
             logger.error(throwable.getMessage(),throwable);
