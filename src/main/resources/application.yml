@@ -15,12 +15,12 @@ spring:
                     username: root
                     password: root
                     driver-class-name: com.mysql.cj.jdbc.Driver
-                    url: jdbc:mysql://localhost:3306/development?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
+                    url: jdbc:mysql://localhost:3306/development?useAffectedRows=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
                 slave:
                     username: root
                     password: root
                     driver-class-name: com.mysql.cj.jdbc.Driver
-                    url: jdbc:mysql://localhost:3306/development_slave?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
+                    url: jdbc:mysql://localhost:3306/development_slave?useAffectedRows=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
     mail:
         host: smtp.qq.com
         username: 987856377@qq.com
@@ -66,12 +66,12 @@ spring:
                     username: root
                     password: root
                     driver-class-name: com.mysql.cj.jdbc.Driver
-                    url: jdbc:mysql://localhost:3306/development?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
+                    url: jdbc:mysql://localhost:3306/development?useAffectedRows=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
                 slave:
                     username: root
                     password: root
                     driver-class-name: com.mysql.cj.jdbc.Driver
-                    url: jdbc:mysql://localhost:3306/development_slave?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
+                    url: jdbc:mysql://localhost:3306/development_slave?useAffectedRows=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
     mail:
         host: smtp.qq.com
         username: 987856377@qq.com
