@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.prescription.mapper.CirculationInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.development.module.prescription.entity.CirculationInfo">
+        <id column="id" property="id" />
+        <result column="pid" property="pid" />
+        <result column="sender" property="sender" />
+        <result column="sender_name" property="senderName" />
+        <result column="origin_code" property="originCode" />
+        <result column="origin_name" property="originName" />
+        <result column="origin_time" property="originTime" />
+        <result column="achieve_code" property="achieveCode" />
+        <result column="achieve_name" property="achieveName" />
+        <result column="receiver" property="receiver" />
+        <result column="receiver_name" property="receiverName" />
+        <result column="accept_status" property="acceptStatus" />
+        <result column="change_time" property="changeTime" />
+        <result column="extra" property="extra" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, pid, sender, sender_name, origin_code, origin_name,origin_time, achieve_code, achieve_name, receiver, receiver_name, accept_status, change_time, extra
+    </sql>
+    <update id="acceptPrescription">
+        update circulation_info
+        <set>
+            <if test="acceptStatus != null">
+                accept_status = #{acceptStatus}
+            </if>
+            <if test="changeTime != null">
+                ,change_time = #{changeTime}
+            </if>
+            <if test="extra != null and extra != ''">
+                ,extra = #{extra}
+            </if>
+        </set>
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+        </where>
+    </update>
+
+</mapper>

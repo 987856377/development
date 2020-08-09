@@ -49,4 +49,8 @@ public interface OrganizationMapper extends BaseMapper<Organization> {
     CountResponse countTotal(@Param("flag") Integer flag,@Param("begin") Timestamp begin, @Param("end") Timestamp end);
 
     List<Organization> getPeerAndSubOrgListByOrgFlag(@Param("orgflag") String orgFlag);
+
+    Organization getOrgByNameFromMaster(@Param("name") String name);
+
+    Organization getOrgByNameFromSlave(@Param("name") String name);
 }

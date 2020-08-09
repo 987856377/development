@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.user.mapper.UserRoleMapper">
+    <resultMap id="userRoleMap" type="com.spring.development.module.user.entity.UserRole">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="rid" property="rid"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
+    <insert id="create">
+        insert into user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null and uid != ''">uid,</if>
+            <if test="rid != null and rid != ''">rid,</if>
+            <if test="flag != null">flag,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="uid != null and uid != ''">#{uid},</if>
+            <if test="rid != null and rid != ''">#{rid},</if>
+            <if test="flag != null">#{flag},</if>
+        </trim>
+    </insert>
+    <update id="setUserRole">
+        update user_role
+        <set>
+            <if test="destId != null and destId != ''">
+                rid=#{destId}
+            </if>
+        </set>
+        <where>
+            <if test="uid != null and uid != ''">
+                uid=#{uid} and rid = #{sourceId}
+            </if>
+        </where>
+    </update>
+    <delete id="delUserRole">
+        delete from user_role
+        <where>
+            uid = #{uid} and rid = #{rid}
+        </where>
+    </delete>
+    <select id="getUserRoleByUid" resultType="com.spring.development.module.user.entity.UserRole">
+        select * from user_role
+        <where>
+            <if test="uid != null and uid != ''">
+                uid=#{uid}
+            </if>
+        </where>
+    </select>
+    <select id="getRoleList" resultType="com.spring.development.module.user.entity.Role">
+        select DISTINCT role.id, role.title, role.code, role.flag from role, user_role
+        <where>
+            role.id = user_role.rid
+            <if test="uid != null and uid != ''">
+                and user_role.uid = #{uid} and role.flag=1 ORDER BY role.id asc
+            </if>
+        </where>
+    </select>
+    <select id="getRoleListAvalible" resultType="com.spring.development.module.user.entity.Role">
+        SELECT id, title, code, flag FROM role
+            WHERE id >= (select MIN(role.id) from role, user_role WHERE
+                role.id = user_role.rid and role.flag=1 and user_role.uid = #{uid})
+                <if test="flag != null">
+                    and role.flag = #{flag}
+                </if>
+             ORDER BY role.id asc
+    </select>
+    <update id="updateRoleStateFlag">
+        update user_role set flag = #{flag} where rid = #{rid}
+    </update>
+</mapper>

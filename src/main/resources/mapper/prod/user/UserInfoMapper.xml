@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.user.mapper.UserInfoMapper">
+    <resultMap id="userInfoMap" type="com.spring.development.module.user.entity.UserInfo">
+        <id column="id" property="id"/>
+        <result column="orgcode" property="orgcode"/>
+        <result column="orgname" property="orgname"/>
+        <result column="name" property="name"/>
+        <result column="identity" property="identity"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="nation" property="nation"/>
+        <result column="phone" property="phone"/>
+        <result column="mail" property="mail"/>
+    </resultMap>
+
+
+    <select id="getUserNamesByOrgCode" resultType="java.lang.String">
+        select name from user_info
+        <where>
+            <if test="orgcode != null and orgcode != ''">
+                orgcode = #{orgcode}
+            </if>
+            <if test="name != null and name != ''">
+                and orgname = #{orgname}
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserInfoByOrgCodeOrName" resultType="com.spring.development.module.user.entity.UserInfo">
+        select * from user_info
+        <where>
+            <if test="orgcode != null and orgcode != ''">
+                orgcode = #{orgcode}
+            </if>
+            <if test="orgname != null and orgname != ''">
+                and orgname = #{name}
+            </if>
+            and id in (SELECT id from `user` WHERE flag = 1)
+        </where>
+    </select>
+    <select id="userInfoPage" resultType="com.spring.development.module.user.entity.response.UserResponse">
+        SELECT user.username, user_info.* , user.register_time,user.modify_time,user.last_login_time, user.flag FROM user,user_info WHERE user.id = user_info.id
+        <if test="orgflag != null and orgflag != ''">
+            <bind name="orgFlag" value="orgflag + '%'"/>
+            and user_info.orgcode IN ( select code from organization where orgflag like #{orgFlag})
+        </if>
+    </select>
+    <select id="getUserInfo" resultType="com.spring.development.module.user.entity.response.UserResponse">
+        SELECT user.username, user_info.* , user.register_time,user.modify_time,user.last_login_time, user.flag FROM user,user_info WHERE user.id = user_info.id
+        <if test="username != null and username != ''">
+            and username = #{username}
+        </if>
+    </select>
+    <select id="getUserInfoByUsername" resultType="com.spring.development.module.user.entity.UserInfo">
+        select * from  user_info where id = (select id from user where username = #{username})
+    </select>
+    <select id="countUser" resultType="com.spring.development.module.user.entity.response.UserCountData">
+        select orgname, sum(case when sex='男' then 1 else 0 end ) manNum, sum(case when sex='女' then 1 else 0 end ) womanNum, COUNT(id) total
+        FROM user_info
+        WHERE orgname in (
+        SELECT name FROM organization
+        <if test="orgflag != null and orgflag != ''">
+            <bind name="orgFlag" value="orgflag + '%'"/>
+            WHERE orgflag LIKE #{orgFlag}
+        </if>
+        )
+        GROUP BY orgname
+    </select>
+    <select id="getOne" resultType="com.spring.development.module.user.entity.UserInfo">
+        select * from user_info
+        where identity = #{identity} or phone = #{phone} or mail = #{mail}
+        group by id having id != #{id}
+    </select>
+    <select id="getUserAndOrgInfoByUsername"
+            resultType="com.spring.development.module.user.entity.response.UserOrgInfoResponse">
+        SELECT user_info.id,user_info.name,user_info.orgcode,user_info.orgname,organization.orgflag
+        FROM user,user_info,organization
+        WHERE user.id = user_info.id and user_info.orgcode = organization.code and user.username = #{username}
+    </select>
+
+</mapper>
+

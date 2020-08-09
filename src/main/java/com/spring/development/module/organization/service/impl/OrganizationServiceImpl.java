@@ -1,5 +1,6 @@
 package com.spring.development.module.organization.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.spring.development.module.organization.entity.request.CountRequest;
 import com.spring.development.module.organization.entity.response.CountResponse;
 import com.spring.development.module.organization.entity.response.OrgResponse;
@@ -123,5 +124,17 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         }
         String parentOrgFlag = request.getOrgflag().substring(0,request.getOrgflag().length()-2);
         return organizationMapper.getPeerAndSubOrgListByOrgFlag(parentOrgFlag);
+    }
+
+    @Override
+    @DS("master")
+    public Organization getOrgByNameFromMaster(String name) {
+        return organizationMapper.getOrgByNameFromMaster(name);
+    }
+
+    @Override
+    @DS("slave")
+    public Organization getOrgByNameFromSlave(String name) {
+        return organizationMapper.getOrgByNameFromSlave(name);
     }
 }

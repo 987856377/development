@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.organization.mapper.OrganizationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.development.module.organization.entity.Organization">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="orgflag" property="orgflag" />
+        <result column="name" property="name" />
+        <result column="classify" property="classify" />
+        <result column="type" property="type" />
+        <result column="host" property="host" />
+        <result column="relation" property="relation" />
+        <result column="postcode" property="postcode" />
+        <result column="address" property="address" />
+        <result column="phone" property="phone" />
+        <result column="mail" property="mail" />
+        <result column="responser" property="responser" />
+        <result column="officer" property="officer" />
+        <result column="web" property="web" />
+        <result column="supervising" property="supervising" />
+        <result column="date" property="date" />
+        <result column="introduction" property="introduction" />
+        <result column="flag" property="flag" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, orgflag, name, classify, type, host, relation, postcode, address, phone, mail, responser, officer, web, supervising, date, introduction,flag
+    </sql>
+
+    <select id="getOrg" resultType="com.spring.development.module.organization.entity.Organization">
+        select * from organization
+        <where>
+            <if test="code != null and code != ''">
+                code = #{code}
+            </if>
+
+            <if test="name != null and name != ''">
+                <bind name="usrName" value="'%' + name + '%'"/>
+                and name like #{usrName}
+            </if>
+
+            <if test="orgflag != null and orgflag != ''">
+                <bind name="orgFlag" value="orgflag + '%'"/>
+                and orgflag like #{orgFlag}
+            </if>
+
+            <if test="classify != null and classify != ''">
+                and classify = #{classify}
+            </if>
+
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+
+            <if test="host != null and host != ''">
+                and host = #{host}
+            </if>
+
+            <if test="relation != null and relation != ''">
+                and relation = #{relation}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+
+            <if test="responser != null and responser != ''">
+                and responser = #{responser}
+            </if>
+
+            <if test="officer != null and officer != ''">
+                and officer = #{officer}
+            </if>
+
+            <if test="supervising != null and supervising != ''">
+                <bind name="super" value="'%' + supervising + '%'"/>
+                and supervising like #{super}
+            </if>
+
+            <if test="flag != null">
+                and flag = #{flag}
+            </if>
+        </where>
+        limit #{current}, #{size}
+    </select>
+    <select id="getOrgByName" resultType="com.spring.development.module.organization.entity.Organization">
+        select * from organization
+        <where>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+        </where>
+    </select>
+    <select id="getSubOrg" resultType="com.spring.development.module.organization.entity.response.OrgResponse">
+        select name,code,orgflag  from organization
+        <where>
+            <if test="orgflag != null and orgflag != ''">
+                <bind name="orgFlag" value="orgflag + '%'"/>
+                orgflag like #{orgFlag} and flag = 1
+            </if>
+            order by orgflag asc
+        </where>
+    </select>
+    <select id="getOrgInfoByUid" resultType="com.spring.development.module.organization.entity.response.OrgResponse">
+        SELECT name,code,orgflag FROM organization WHERE name=(SELECT orgname from user_info WHERE id = #{id})
+    </select>
+    <select id="getOrgCodeAndUsersByName" resultType="com.spring.development.module.organization.entity.response.TargetUser">
+        SELECT id, name FROM user_info WHERE orgname = #{name} AND id in (SELECT id FROM user WHERE flag = 1)
+    </select>
+    <select id="getOrgIntroductionByCode" resultType="java.lang.String">
+        select introduction from organization where code = #{code}
+    </select>
+
+    <select id="countTotal"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+         SELECT '总数' name, COUNT(0) value FROM organization WHERE flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="countClassify"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+        SELECT (SELECT name FROM org_classify WHERE id = #{classify} ) name, COUNT(0) value
+            FROM organization
+            WHERE classify = #{classify} and flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="countType"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+        SELECT (SELECT name FROM org_type WHERE id = #{type} ) name, COUNT(0) value
+            FROM organization
+            WHERE type = #{type} and flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="countHost"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+        SELECT (SELECT name FROM org_host WHERE id = #{host} ) name, COUNT(0) value
+            FROM organization
+            WHERE host = #{host} and flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="countRelation"
+            resultType="com.spring.development.module.organization.entity.response.CountResponse">
+         SELECT (SELECT name FROM org_relation WHERE id = #{relation} ) name, COUNT(0) value
+            FROM organization
+            WHERE relation = #{relation} and flag = #{flag} and date between #{begin} and #{end}
+    </select>
+    <select id="getPeerAndSubOrgListByOrgFlag"
+            resultType="com.spring.development.module.organization.entity.Organization">
+        select <include refid="Base_Column_List"/> from organization
+        <where>
+            <if test="orgflag != null and orgflag != ''">
+                <bind name="orgFlag" value="orgflag + '%'"/>
+                orgflag like #{orgFlag} and flag = 1
+            </if>
+            order by orgflag asc
+        </where>
+    </select>
+    <select id="getOrgByNameFromMaster"
+            resultType="com.spring.development.module.organization.entity.Organization">
+        select * from organization
+        <where>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+        </where>
+    </select>
+    <select id="getOrgByNameFromSlave"
+            resultType="com.spring.development.module.organization.entity.Organization">
+        select * from organization
+        <where>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <update id="cancelOrg">
+        update organization
+        <set>
+            <if test="flag != null">
+                flag = #{flag}
+            </if>
+        </set>
+        <where>
+            <if test="code != null and code != ''">
+                code = #{code}
+            </if>
+        </where>
+    </update>
+
+</mapper>

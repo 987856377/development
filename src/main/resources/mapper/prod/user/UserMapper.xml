@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.user.mapper.UserMapper">
+    <resultMap id="userMap" type="com.spring.development.module.user.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
+    <insert id="create" parameterType="com.spring.development.module.user.entity.User" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into user(username,password,register_time,modify_time,flag) values (#{user.username},#{user.password},#{user.registerTime},#{user.modifyTime},#{user.flag})
+    </insert>
+
+    <select id="getByUsername" parameterType="String" resultMap="userMap">
+        select * from user
+            <where>
+                <if test="username != null and username != ''">
+                    username = #{username} and
+                </if>
+                flag = 1
+            </where>
+    </select>
+
+    <select id="getUserByPage" parameterType="long" resultMap="userMap">
+        select * from user where flag = 1 limit #{offset}, #{pageSize}
+    </select>
+
+    <select id="getByWrapper" parameterType="String" resultMap="userMap">
+        select * from user ${ew.customSqlSegment}
+    </select>
+    <select id="getIdByNameAndCode" resultType="java.lang.Long">
+        select user.id from  user,user_info
+        <where>
+            user.id = user_info.id
+            <if test="name != null and name != ''">
+                and user_info.name = #{name}
+            </if>
+            <if test="code != null and code != ''">
+                and user_info.code = #{code}
+            </if>
+            and flag = 1
+        </where>
+    </select>
+    <select id="loadUserByUsername" resultType="com.spring.development.module.user.entity.UserDetail">
+        select * from user
+        <where>
+            <if test="username != null and username != ''">
+                username = #{username} and
+            </if>
+            flag = 1
+        </where>
+    </select>
+    <select id="getIdByUsername" resultType="java.lang.Long">
+        select id from user where username = #{username}
+    </select>
+    <select id="getRealNameById" resultType="java.lang.String">
+        select name from user_info where id = #{id}
+    </select>
+    <select id="getOrgFlagByUid" resultType="java.lang.Integer">
+        SELECT flag FROM organization WHERE code = (SELECT orgcode FROM user_info WHERE id = #{id})
+    </select>
+
+    <update id="cancelUserByOrgCode">
+        update user
+        <set>
+            <if test="flag != null">
+                flag = #{flag}
+            </if>
+        </set>
+        <where>
+            <if test="orgcode != null and orgcode != ''">
+                id in
+                <trim prefix="(" suffix=")">
+                    select id from user_info
+                    <where>
+                        <if test="orgcode != null and orgcode != ''">
+                            orgcode = #{orgcode}
+                        </if>
+                    </where>
+                </trim>
+            </if>
+        </where>
+    </update>
+
+    <update id="cancelUserById">
+        update user
+        <set>
+            <if test="flag != null">
+                flag = #{flag}
+            </if>
+        </set>
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+        </where>
+    </update>
+    <update id="updateLastLoginTime">
+        update user
+        <set>
+            <if test="lastLoginTime != null and lastLoginTime != ''">
+                lastLoginTime = #{lastLoginTime}
+            </if>
+        </set>
+        <where>
+            <if test="username != null and username != ''">
+                username = #{username}
+            </if>
+        </where>
+    </update>
+</mapper>

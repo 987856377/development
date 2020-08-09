@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.prescription.mapper.PrescriptionStatusMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.development.module.prescription.entity.PrescriptionStatus">
+        <id column="id" property="id" />
+        <result column="pid" property="pid" />
+        <result column="flag" property="flag" />
+        <result column="operator" property="operator" />
+        <result column="operatorName" property="operatorName" />
+        <result column="verify" property="verify" />
+        <result column="verify_time" property="verifyTime" />
+        <result column="forbidden_time" property="forbiddenTime" />
+        <result column="enable" property="enable" />
+        <result column="extra" property="extra" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, pid, flag, operator,operatorName, verify, verify_time, forbidden_time, enable, extra
+    </sql>
+    <update id="stopCirculate">
+        update prescription_status
+            <set>
+                <if test="flag != null">
+                    flag = #{flag}
+                    <choose>
+                        <when test="flag == 0">
+                            ,enable = 0
+                        </when>
+                    </choose>
+                </if>
+                <if test="forbiddenTime != null">
+                    ,forbidden_time = #{forbiddenTime}
+                </if>
+                <if test="extra != null and extra != ''">
+                    ,extra = #{extra}
+                </if>
+            </set>
+            <where>
+                <if test="pid != null and pid != ''">
+                    pid = #{pid}
+                </if>
+            </where>
+    </update>
+
+    <update id="verifyPrescription">
+        update prescription_status
+            <set>
+                <if test="operator != null and operator != ''">
+                    operator = #{operator}
+                </if>
+                <if test="operatorName != null and operatorName != ''">
+                    ,operator_name = #{operatorName}
+                </if>
+                <if test="verify != null">
+                    ,verify = #{verify}
+                    <choose>
+                        <when test="verify == 0">
+                            ,flag=0, enable = 0
+                        </when>
+                        <when test="verify == 1">
+                            ,flag=1
+                        </when>
+                    </choose>
+                </if>
+                <if test="verifyTime != null">
+                    ,verify_time = #{verifyTime}
+                </if>
+                <if test="extra != null and extra != ''">
+                    ,extra = #{extra}
+                </if>
+            </set>
+            <where>
+                <if test="pid != null and pid != ''">
+                    pid = #{pid}
+                </if>
+            </where>
+    </update>
+
+    <update id="enableCirculate">
+        update prescription_status
+        <set>
+            <if test="enable != null">
+                enable = #{enable}
+            </if>
+            <if test="extra != null and extra != ''">
+                ,extra = #{extra}
+            </if>
+        </set>
+        <where>
+            <if test="pid != null and pid != ''">
+                pid = #{pid}
+            </if>
+        </where>
+    </update>
+    <select id="getWaitingVarified" resultType="com.spring.development.module.prescription.entity.PrescriptionStatus">
+        select * from prescription_status
+        <if test="verify != null">
+            <where>
+                verify = #{verify}
+            </where>
+        </if>
+    </select>
+
+    <select id="getCirculated" resultType="com.spring.development.module.prescription.entity.PrescriptionStatus">
+        select * from prescription_status
+        <if test="flag != null">
+            <where>
+                flag = #{flag}
+            </where>
+        </if>
+    </select>
+    <select id="getPrescriptionList"
+            resultType="com.spring.development.module.prescription.entity.response.PrescriptionResponse">
+        SELECT prescription_detail.* ,
+                prescription_status.flag,prescription_status.operator,prescription_status.operator_name,
+                prescription_status.verify,prescription_status.verify_time,prescription_status.forbidden_time,
+                prescription_status.enable,prescription_status.extra
+            from prescription_status,prescription_detail
+        <where>
+            prescription_detail.id = prescription_status.pid
+            <if test="id != null and id != ''">
+                and prescription_detail.id = #{id}
+            </if>
+            <if test="orgname != null and orgname != ''">
+                and orgname = #{orgname}
+            </if>
+            <if test="department != null and department != ''">
+                and department = #{department}
+            </if>
+            <if test="type != null">
+                and prescription_detail.type = #{type}
+            </if>
+            <if test="symptom != null and symptom != ''">
+                <bind name="sym" value="'%' + symptom + '%'"/>
+                and prescription_detail.symptom like #{sym}
+            </if>
+            <if test="flag != null">
+                and prescription_status.flag = #{flag}
+            </if>
+            <if test="verify != null">
+                and prescription_status.verify = #{verify}
+            </if>
+            <if test="enable != null">
+                and prescription_status.enable = #{enable}
+            </if>
+        </where>
+        order by prescription_detail.id asc
+    </select>
+    <select id="getPrescriptionById"
+            resultType="com.spring.development.module.prescription.entity.response.PrescriptionResponse">
+        SELECT prescription_detail.* ,
+                prescription_status.flag,prescription_status.operator,prescription_status.operator_name,
+                prescription_status.verify,prescription_status.verify_time,prescription_status.forbidden_time,
+                prescription_status.enable,prescription_status.extra
+            from prescription_status,prescription_detail
+            where prescription_detail.id = prescription_status.pid and prescription_detail.id = #{pid}
+    </select>
+
+
+</mapper>

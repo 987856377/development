@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.message.mapper.MessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spring.development.module.message.entity.Message">
+        <id column="id" property="id" />
+        <result column="sender" property="sender" />
+        <result column="sender_name" property="senderName" />
+        <result column="send_org_code" property="sendOrgCode" />
+        <result column="send_org_name" property="sendOrgName" />
+        <result column="send_time" property="sendTime" />
+        <result column="send_flag" property="sendFlag" />
+        <result column="receiver" property="receiver" />
+        <result column="receiver_name" property="receiverName" />
+        <result column="accept_org_code" property="acceptOrgCode" />
+        <result column="accept_org_name" property="acceptOrgName" />
+        <result column="read_time" property="readTime" />
+        <result column="subject" property="subject" />
+        <result column="content" property="content" />
+        <result column="read_flag" property="readFlag" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sender,sender_name, send_org_code,send_org_name , send_time, send_flag, receiver,receiver_name, accept_org_code,accept_org_name, read_time, subject, content, period, read_flag
+    </sql>
+    <update id="isRead">
+        update message
+        <set>
+            <if test="readTime != null">
+                read_time = #{readTime}
+            </if>
+            <if test="readFlag != null">
+                ,read_flag = #{readFlag}
+            </if>
+        </set>
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+        </where>
+    </update>
+    <update id="sendDraftMessage">
+        update message set send_flag = 1 where id = #{id}
+    </update>
+    <select id="getMessageList" resultType="com.spring.development.module.message.entity.Message">
+        select * from message
+        <where>
+            <if test="sender != null and sender != ''">
+                sender = #{sender}
+            </if>
+            <if test="receiver != null and receiver != ''">
+                receiver = #{receiver}
+            </if>
+            <if test="sendFlag != null">
+                and send_flag = #{sendFlag}
+            </if>
+        </where>
+        order by send_time desc
+    </select>
+    <select id="getMessage" resultType="com.spring.development.module.message.entity.Message">
+        select * from message
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="sender != null and sender != ''">
+                and sender = #{sender}
+            </if>
+            <if test="receiver != null and receiver != ''">
+                and receiver = #{receiver}
+            </if>
+            <if test="sendFlag != null">
+                and send_flag = #{sendFlag}
+            </if>
+        </where>
+    </select>
+    <select id="getUnReadCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM message WHERE receiver = #{receiver} AND read_flag = 0
+    </select>
+    <select id="getUserMail" resultType="java.lang.String">
+        SELECT DISTINCT user_info.mail
+        FROM user,user_info,message
+        WHERE message.read_time IS NULL AND user.id = user_info.id AND user.id = message.receiver AND user.flag = 1
+            AND send_time >= DATE_ADD(NOW(),INTERVAL -30 MINUTE)
+    </select>
+
+</mapper>

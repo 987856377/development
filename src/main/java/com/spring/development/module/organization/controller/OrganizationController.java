@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -311,5 +312,18 @@ public class OrganizationController {
             return ResultJson.failure(ResultCode.NOT_ACCEPTABLE);
         }
         return ResultJson.success(organizationService.getPeerAndSubOrgListByOrgFlag(request));
+    }
+
+
+    @RequestMapping("/readMaster")
+    public ResultJson readMaster(@RequestBody OrgRequest request){
+        assert request.getName() != null;
+        return ResultJson.success(organizationService.getOrgByNameFromMaster(request.getName()));
+    }
+
+    @RequestMapping("/readSlave")
+    public ResultJson readSlave(@RequestBody OrgRequest request){
+        assert request.getName() != null;
+        return ResultJson.success(organizationService.getOrgByNameFromSlave(request.getName()));
     }
 }

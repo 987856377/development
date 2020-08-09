@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.development.module.user.mapper.RoleMapper">
+    <resultMap id="roleMap" type="com.spring.development.module.user.entity.Role">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="code" property="code"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
+    <update id="updateRoleState">
+        update role set flag = #{flag}, modify_time = #{timestamp} where id = #{id}
+    </update>
+
+    <select id="getRoleByCode" resultMap="roleMap">
+        select * from role
+        <where>
+            <if test="code != null and code != ''">
+                code = #{code}
+            </if>
+        </where>
+    </select>
+    <select id="getRoleById" resultMap="roleMap">
+        select * from role
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+    <select id="getRolesByUid" resultType="com.spring.development.module.user.entity.Role">
+        select * from role
+            where id in (
+                select rid from user_role where uid = #{uid} and flag = 1
+            )
+    </select>
+
+    <select id="getRoleCodes" resultType="java.lang.String">
+        select code from role
+    </select>
+
+    <select id="getRoleList" resultMap="roleMap">
+        select * from role
+    </select>
+</mapper>

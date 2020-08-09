@@ -36,7 +36,7 @@ public class ApplicationEnvironmentPostProcessor implements EnvironmentPostProce
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        Resource path = new ClassPathResource("application.yml");
+        Resource path = new ClassPathResource("application-test.yml.txt");
         PropertySource<?> propertySource = loadYaml(path);
         environment.getPropertySources().addLast(propertySource);
     }
