@@ -27,11 +27,11 @@
         </encoder>
     </appender>
 
-    <appender name="debug_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${path}/logback_debug.log</file>
+    <appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/debug.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 每天一归档 -->
-            <fileNamePattern>${path}/logback_debug.log.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
+            <fileNamePattern>${path}/debug.log.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -49,11 +49,11 @@
         </filter>
     </appender>
 
-    <appender name="info_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${path}/logback_info.log</file>
+    <appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 每天一归档 -->
-            <fileNamePattern>${path}/logback_info.log.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
+            <fileNamePattern>${path}/info.log.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -71,11 +71,11 @@
         </filter>
     </appender>
 
-    <appender name="warn_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${path}/logback_warn.log</file>
+    <appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 每天一归档 -->
-            <fileNamePattern>${path}/logback_warn.log.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
+            <fileNamePattern>${path}/warn.log.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -94,11 +94,11 @@
     </appender>
 
 
-    <appender name="error_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${path}/logback_error.log</file>
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 每天一归档 -->
-            <fileNamePattern>${path}/logback_error.log.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
+            <fileNamePattern>${path}/error.log.%d{yyyy-MM-dd}-%i.zip</fileNamePattern>
             <maxHistory>${maxHistory}</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -119,10 +119,10 @@
     <root>
         <level value="info"/>
         <appender-ref ref="console"/>
-        <appender-ref ref="debug_file"/>
-        <appender-ref ref="info_file"/>
-        <appender-ref ref="warn_file"/>
-        <appender-ref ref="error_file"/>
+        <appender-ref ref="debug"/>
+        <appender-ref ref="info"/>
+        <appender-ref ref="warn"/>
+        <appender-ref ref="error"/>
     </root>
 
 </configuration>
