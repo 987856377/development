@@ -72,13 +72,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .csrf().disable()
                     .authorizeRequests()
-                    .antMatchers(HttpMethod.OPTIONS,"/**")
-                    .permitAll()
+                    .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 //                    .hasRole("ADMIN")//用hasRole时，在我们返回的UserDetails的Authority需要加ROLE_ADMIN
 //                    .hasAuthority("read")//用户自定义的权限，返回的UserDetails的Authority只要与这里匹配就可以，这里不需要加ROLE_
 //                    .access("hasRole('ADMIN') and hasIpAddress('192.168.0.1')")//指定有ADMIN权限并且匹配相应的IP
-                    .antMatchers("/sendVerificationCode","/resetPassword")
-                    .permitAll()
+                    .antMatchers("/","/file/**").permitAll()
+                    .antMatchers("/sendVerificationCode","/resetPassword").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
