@@ -32,7 +32,7 @@ public class ThreadPoolExecutorFactory {
 
     private static ExecutorService threadPoolExecutor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE,
             KEEP_ALIVE_TIME, TIME_UNIT,
-            workQueue, new ThreadPoolExecutor.AbortPolicy());
+            workQueue, threadFactory, new ThreadPoolExecutor.AbortPolicy());
 
     public static ExecutorService getThreadPoolExecutor() {
         return threadPoolExecutor;
