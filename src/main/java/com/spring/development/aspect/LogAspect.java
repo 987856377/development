@@ -1,8 +1,6 @@
 package com.spring.development.aspect;
 
 import com.alibaba.fastjson.JSON;
-import com.spring.development.module.log.entity.MethodLog;
-import com.spring.development.module.log.service.MethodLogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -31,9 +29,6 @@ import java.util.Objects;
 public class LogAspect {
     private Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    @Resource
-    private MethodLogService methodLogService;
-
     @Pointcut("execution(public * com.spring.development.module.*.controller.*.*(..))")
     public void log(){}
 
@@ -53,7 +48,6 @@ public class LogAspect {
             long consultTime = System.currentTimeMillis() - startTimeMillis;
             logger.info("\n请求URL: "+request.getRequestURI()+"\n入参:"+ input +"\n出参:"+ ouput +"\n执行时间: "+ consultTime +" 毫秒");
 
-            methodLogService.save(new MethodLog(request.getRemoteAddr(),request.getLocalAddr(),request.getRequestURI(), LocalDateTime.now() ,input, ouput, String.valueOf(consultTime)));
             return result;
         } catch (Throwable throwable) {
             logger.error(throwable.getMessage(),throwable);
