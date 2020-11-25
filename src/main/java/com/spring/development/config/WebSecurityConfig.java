@@ -85,6 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .logout()
+                    .deleteCookies()
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
                     .permitAll()//注销请求可直接访问
